@@ -1,0 +1,9 @@
+<div>
+  <div class="login__container" *ngIf="authType === authTypes.LOGIN">
+    <app-login (changeAuthTypeEvent)="changeAuthType()"></app-login>
+  </div>
+
+  <div class="signup__container" *ngIf="authType === authTypes.SIGNUP">
+    <app-signup></app-signup>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+.change__auth {
+  cursor: pointer;
+}
+
+@media(min-width: 768px) {
+  mat-card {
+    width: 500px;
+  }
+}
+
+@media(min-width: 1024px) {
+  mat-card {
+    width: 600px;
+  }
+}
