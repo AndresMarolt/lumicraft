@@ -1,4 +1,4 @@
-<app-topbar> </app-topbar>
+<app-topbar *ngIf="currentRoute !== '/login'"> </app-topbar>
 
 <div class="col-md-12 p-md-5">
   <router-outlet></router-outlet>

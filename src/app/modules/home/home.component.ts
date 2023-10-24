@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Product } from 'src/app/models/product';
-import { ProductService } from 'src/app/services/product.service';
+import { ProductService } from 'src/app/services/product/product.service';
 import { ProductFormComponent } from './product-form/product-form.component';
 import {
   SnackbarService,
   SnackbarTone,
-} from 'src/app/services/snackbar.service';
+} from 'src/app/services/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-home',
@@ -34,7 +34,6 @@ export class HomeComponent implements OnInit {
       );
       if (index) {
         this.productsList[index] = editedProduct;
-        console.log(this.productsList);
 
         this.productsList = [...this.productsList];
       }

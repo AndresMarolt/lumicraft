@@ -4,6 +4,6 @@
   </div>
 
   <div class="signup__container" *ngIf="authType === authTypes.SIGNUP">
-    <app-signup></app-signup>
+    <app-signup (changeAuthTypeEvent)="changeAuthType()"></app-signup>
   </div>
 </div>

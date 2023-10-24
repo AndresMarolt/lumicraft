@@ -7,12 +7,12 @@ import {
 } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Product } from 'src/app/models/product';
-import { ProductService } from 'src/app/services/product.service';
+import { ProductService } from 'src/app/services/product/product.service';
 import { catchError, of } from 'rxjs';
 import {
   SnackbarService,
   SnackbarTone,
-} from 'src/app/services/snackbar.service';
+} from 'src/app/services/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-product-form',
