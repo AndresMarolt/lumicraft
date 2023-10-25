@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoginService } from 'src/app/services/auth/login.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -13,11 +13,11 @@ export class LoginComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private loginService: LoginService
+    private authService: AuthService
   ) {
     this.loginForm = this.formBuilder.group({
       username: [null, [Validators.required]],
-      password: [null, [Validators.required, Validators.minLength(8)]],
+      password: [null, [Validators.required, Validators.minLength(4)]],
     });
   }
 
@@ -30,9 +30,11 @@ export class LoginComponent {
   }
 
   submit() {
+    console.log(this.loginForm.invalid);
+
     if (this.loginForm.invalid) return;
 
-    this.loginService.login(this.loginForm.value);
+    this.authService.login(this.loginForm.value).subscribe();
     this.loginForm.reset();
   }
 }
