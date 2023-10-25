@@ -32,14 +32,14 @@ export class AuthService {
       );
   }
 
-  public isLoggedIn(): Observable<boolean> {
+  public isLoggedIn(): boolean {
     const token = localStorage.getItem('token_lumicraft');
     const expiration = localStorage.getItem('token_lumicraft_expiration');
     if (token && expiration) {
       const expirationDate = new Date(parseInt(expiration));
-      return of(expirationDate > new Date());
+      return expirationDate > new Date();
     }
-    return of(false);
+    return false;
   }
 
   private handleError(error: HttpErrorResponse) {
