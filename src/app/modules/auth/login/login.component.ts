@@ -1,5 +1,7 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { LoginResponse } from 'src/app/models/auth/loginResponse';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
@@ -10,11 +12,11 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 export class LoginComponent {
   loginForm!: FormGroup;
   @Output() changeAuthTypeEvent: EventEmitter<void> = new EventEmitter<void>();
+  private formBuilder = inject(FormBuilder);
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private authService: AuthService
-  ) {
+  constructor() {
     this.loginForm = this.formBuilder.group({
       username: [null, [Validators.required]],
       password: [null, [Validators.required, Validators.minLength(4)]],
@@ -30,11 +32,15 @@ export class LoginComponent {
   }
 
   submit() {
-    console.log(this.loginForm.invalid);
-
     if (this.loginForm.invalid) return;
-
-    this.authService.login(this.loginForm.value).subscribe();
+    this.authService.login(this.loginForm.value).subscribe({
+      next: (data: LoginResponse) => {
+        this.router.navigate(['/']);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
     this.loginForm.reset();
   }
 }

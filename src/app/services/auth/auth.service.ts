@@ -4,8 +4,10 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of, tap, throwError } from 'rxjs';
+import { Observable, Subject, catchError, of, tap, throwError } from 'rxjs';
 import { LoginRequest } from 'src/app/models/auth/loginRequest';
+import { LoginResponse } from 'src/app/models/auth/loginResponse';
+import { User } from 'src/app/models/user';
 import { environment } from 'src/environments/environment.development';
 
 const httpOptions = {
@@ -18,23 +20,34 @@ const httpOptions = {
 export class AuthService {
   constructor(private httpClient: HttpClient) {}
 
-  login(credentials: LoginRequest): Observable<any> {
+  login(credentials: LoginRequest): Observable<LoginResponse> {
     return this.httpClient
-      .post<any>(`${environment.ApiURL}/auth/login`, credentials, httpOptions)
+      .post<LoginResponse>(
+        `${environment.ApiURL}/auth/login`,
+        credentials,
+        httpOptions
+      )
       .pipe(
         tap((response) => {
-          console.log(response);
-
-          // const expirationDate = new Date().getTime() + 86400000;
-          // localStorage.setItem('token', response.token);
-          // localStorage.setItem('token_expiration', expirationDate.toString());
-        })
+          const expirationDate = new Date().getTime() + 86400000;
+          localStorage.setItem('lumicraft_token', response.token);
+          localStorage.setItem(
+            'lumicraft_token_expiration',
+            expirationDate.toString()
+          );
+        }),
+        catchError(this.handleError)
       );
   }
 
+  public logout() {
+    localStorage.removeItem('lumicraft_token');
+    localStorage.removeItem('lumicraft_token_expiration');
+  }
+
   public isLoggedIn(): boolean {
-    const token = localStorage.getItem('token_lumicraft');
-    const expiration = localStorage.getItem('token_lumicraft_expiration');
+    const token = localStorage.getItem('lumicraft_token');
+    const expiration = localStorage.getItem('lumicraft_token_expiration');
     if (token && expiration) {
       const expirationDate = new Date(parseInt(expiration));
       return expirationDate > new Date();
@@ -52,7 +65,6 @@ export class AuthService {
         error.error
       );
     }
-
     return throwError(
       () => new Error('Algo falló, por favor intente nuevamente')
     );
