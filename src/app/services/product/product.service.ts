@@ -1,4 +1,4 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { EventEmitter, Injectable, inject } from '@angular/core';
 import { environment } from 'src/environments/environment.development';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -10,8 +10,7 @@ import { Product } from '../../models/product';
 export class ProductService {
   editProductEvent: EventEmitter<Product> = new EventEmitter<Product>();
   addProductEvent: EventEmitter<Product> = new EventEmitter<Product>();
-
-  constructor(private httpClient: HttpClient) {}
+  private httpClient = inject(HttpClient);
 
   getAllProducts(): Observable<Product[]> {
     return this.httpClient.get<Product[]>(`${environment.ApiURL}/api/products`);

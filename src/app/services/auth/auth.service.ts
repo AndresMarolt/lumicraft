@@ -29,7 +29,7 @@ export class AuthService {
       )
       .pipe(
         tap((response) => {
-          const expirationDate = new Date().getTime() + 86400000;
+          const expirationDate = new Date().getTime() + 3600000 * 24 * 2; // 1 hora * 24 * 2 = Expira luego de 2 días
           localStorage.setItem('lumicraft_token', response.token);
           localStorage.setItem(
             'lumicraft_token_expiration',
@@ -38,6 +38,10 @@ export class AuthService {
         }),
         catchError(this.handleError)
       );
+  }
+
+  public getToken(): string | null {
+    return localStorage.getItem('lumicraft_token') || null;
   }
 
   public logout() {

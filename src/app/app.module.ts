@@ -9,6 +9,8 @@ import { HomeModule } from './modules/home/home.module';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 import { TopbarComponent } from './components/topbar/topbar.component';
 import { MaterialModule } from './material/material.module';
+import { AuthService } from './services/auth/auth.service';
+import { httpInterceptorProviders } from './services/auth/interceptor.service';
 
 @NgModule({
   declarations: [AppComponent, MainLayoutComponent, TopbarComponent],
@@ -20,7 +22,7 @@ import { MaterialModule } from './material/material.module';
     AppRoutingModule,
     HomeModule,
   ],
-  providers: [],
+  providers: [AuthService, httpInterceptorProviders],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
