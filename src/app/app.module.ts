@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeModule } from './modules/home/home.module';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
-import { TopbarComponent } from './components/topbar/topbar.component';
+import { TopbarComponent } from './layouts/topbar/topbar.component';
 import { MaterialModule } from './material/material.module';
 import { AuthService } from './services/auth/auth.service';
 import { httpInterceptorProviders } from './services/auth/interceptor.service';

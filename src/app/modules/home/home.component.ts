@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/services/product/product.service';
@@ -7,6 +7,7 @@ import {
   SnackbarService,
   SnackbarTone,
 } from 'src/app/services/snackbar/snackbar.service';
+import { ConfirmationComponent } from 'src/app/shared/components/confirmation/confirmation.component';
 
 @Component({
   selector: 'app-home',
@@ -19,11 +20,12 @@ export class HomeComponent implements OnInit {
   form: boolean = false;
   closeResult!: string;
 
-  constructor(
-    private productService: ProductService,
-    private dialog: MatDialog,
-    private snackbarService: SnackbarService
-  ) {
+  private productService = inject(ProductService);
+  private dialog = inject(MatDialog);
+  private snackbarService = inject(SnackbarService);
+  private dialogRef = inject(MatDialog);
+
+  constructor() {
     this.productService.addProductEvent.subscribe((newProduct: Product) => {
       this.productsList = [...this.productsList, newProduct];
     });
@@ -50,17 +52,31 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  deleteProduct(product: Product) {
-    this.productService.deleteProduct(product.id_product!).subscribe(() => {
-      this.productsList = this.productsList.filter(
-        (prod) => prod.id_product !== product.id_product
-      );
-
-      this.snackbarService.showSnackbar(
-        `${product.title} eliminado exitosamente!`,
-        SnackbarTone.Success
-      );
+  openConfirmationModal(message: string, action: () => void) {
+    const confirmationModalRef = this.dialog.open(ConfirmationComponent, {
+      width: '500px',
+      autoFocus: false,
     });
+    confirmationModalRef.componentInstance.message = message;
+    confirmationModalRef.componentInstance.action.subscribe(() => {
+      action();
+    });
+  }
+
+  deleteProduct(product: Product) {
+    const action = () =>
+      this.productService.deleteProduct(product.id_product!).subscribe(() => {
+        this.productsList = this.productsList.filter(
+          (prod) => prod.id_product !== product.id_product
+        );
+
+        this.snackbarService.showSnackbar(
+          `${product.title} eliminado exitosamente!`,
+          SnackbarTone.Success
+        );
+      });
+    const message = '¿Está seguro que desea eliminar este producto?';
+    this.openConfirmationModal(message, action);
   }
 
   openModal(product: Product | undefined = undefined) {

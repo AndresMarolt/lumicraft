@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>
+  {{ message }}
+</h2>
+<div mat-dialog-actions class="d-flex justify-content-end">
+  <button mat-button mat-dialog-close type="button">Cerrar</button>
+  <button
+    mat-flat-button
+    color="primary"
+    type="submit"
+    (click)="confirmAction()"
+  >
+    Confirmar
+  </button>
+</div>
