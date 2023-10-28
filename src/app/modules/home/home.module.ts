@@ -7,6 +7,7 @@ import { HomeComponent } from './home.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/material/material.module';
 import { ProductFormComponent } from './product-form/product-form.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [HomeComponent, ProductFormComponent],
@@ -16,6 +17,7 @@ import { ProductFormComponent } from './product-form/product-form.component';
     ReactiveFormsModule,
     NgbModule,
     HomeRoutingModule,
+    SharedModule,
     MaterialModule,
   ],
 })
