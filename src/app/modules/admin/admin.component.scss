@@ -1,0 +1,14 @@
+.actions-column {
+  button {
+    min-width: unset !important;
+    width: 30px;
+  }
+}
+
+@media(min-width: 768px) {
+  .actions-column {
+    button {
+      width: 40px;
+    }
+  }
+}
