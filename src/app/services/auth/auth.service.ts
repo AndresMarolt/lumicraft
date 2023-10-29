@@ -1,40 +1,33 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-} from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, Subject, catchError, of, tap, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import { Observable, catchError, tap, throwError } from 'rxjs';
 import { LoginRequest } from 'src/app/models/auth/loginRequest';
 import { LoginResponse } from 'src/app/models/auth/loginResponse';
-import { User } from 'src/app/models/user';
 import { environment } from 'src/environments/environment.development';
-
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-};
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private httpClient: HttpClient) {}
+  private httpClient = inject(HttpClient);
 
   login(credentials: LoginRequest): Observable<LoginResponse> {
     return this.httpClient
-      .post<LoginResponse>(
-        `${environment.ApiURL}/auth/login`,
-        credentials,
-        httpOptions
-      )
+      .post<LoginResponse>(`${environment.ApiURL}/auth/login`, credentials)
       .pipe(
         tap((response) => {
-          const expirationDate = new Date().getTime() + 3600000 * 24 * 2; // 1 hora * 24 * 2 = Expira luego de 2 días
-          localStorage.setItem('lumicraft_token', response.token);
-          localStorage.setItem(
-            'lumicraft_token_expiration',
-            expirationDate.toString()
-          );
+          this.saveNewToken(response.token);
+        }),
+        catchError(this.handleError)
+      );
+  }
+
+  signup(credentials: LoginRequest): Observable<LoginResponse> {
+    return this.httpClient
+      .post<LoginResponse>(`${environment.ApiURL}/auth/signup`, credentials)
+      .pipe(
+        tap((response) => {
+          this.saveNewToken(response.token);
         }),
         catchError(this.handleError)
       );
@@ -57,6 +50,15 @@ export class AuthService {
       return expirationDate > new Date();
     }
     return false;
+  }
+
+  private saveNewToken(token: string) {
+    const expirationDate = new Date().getTime() + 3600000 * 24 * 2; // 1 hora * 24 * 2 = Expira luego de 2 días
+    localStorage.setItem('lumicraft_token', token);
+    localStorage.setItem(
+      'lumicraft_token_expiration',
+      expirationDate.toString()
+    );
   }
 
   private handleError(error: HttpErrorResponse) {

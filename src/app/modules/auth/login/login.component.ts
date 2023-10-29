@@ -39,8 +39,8 @@ export class LoginComponent {
       },
       error: (err) => {
         console.log(err);
+        this.loginForm.reset();
       },
     });
-    this.loginForm.reset();
   }
 }
