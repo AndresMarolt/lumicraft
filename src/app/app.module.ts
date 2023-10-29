@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeModule } from './modules/home/home.module';
+import { AdminModule } from './modules/admin/admin.module';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 import { TopbarComponent } from './layouts/topbar/topbar.component';
 import { MaterialModule } from './material/material.module';
@@ -20,7 +20,7 @@ import { httpInterceptorProviders } from './services/auth/interceptor.service';
     BrowserAnimationsModule,
     MaterialModule,
     AppRoutingModule,
-    HomeModule,
+    AdminModule,
   ],
   providers: [AuthService, httpInterceptorProviders],
   bootstrap: [AppComponent],

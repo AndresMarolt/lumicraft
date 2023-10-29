@@ -2,14 +2,14 @@ import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth/auth.service';
 
-export const AuthGuard = () => {
+export const AdminGuard = () => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  if (authService.isLoggedIn()) {
+  if (authService.isAdmin()) {
     return true;
   } else {
-    router.navigate(['login']);
+    router.navigate(['/']);
     return false;
   }
 };

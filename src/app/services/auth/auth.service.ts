@@ -1,9 +1,14 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, tap, throwError } from 'rxjs';
+import { JwtPayload, jwtDecode } from 'jwt-decode';
 import { LoginRequest } from 'src/app/models/auth/loginRequest';
 import { LoginResponse } from 'src/app/models/auth/loginResponse';
 import { environment } from 'src/environments/environment.development';
+
+interface JwtCustomPayload extends JwtPayload {
+  role: string;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -42,15 +47,36 @@ export class AuthService {
     localStorage.removeItem('lumicraft_token_expiration');
   }
 
-  public isLoggedIn(): boolean {
+  public isAdmin(): boolean {
     const token = localStorage.getItem('lumicraft_token');
-    const expiration = localStorage.getItem('lumicraft_token_expiration');
-    if (token && expiration) {
-      const expirationDate = new Date(parseInt(expiration));
-      return expirationDate > new Date();
+    if (token) {
+      const decodedToken: JwtCustomPayload | null = this.decodeToken(token);
+      if (decodedToken) {
+        return decodedToken.role === 'ADMIN';
+      }
     }
     return false;
   }
+
+  private decodeToken(token: string): JwtCustomPayload | null {
+    try {
+      const decodedToken: JwtCustomPayload = jwtDecode(token);
+      return decodedToken;
+    } catch (error) {
+      console.error('Error al decodificar el token: ', error);
+      return null;
+    }
+  }
+
+  // public isLoggedIn(): boolean {
+  //   const token = localStorage.getItem('lumicraft_token');
+  //   const expiration = localStorage.getItem('lumicraft_token_expiration');
+  //   if (token && expiration) {
+  //     const expirationDate = new Date(parseInt(expiration));
+  //     return expirationDate > new Date();
+  //   }
+  //   return false;
+  // }
 
   private saveNewToken(token: string) {
     const expirationDate = new Date().getTime() + 3600000 * 24 * 2; // 1 hora * 24 * 2 = Expira luego de 2 días

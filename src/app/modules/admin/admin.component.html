@@ -1,0 +1,66 @@
+<div>
+  <div class="mx-auto d-flex justify-content-between mb-4">
+    <h1>Productos</h1>
+
+    <div>
+      <button mat-raised-button color="accent" (click)="openModal()">
+        <mat-icon class="m-0"> add </mat-icon>
+        <p class="mb-0 ms-2">Agregar producto</p>
+      </button>
+    </div>
+  </div>
+
+  <div class="mx-auto">
+    <table mat-table [dataSource]="productsList">
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef class="fw-bold">Producto</th>
+        <td mat-cell *matCellDef="let element" class="col-6">
+          {{ element.title }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef class="fw-bold">Precio</th>
+        <td mat-cell *matCellDef="let element" class="col-2">
+          ${{ element.price }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef class="fw-bold">Cantidad</th>
+        <td mat-cell *matCellDef="let element" class="col-2">
+          {{ element.quantity }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          class="actions-column d-flex gap-1 gap-md-2"
+        >
+          <button
+            mat-raised-button
+            (click)="openModal(element)"
+            class="p-0"
+            color="accent"
+          >
+            <mat-icon class="m-0">edit</mat-icon>
+          </button>
+          <button
+            mat-raised-button
+            class="p-0"
+            color="accent"
+            (click)="deleteProduct(element)"
+          >
+            <mat-icon class="m-0">delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+</div>
