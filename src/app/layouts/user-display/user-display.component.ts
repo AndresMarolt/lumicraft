@@ -12,6 +12,7 @@ export class UserDisplayComponent implements OnInit {
   user!: User;
   isAdmin = false;
   private authService = inject(AuthService);
+  private router = inject(Router);
 
   constructor() {
     this.authService.user$.subscribe((user) => {
@@ -31,5 +32,6 @@ export class UserDisplayComponent implements OnInit {
 
   logout() {
     this.authService.logout();
+    this.router.navigate(['/']);
   }
 }
