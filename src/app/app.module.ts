@@ -6,14 +6,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AdminModule } from './modules/admin/admin.module';
-import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 import { TopbarComponent } from './layouts/topbar/topbar.component';
 import { MaterialModule } from './material/material.module';
 import { AuthService } from './services/auth/auth.service';
 import { httpInterceptorProviders } from './services/auth/interceptor.service';
+import { UserDisplayComponent } from './layouts/user-display/user-display.component';
 
 @NgModule({
-  declarations: [AppComponent, MainLayoutComponent, TopbarComponent],
+  declarations: [AppComponent, TopbarComponent, UserDisplayComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
