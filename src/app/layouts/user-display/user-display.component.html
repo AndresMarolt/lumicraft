@@ -12,7 +12,7 @@
 </button>
 
 <mat-menu #menu="matMenu">
-  <button mat-menu-item class="profile_btn">Mi perfil</button>
+  <a mat-menu-item class="profile_btn" [routerLink]="['profile']">Mi perfil</a>
   <a mat-menu-item class="admin_btn" *ngIf="isAdmin" [routerLink]="['admin']"
     >Admin</a
   >

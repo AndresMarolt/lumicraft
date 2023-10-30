@@ -12,7 +12,6 @@ export class UserDisplayComponent implements OnInit {
   user!: User;
   isAdmin = false;
   private authService = inject(AuthService);
-  private router = inject(Router);
 
   constructor() {
     this.authService.user$.subscribe((user) => {
@@ -25,6 +24,9 @@ export class UserDisplayComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.authService.getUser()!;
+    if (this.user) {
+      this.isAdmin = this.authService.isAdmin();
+    }
   }
 
   logout() {
