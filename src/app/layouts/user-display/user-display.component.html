@@ -1,0 +1,24 @@
+<button class="p-0" mat-button [matMenuTriggerFor]="menu" *ngIf="user">
+  <div class="user-display-container d-flex align-items-center gap-2">
+    <img
+      [src]="
+        user.avatar ||
+        'https://marketplace.canva.com/EAE-xnqWvJk/1/0/1600w/canva-retro-smoke-and-round-light-desktop-wallpapers-JLofAI27pCg.jpg'
+      "
+      alt="avatar"
+    />
+    <p class="m-0">{{ user.username }}</p>
+  </div>
+</button>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item class="profile_btn">Mi perfil</button>
+  <a mat-menu-item class="admin_btn" *ngIf="isAdmin" [routerLink]="['admin']"
+    >Admin</a
+  >
+  <button mat-menu-item class="logout_btn" (click)="logout()">
+    Cerrar Sesión
+  </button>
+</mat-menu>
+
+<a *ngIf="!user" [routerLink]="['/login']"> Iniciar Sesión </a>

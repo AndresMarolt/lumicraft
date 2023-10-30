@@ -1,10 +1,11 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, catchError, tap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
 import { JwtPayload, jwtDecode } from 'jwt-decode';
 import { LoginRequest } from 'src/app/models/auth/loginRequest';
 import { LoginResponse } from 'src/app/models/auth/loginResponse';
 import { environment } from 'src/environments/environment.development';
+import { User } from 'src/app/models/user';
 
 interface JwtCustomPayload extends JwtPayload {
   role: string;
@@ -15,19 +16,33 @@ interface JwtCustomPayload extends JwtPayload {
 })
 export class AuthService {
   private httpClient = inject(HttpClient);
+  private userSubject: BehaviorSubject<User | null> =
+    new BehaviorSubject<User | null>(null);
+  public user$ = this.userSubject.asObservable();
 
-  login(credentials: LoginRequest): Observable<LoginResponse> {
+  public login(credentials: LoginRequest): Observable<LoginResponse> {
     return this.httpClient
       .post<LoginResponse>(`${environment.ApiURL}/auth/login`, credentials)
       .pipe(
         tap((response) => {
+          const { username, first_name, last_name, email } = response;
+          this.userSubject.next({ username, first_name, last_name, email });
+          localStorage.setItem(
+            'lumicraft_user',
+            JSON.stringify({
+              username,
+              first_name,
+              last_name,
+              email,
+            })
+          );
           this.saveNewToken(response.token);
         }),
         catchError(this.handleError)
       );
   }
 
-  signup(credentials: LoginRequest): Observable<LoginResponse> {
+  public signup(credentials: LoginRequest): Observable<LoginResponse> {
     return this.httpClient
       .post<LoginResponse>(`${environment.ApiURL}/auth/signup`, credentials)
       .pipe(
@@ -42,9 +57,16 @@ export class AuthService {
     return localStorage.getItem('lumicraft_token') || null;
   }
 
+  public getUser(): User | null {
+    return JSON.parse(localStorage.getItem('lumicraft_user')!) || null;
+  }
+
   public logout() {
     localStorage.removeItem('lumicraft_token');
     localStorage.removeItem('lumicraft_token_expiration');
+    localStorage.removeItem('lumicraft_user');
+
+    this.userSubject.next(null);
   }
 
   public isAdmin(): boolean {

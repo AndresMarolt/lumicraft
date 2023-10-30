@@ -1,5 +1,7 @@
 <mat-toolbar color="primary" class="d-flex justify-content-between">
-  <span>LumiCraft</span>
+  <a [routerLink]="['/']">LumiCraft</a>
 
-  <p class="logout-btn m-0" (click)="logout()">Cerrar Sesión</p>
+  <div class="d-flex gap-3 align-items-center">
+    <app-user-display></app-user-display>
+  </div>
 </mat-toolbar>

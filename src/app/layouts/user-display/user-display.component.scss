@@ -1,0 +1,58 @@
+.user-display-container {
+  //background: linear-gradient(to top right, rgb(112, 112, 205) 20%, rgba(112, 112, 205, 0.599) 40%, rgba(0, 0, 255, 0) 50%);
+  background: rgb(112, 112, 205);
+  padding: 2px 15px;
+  cursor: pointer;
+  border-radius: 50px;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  -ms-border-radius: 50px;
+  -o-border-radius: 50px;
+  transition: .2s ease-in-out;
+  -webkit-transition: .2s ease-in-out;
+  -moz-transition: .2s ease-in-out;
+  -ms-transition: .2s ease-in-out;
+  -o-transition: .2s ease-in-out;
+
+  &:hover {
+    box-shadow: 0px 0px 4px 1px rgb(162, 162, 255);;
+  }
+  
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    -ms-border-radius: 50px;
+    -o-border-radius: 50px;
+  }
+}
+
+::ng-deep {
+  .mat-mdc-menu-content {
+    padding: 0 !important;
+  }
+
+  .logout_btn.mat-mdc-menu-item:not([disabled]):hover {
+    color: white !important;
+    background-color: rgb(255, 56, 56) !important;
+
+  }
+}
+
+.logout_btn {
+  background-color: red;
+  color: white;
+  transition: .2s ease-in-out;
+  -webkit-transition: .2s ease-in-out;
+  -moz-transition: .2s ease-in-out;
+  -ms-transition: .2s ease-in-out;
+  -o-transition: .2s ease-in-out;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+}
