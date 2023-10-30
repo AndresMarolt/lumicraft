@@ -2,10 +2,10 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
 import { JwtPayload, jwtDecode } from 'jwt-decode';
-import { LoginRequest } from 'src/app/models/auth/loginRequest';
-import { LoginResponse } from 'src/app/models/auth/loginResponse';
+import { LoginRequest } from 'src/app/models/auth/loginRequest.interface';
+import { LoginResponse } from 'src/app/models/auth/loginResponse.interface';
 import { environment } from 'src/environments/environment.development';
-import { User } from 'src/app/models/user';
+import { User } from 'src/app/models/user.interface';
 
 interface JwtCustomPayload extends JwtPayload {
   role: string;
@@ -90,15 +90,15 @@ export class AuthService {
     }
   }
 
-  // public isLoggedIn(): boolean {
-  //   const token = localStorage.getItem('lumicraft_token');
-  //   const expiration = localStorage.getItem('lumicraft_token_expiration');
-  //   if (token && expiration) {
-  //     const expirationDate = new Date(parseInt(expiration));
-  //     return expirationDate > new Date();
-  //   }
-  //   return false;
-  // }
+  public isLoggedIn(): boolean {
+    const token = localStorage.getItem('lumicraft_token');
+    const expiration = localStorage.getItem('lumicraft_token_expiration');
+    if (token && expiration) {
+      const expirationDate = new Date(parseInt(expiration));
+      return expirationDate > new Date();
+    }
+    return false;
+  }
 
   private saveNewToken(token: string) {
     const expirationDate = new Date().getTime() + 3600000 * 24 * 2; // 1 hora * 24 * 2 = Expira luego de 2 días
