@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoginResponse } from 'src/app/models/auth/loginResponse';
+import { LoginResponse } from 'src/app/models/auth/loginResponse.interface';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
