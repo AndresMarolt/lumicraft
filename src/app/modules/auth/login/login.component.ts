@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoginResponse } from 'src/app/models/auth/loginResponse.interface';
+import { AuthResponse } from 'src/app/models/auth/authResponse.interface';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
@@ -34,7 +34,7 @@ export class LoginComponent {
   submit() {
     if (this.loginForm.invalid) return;
     this.authService.login(this.loginForm.value).subscribe({
-      next: (data: LoginResponse) => {
+      next: (data: AuthResponse) => {
         this.router.navigate(['/']);
       },
       error: (err) => {

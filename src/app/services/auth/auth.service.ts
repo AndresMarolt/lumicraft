@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
 import { JwtPayload, jwtDecode } from 'jwt-decode';
 import { LoginRequest } from 'src/app/models/auth/loginRequest.interface';
-import { LoginResponse } from 'src/app/models/auth/loginResponse.interface';
+import { AuthResponse } from 'src/app/models/auth/authResponse.interface';
 import { environment } from 'src/environments/environment.development';
 import { User } from 'src/app/models/user.interface';
 import { SignupRequest } from 'src/app/models/auth/signupRequest';
@@ -21,48 +21,68 @@ export class AuthService {
     new BehaviorSubject<User | null>(null);
   public user$ = this.userSubject.asObservable();
 
-  public login(credentials: LoginRequest): Observable<LoginResponse> {
+  public login(credentials: LoginRequest): Observable<AuthResponse> {
     return this.httpClient
-      .post<LoginResponse>(`${environment.ApiURL}/auth/login`, credentials)
+      .post<AuthResponse>(`${environment.ApiURL}/auth/login`, credentials)
       .pipe(
         tap((response) => {
-          const { username, first_name, last_name, email } = response;
-          this.userSubject.next({ username, first_name, last_name, email });
-          localStorage.setItem(
-            'lumicraft_user',
-            JSON.stringify({
-              username,
-              first_name,
-              last_name,
-              email,
-            })
-          );
-          this.saveNewToken(response.token);
+          this.handleAuthResponse(response);
         }),
         catchError(this.handleError)
       );
   }
 
-  public signup(newUserData: SignupRequest): Observable<LoginResponse> {
+  public signup(newUserData: SignupRequest): Observable<AuthResponse> {
     return this.httpClient
-      .post<LoginResponse>(`${environment.ApiURL}/auth/signup`, newUserData)
+      .post<AuthResponse>(`${environment.ApiURL}/auth/signup`, newUserData)
       .pipe(
         tap((response) => {
-          const { username, first_name, last_name, email } = response;
-          this.userSubject.next({ username, first_name, last_name, email });
-          localStorage.setItem(
-            'lumicraft_user',
-            JSON.stringify({
-              username,
-              first_name,
-              last_name,
-              email,
-            })
-          );
-          this.saveNewToken(response.token);
+          console.log(response);
+
+          this.handleAuthResponse(response);
         }),
         catchError(this.handleError)
       );
+  }
+
+  private handleAuthResponse(response: AuthResponse): void {
+    const {
+      username,
+      first_name,
+      last_name,
+      email,
+      address,
+      city,
+      country,
+      phone,
+      date_of_birth,
+    } = response;
+    this.userSubject.next({
+      username,
+      first_name,
+      last_name,
+      email,
+      address: address ?? '',
+      city: city ?? '',
+      country: country ?? '',
+      phone: phone ?? '',
+      date_of_birth: date_of_birth ?? undefined,
+    });
+    localStorage.setItem(
+      'lumicraft_user',
+      JSON.stringify({
+        username,
+        first_name,
+        last_name,
+        email,
+        address: address ?? '',
+        city: city ?? '',
+        country: country ?? '',
+        phone: phone ?? '',
+        date_of_birth: date_of_birth ?? '',
+      })
+    );
+    this.saveNewToken(response.token);
   }
 
   public getToken(): string | null {
