@@ -6,6 +6,7 @@ import { LoginRequest } from 'src/app/models/auth/loginRequest.interface';
 import { LoginResponse } from 'src/app/models/auth/loginResponse.interface';
 import { environment } from 'src/environments/environment.development';
 import { User } from 'src/app/models/user.interface';
+import { SignupRequest } from 'src/app/models/auth/signupRequest';
 
 interface JwtCustomPayload extends JwtPayload {
   role: string;
@@ -42,11 +43,22 @@ export class AuthService {
       );
   }
 
-  public signup(credentials: LoginRequest): Observable<LoginResponse> {
+  public signup(newUserData: SignupRequest): Observable<LoginResponse> {
     return this.httpClient
-      .post<LoginResponse>(`${environment.ApiURL}/auth/signup`, credentials)
+      .post<LoginResponse>(`${environment.ApiURL}/auth/signup`, newUserData)
       .pipe(
         tap((response) => {
+          const { username, first_name, last_name, email } = response;
+          this.userSubject.next({ username, first_name, last_name, email });
+          localStorage.setItem(
+            'lumicraft_user',
+            JSON.stringify({
+              username,
+              first_name,
+              last_name,
+              email,
+            })
+          );
           this.saveNewToken(response.token);
         }),
         catchError(this.handleError)

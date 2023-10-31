@@ -1,1 +1,23 @@
-<p>profile works!</p>
+<div class="profile-container">
+  <div class="user_data">
+    <h2 class="fs-1 username">
+      {{ user.username }}
+    </h2>
+
+    <div class="mt-4">
+      <p>
+        Nombre completo:
+        <span> {{ user.first_name }} {{ user.last_name }} </span>
+      </p>
+      <p>
+        Correo electrónico:
+        <span>
+          {{ user.email }}
+        </span>
+      </p>
+      <p>Domicilio:</p>
+      <p>Ciudad:</p>
+      <p>País:</p>
+    </div>
+  </div>
+</div>

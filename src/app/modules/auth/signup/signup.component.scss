@@ -2,6 +2,9 @@
   cursor: pointer;
 }
 
+.signup_column {
+  width: 49%;
+}
 @media(min-width: 768px) {
   mat-card {
     width: 500px;
@@ -10,6 +13,6 @@
 
 @media(min-width: 1024px) {
   mat-card {
-    width: 600px;
+    width: 900px;
   }
 }
