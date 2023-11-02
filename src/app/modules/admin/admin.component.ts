@@ -23,7 +23,6 @@ export class AdminComponent implements OnInit {
   private productService = inject(ProductService);
   private dialog = inject(MatDialog);
   private snackbarService = inject(SnackbarService);
-  private dialogRef = inject(MatDialog);
 
   constructor() {
     this.productService.addProductEvent.subscribe((newProduct: Product) => {
@@ -32,10 +31,12 @@ export class AdminComponent implements OnInit {
 
     this.productService.editProductEvent.subscribe((editedProduct: Product) => {
       const index = this.productsList.findIndex(
-        (p) => p.id_product === editedProduct.id_product
+        (p) => p.id === editedProduct.id
       );
-      if (index) {
-        this.productsList[index] = editedProduct;
+      if (index >= 0) {
+        this.productsList[index] = {
+          ...editedProduct,
+        };
 
         this.productsList = [...this.productsList];
       }
@@ -52,22 +53,11 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  openConfirmationModal(message: string, action: () => void) {
-    const confirmationModalRef = this.dialog.open(ConfirmationComponent, {
-      width: '500px',
-      autoFocus: false,
-    });
-    confirmationModalRef.componentInstance.message = message;
-    confirmationModalRef.componentInstance.action.subscribe(() => {
-      action();
-    });
-  }
-
   deleteProduct(product: Product) {
     const action = () =>
-      this.productService.deleteProduct(product.id_product!).subscribe(() => {
+      this.productService.deleteProduct(product.id!).subscribe(() => {
         this.productsList = this.productsList.filter(
-          (prod) => prod.id_product !== product.id_product
+          (prod) => prod.id !== product.id
         );
 
         this.snackbarService.showSnackbar(
@@ -77,6 +67,17 @@ export class AdminComponent implements OnInit {
       });
     const message = '¿Está seguro que desea eliminar este producto?';
     this.openConfirmationModal(message, action);
+  }
+
+  openConfirmationModal(message: string, action: () => void) {
+    const confirmationModalRef = this.dialog.open(ConfirmationComponent, {
+      width: '500px',
+      autoFocus: false,
+    });
+    confirmationModalRef.componentInstance.message = message;
+    confirmationModalRef.componentInstance.action.subscribe(() => {
+      action();
+    });
   }
 
   openModal(product: Product | undefined = undefined) {

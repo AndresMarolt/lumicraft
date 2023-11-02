@@ -64,7 +64,6 @@ export class EditUserModalComponent implements OnInit {
         username: this.user.username,
       })
       .subscribe((response) => {
-        console.log(response);
         const {
           first_name,
           last_name,

@@ -30,7 +30,7 @@ export class ProductService {
     );
   }
 
-  deleteProduct(productId: string): Observable<void> {
+  deleteProduct(productId: number): Observable<void> {
     return this.httpClient.delete<void>(
       `${environment.ApiURL}/api/delete-product/${productId}`
     );

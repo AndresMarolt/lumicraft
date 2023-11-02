@@ -60,7 +60,7 @@ export class ProductFormComponent implements OnInit {
     if (this.product) {
       this.submitProduct({
         ...this.productForm.value,
-        id_product: this.product.id_product,
+        id: this.product.id,
       });
     } else {
       this.submitProduct({ ...this.productForm.value });
