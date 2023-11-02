@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminComponent } from './admin.component';
-import { AdminGuard } from 'src/app/guards/admin.guard';
+import { ProfileComponent } from './profile.component';
+import { SessionGuard } from 'src/app/guards/session.guard';
 
 const routes: Routes = [
   {
     path: '',
-    component: AdminComponent,
-    canActivate: [AdminGuard],
+    component: ProfileComponent,
+    canActivate: [SessionGuard],
   },
 ];
 
@@ -15,4 +15,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AdminRoutingModule {}
+export class ProfileRoutingModule {}

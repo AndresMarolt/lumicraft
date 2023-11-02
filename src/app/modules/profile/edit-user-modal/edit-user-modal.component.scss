@@ -1,0 +1,25 @@
+::ng-deep .mat-mdc-dialog-container.mdc-dialog.cdk-dialog-container{
+  width: 90vw !important;
+}
+
+.form_column {
+  display: flex;
+  flex-direction: column;
+}
+
+@media(min-width: 768px) {
+  ::ng-deep .mat-mdc-dialog-container.mdc-dialog.cdk-dialog-container{
+    width: 80vw !important;
+  }
+
+  .form_column {
+    width: 48%;
+  }
+}
+
+@media(min-width: 1024px) {
+  ::ng-deep .mat-mdc-dialog-container.mdc-dialog.cdk-dialog-container{
+    width: 70vw !important;
+  }
+}
+

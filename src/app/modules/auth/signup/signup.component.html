@@ -8,56 +8,58 @@
     class="d-flex flex-column w-100 mb-3"
     (ngSubmit)="submit()"
   >
-    <mat-form-field>
-      <mat-label>Usuario</mat-label>
-      <input matInput formControlName="username" />
-      <mat-icon matPrefix>person_outline</mat-icon>
-      <mat-error *ngIf="username.hasError('required')"
-        >Este campo no puede ir vacío
-      </mat-error>
-    </mat-form-field>
+    <div class="d-flex flex-column w-100 mb-3 justify-content-between">
+      <mat-form-field class="w-100">
+        <mat-label>Usuario</mat-label>
+        <input matInput formControlName="username" />
+        <mat-icon matPrefix>person_outline</mat-icon>
+        <mat-error *ngIf="username.hasError('required')"
+          >Este campo no puede ir vacío
+        </mat-error>
+      </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Email</mat-label>
-      <input matInput type="email" formControlName="email" />
-      <mat-icon matPrefix>mail_outline</mat-icon>
-      <mat-error *ngIf="email.hasError('required')"
-        >Este campo no puede ir vacío
-      </mat-error>
-      <mat-error *ngIf="email.hasError('email')"
-        >La dirección de email debe tener un formato válido</mat-error
-      >
-    </mat-form-field>
+      <mat-form-field class="w-100">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" />
+        <mat-icon matPrefix>mail_outline</mat-icon>
+        <mat-error *ngIf="email.hasError('required')"
+          >Este campo no puede ir vacío
+        </mat-error>
+        <mat-error *ngIf="email.hasError('email')"
+          >La dirección de email debe tener un formato válido</mat-error
+        >
+      </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Contraseña</mat-label>
-      <input matInput type="password" formControlName="password" />
-      <mat-icon matPrefix>lock_outline</mat-icon>
-      <mat-error *ngIf="password.hasError('required')"
-        >Este campo no puede ir vacío
-      </mat-error>
-      <mat-error *ngIf="password.hasError('minlength')"
-        >La contraseña debe tener al menos 8 caracteres
-      </mat-error>
-    </mat-form-field>
+      <mat-form-field class="w-100">
+        <mat-label>Contraseña</mat-label>
+        <input matInput type="password" formControlName="password" />
+        <mat-icon matPrefix>lock_outline</mat-icon>
+        <mat-error *ngIf="password.hasError('required')"
+          >Este campo no puede ir vacío
+        </mat-error>
+        <mat-error *ngIf="password.hasError('minlength')"
+          >La contraseña debe tener al menos 8 caracteres
+        </mat-error>
+      </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Nombre</mat-label>
-      <input matInput type="text" formControlName="first_name" />
-      <mat-icon matPrefix>portrait</mat-icon>
-      <mat-error *ngIf="first_name.hasError('required')"
-        >Este campo no puede ir vacío
-      </mat-error>
-    </mat-form-field>
+      <mat-form-field class="w-100">
+        <mat-label>Nombre</mat-label>
+        <input matInput type="text" formControlName="first_name" />
+        <mat-icon matPrefix>portrait</mat-icon>
+        <mat-error *ngIf="first_name.hasError('required')"
+          >Este campo no puede ir vacío
+        </mat-error>
+      </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Apellido</mat-label>
-      <input matInput type="text" formControlName="last_name" />
-      <mat-icon matPrefix>portrait</mat-icon>
-      <mat-error *ngIf="last_name.hasError('required')"
-        >Este campo no puede ir vacío
-      </mat-error>
-    </mat-form-field>
+      <mat-form-field class="w-100">
+        <mat-label>Apellido</mat-label>
+        <input matInput type="text" formControlName="last_name" />
+        <mat-icon matPrefix>portrait</mat-icon>
+        <mat-error *ngIf="last_name.hasError('required')"
+          >Este campo no puede ir vacío
+        </mat-error>
+      </mat-form-field>
+    </div>
 
     <button
       mat-raised-button

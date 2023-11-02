@@ -1,0 +1,50 @@
+<div class="profile-container">
+  <div class="user_data">
+    <div class="username">
+      <h2 class="fs-1 d-inline">
+        {{ user.username }}
+      </h2>
+
+      <mat-icon color="accent" class="edit_icon" (click)="openModal()"
+        >edit</mat-icon
+      >
+    </div>
+
+    <div class="mt-4">
+      <p>
+        Nombre completo:
+        <span> {{ user.first_name }} {{ user.last_name }} </span>
+      </p>
+      <p>
+        Email:
+        <span>
+          {{ user.email }}
+        </span>
+      </p>
+      <p>
+        Domicilio:
+        <span>
+          {{ user.address }}
+        </span>
+      </p>
+      <p>
+        Ciudad:
+        <span>
+          {{ user.city }}
+        </span>
+      </p>
+      <p>
+        País:
+        <span>
+          {{ user.country }}
+        </span>
+      </p>
+      <p>
+        Celular: <span>{{ user.phone }}</span>
+      </p>
+      <p>
+        Fecha de nacimiento: <span>{{ user.date_of_birth }}</span>
+      </p>
+    </div>
+  </div>
+</div>

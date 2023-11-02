@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from 'src/app/models/user';
+import { User } from 'src/app/models/user.interface';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
@@ -25,9 +25,13 @@ export class UserDisplayComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.authService.getUser()!;
+    if (this.user) {
+      this.isAdmin = this.authService.isAdmin();
+    }
   }
 
   logout() {
     this.authService.logout();
+    this.router.navigate(['/']);
   }
 }
