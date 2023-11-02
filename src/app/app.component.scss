@@ -1,7 +1,9 @@
+.content {
+  padding: 8px 16px;
+}
 
-@media(min-width: 1024px) {
-
+@media(min-width: 768px) {
   .content {
-    padding: 5rem !important;
+    padding: 25px 60px !important;
   }
 }
