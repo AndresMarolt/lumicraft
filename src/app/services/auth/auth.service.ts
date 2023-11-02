@@ -10,6 +10,7 @@ import { SignupRequest } from 'src/app/models/auth/signupRequest';
 
 interface JwtCustomPayload extends JwtPayload {
   role: string;
+  id: number;
 }
 
 @Injectable({
@@ -37,8 +38,6 @@ export class AuthService {
       .post<AuthResponse>(`${environment.ApiURL}/auth/signup`, newUserData)
       .pipe(
         tap((response) => {
-          console.log(response);
-
           this.handleAuthResponse(response);
         }),
         catchError(this.handleError)
@@ -62,11 +61,11 @@ export class AuthService {
       first_name,
       last_name,
       email,
-      address: address ?? '',
-      city: city ?? '',
-      country: country ?? '',
-      phone: phone ?? '',
-      date_of_birth: date_of_birth ?? undefined,
+      address: address ?? null,
+      city: city ?? null,
+      country: country ?? null,
+      phone: phone ?? null,
+      date_of_birth: date_of_birth ?? null,
     });
     localStorage.setItem(
       'lumicraft_user',
@@ -75,11 +74,11 @@ export class AuthService {
         first_name,
         last_name,
         email,
-        address: address ?? '',
-        city: city ?? '',
-        country: country ?? '',
-        phone: phone ?? '',
-        date_of_birth: date_of_birth ?? '',
+        address: address ?? null,
+        city: city ?? null,
+        country: country ?? null,
+        phone: phone ?? null,
+        date_of_birth: date_of_birth ?? null,
       })
     );
     this.saveNewToken(response.token);
@@ -91,6 +90,15 @@ export class AuthService {
 
   public getUser(): User | null {
     return JSON.parse(localStorage.getItem('lumicraft_user')!) || null;
+  }
+
+  public updateLocalStorageUserData(newData: User): void {
+    let existingUserData = this.getUser();
+    if (!existingUserData) return;
+
+    let updatedUserData = { ...existingUserData, ...newData };
+
+    localStorage.setItem('lumicraft_user', JSON.stringify(updatedUserData));
   }
 
   public logout() {
@@ -112,7 +120,7 @@ export class AuthService {
     return false;
   }
 
-  private decodeToken(token: string): JwtCustomPayload | null {
+  public decodeToken(token: string): JwtCustomPayload | null {
     try {
       const decodedToken: JwtCustomPayload = jwtDecode(token);
       return decodedToken;
@@ -138,6 +146,15 @@ export class AuthService {
     localStorage.setItem(
       'lumicraft_token_expiration',
       expirationDate.toString()
+    );
+  }
+
+  public updateUser(user: User): Observable<User> {
+    console.log(user);
+
+    return this.httpClient.put<User>(
+      `${environment.ApiURL}/user/${user.id}`,
+      user
     );
   }
 

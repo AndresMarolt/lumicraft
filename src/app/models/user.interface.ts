@@ -1,13 +1,13 @@
 export interface User {
+  id?: string;
   username: string;
   email: string;
   password?: string;
   first_name: string;
   last_name: string;
-  avatar?: string;
-  address: string;
-  city: string;
-  country: string;
-  phone?: string;
-  date_of_birth?: Date;
+  address: string | null;
+  city: string | null;
+  country: string | null;
+  phone?: string | null;
+  date_of_birth?: Date | null;
 }
