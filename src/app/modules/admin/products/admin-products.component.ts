@@ -12,10 +12,10 @@ import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-products',
-  templateUrl: './products.component.html',
-  styleUrls: ['./products.component.scss'],
+  templateUrl: './admin-products.component.html',
+  styleUrls: ['./admin-products.component.scss'],
 })
-export class ProductsComponent {
+export class AdminProductsComponent {
   displayedColumns: string[] = ['title', 'price', 'quantity', 'actions'];
   productsList: Product[] = [];
   form: boolean = false;
