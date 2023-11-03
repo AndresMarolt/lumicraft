@@ -1,5 +1,22 @@
-<app-topbar *ngIf="currentRoute !== '/login'"> </app-topbar>
+<ng-container *ngIf="currentRoute !== '/login'; else NoLayout">
+  <app-sidenav
+    #sidebar
+    [isMobile]="isMobile"
+    [isSidebarVisible]="isSidebarVisible"
+    (toggleSidebar)="toggleSidebar($event)"
+  >
+    <div class="col-md-12">
+      <app-topbar
+        (toggleSidebar)="toggleSidebar($event)"
+        [isMobile]="isMobile"
+        [isSidebarVisible]="isSidebarVisible"
+      >
+      </app-topbar>
+      <router-outlet></router-outlet>
+    </div>
+  </app-sidenav>
+</ng-container>
 
-<div class="col-md-12">
+<ng-template #NoLayout>
   <router-outlet></router-outlet>
-</div>
+</ng-template>

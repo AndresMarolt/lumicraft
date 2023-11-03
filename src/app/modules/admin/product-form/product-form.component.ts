@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -22,13 +22,12 @@ import {
 export class ProductFormComponent implements OnInit {
   productForm!: FormGroup;
   @Input() product!: Product;
+  private formBuilder = inject(FormBuilder);
+  private productService = inject(ProductService);
+  private dialogRef = inject(MatDialogRef<ProductFormComponent>);
+  private snackbarService = inject(SnackbarService);
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private productService: ProductService,
-    private dialogRef: MatDialogRef<ProductFormComponent>,
-    private snackbarService: SnackbarService
-  ) {
+  constructor() {
     this.productForm = this.formBuilder.group({
       title: [null, [Validators.required]],
       price: [null, [Validators.required, this.nonNegativeValidator]],

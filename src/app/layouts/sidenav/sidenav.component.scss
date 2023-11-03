@@ -9,6 +9,10 @@ mat-drawer-container {
   }
 }
 
+.sidenav_title {
+  height: 56px;
+}
+
 @media(min-width: 768px) {
   mat-drawer-container {
     mat-drawer {

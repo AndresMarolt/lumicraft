@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 export enum SnackbarTone {
@@ -11,7 +11,7 @@ export enum SnackbarTone {
   providedIn: 'root',
 })
 export class SnackbarService {
-  constructor(private snackbar: MatSnackBar) {}
+  snackbar = inject(MatSnackBar);
 
   showSnackbar(message: string, tone: SnackbarTone) {
     this.snackbar.open(message, 'X', {
