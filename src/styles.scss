@@ -28,6 +28,20 @@ p {
   padding: 8px 16px;
 }
 
+// INPUTS
+
+.mat-mdc-text-field-wrapper.mdc-text-field.mdc-text-field--filled {
+  border-radius: 30px !important;
+  -webkit-border-radius: 30px !important;
+  -moz-border-radius: 30px !important;
+  -ms-border-radius: 30px !important;
+  -o-border-radius: 30px !important;
+}
+
+.mat-form-field-appearance-fill .mdc-line-ripple {
+  display: none;
+}
+
 @media(min-width: 768px) {
   .content {
     padding: 35px 60px !important;
