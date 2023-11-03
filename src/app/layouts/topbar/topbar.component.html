@@ -1,7 +1,17 @@
 <mat-toolbar color="primary" class="d-flex justify-content-between">
-  <a [routerLink]="['/']" class="d-flex justify-content-between">
-    <img src="assets/logo.png" alt="logo" />
-  </a>
+  <div class="d-flex align-items-center">
+    <button
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with menu icon"
+      (click)="emitToggleSidebarEvent()"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+    <a [routerLink]="['/']" class="d-flex justify-content-between">
+      <img src="assets/logo.png" alt="logo" />
+    </a>
+  </div>
 
   <div class="d-flex gap-3 align-items-center">
     <app-user-display></app-user-display>
