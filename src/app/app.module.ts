@@ -11,9 +11,10 @@ import { MaterialModule } from './material/material.module';
 import { AuthService } from './services/auth/auth.service';
 import { httpInterceptorProviders } from './services/auth/interceptor.service';
 import { UserDisplayComponent } from './layouts/user-display/user-display.component';
+import { SidenavComponent } from './layouts/sidenav/sidenav.component';
 
 @NgModule({
-  declarations: [AppComponent, TopbarComponent, UserDisplayComponent],
+  declarations: [AppComponent, TopbarComponent, UserDisplayComponent, SidenavComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
