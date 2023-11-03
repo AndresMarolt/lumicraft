@@ -25,10 +25,5 @@ export class SidenavComponent implements AfterViewInit {
     });
   }
 
-  sidebarOptions = [
-    { text: 'Home', icon: 'home', link: '/' },
-    { text: 'Perfil', icon: 'person', link: '/profile' },
-    { text: 'Usuarios', icon: 'people', link: '/users' },
-    { text: 'Noticias', icon: 'library_books', link: '/news' },
-  ];
+  sidebarOptions = [{ text: 'Móviles', link: '/phones' }];
 }
