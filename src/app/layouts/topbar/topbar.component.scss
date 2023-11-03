@@ -6,6 +6,10 @@ a img {
   width: 150px;
 }
 
+mat-toolbar {
+  z-index: 100;
+}
+
 @media(min-width: 768px) {
   mat-toolbar {
     padding: 40px 60px;

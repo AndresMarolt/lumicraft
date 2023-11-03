@@ -1,0 +1,26 @@
+mat-drawer-container {
+  height: 100vh;
+  position: relative;
+  mat-drawer {
+    position: fixed;
+    top: 0;
+    width: 80%;
+    z-index: 10;
+  }
+}
+
+@media(min-width: 768px) {
+  mat-drawer-container {
+    mat-drawer {
+      width: 50%;
+    }
+  }
+}
+
+@media(min-width: 1024px) {
+  mat-drawer-container {
+    mat-drawer {
+      width: 340px;
+    }
+  }
+}
