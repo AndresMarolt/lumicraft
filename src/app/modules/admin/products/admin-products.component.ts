@@ -8,17 +8,21 @@ import {
 } from 'src/app/services/snackbar/snackbar.service';
 import { ConfirmationComponent } from 'src/app/shared/components/confirmation/confirmation.component';
 import { ProductFormComponent } from '../product-form/product-form.component';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-products',
-  templateUrl: './products.component.html',
-  styleUrls: ['./products.component.scss'],
+  templateUrl: './admin-products.component.html',
+  styleUrls: ['./admin-products.component.scss'],
 })
-export class ProductsComponent {
+export class AdminProductsComponent {
   displayedColumns: string[] = ['title', 'price', 'quantity', 'actions'];
   productsList: Product[] = [];
   form: boolean = false;
   closeResult!: string;
+  currentPage: number = 0;
+  pageSize: number = 10;
+  pageIndex = 0;
 
   private productService = inject(ProductService);
   private dialog = inject(MatDialog);
@@ -89,5 +93,16 @@ export class ProductsComponent {
     if (product) {
       modalRef.componentInstance.product = product;
     }
+  }
+
+  onPageChange(event: PageEvent): void {
+    this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
+  }
+
+  get pagedProductsList(): Product[] {
+    const startIndex = this.currentPage * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    return this.productsList.slice(startIndex, endIndex);
   }
 }

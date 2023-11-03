@@ -11,7 +11,7 @@
   </div>
 
   <div class="mx-auto">
-    <table mat-table [dataSource]="productsList">
+    <table mat-table [dataSource]="pagedProductsList">
       <ng-container matColumnDef="title">
         <th mat-header-cell *matHeaderCellDef class="fw-bold">Producto</th>
         <td mat-cell *matCellDef="let element" class="col-6">
@@ -63,4 +63,14 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
   </div>
+
+  <mat-paginator
+    #paginator
+    showFirstLastButtons
+    [length]="productsList.length"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    aria-label="Select page"
+    (page)="onPageChange($event)"
+  ></mat-paginator>
 </div>
