@@ -1,11 +1,17 @@
 .login__container, .signup__container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -webkit-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  -o-transform: translate(-50%, -50%);
+  width: 90%;
+  margin: auto;
   
+}
+
+@media(min-width: 768px) {
+  .login__container, .signup__container {
+    width: 500px;
+  }
+}
+
+@media(min-width: 1024px) {
+  .login__container, .signup__container {
+    width: 600px;
+  }
 }

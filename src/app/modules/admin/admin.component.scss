@@ -1,14 +1,32 @@
-.actions-column {
-  button {
-    min-width: unset !important;
-    width: 30px;
+@use '../../../styles/palette.scss' as palette;
+
+.data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &_chart {
+    width: 150px; /* El tamaño del círculo */
+    height: 150px;
+    border-radius: 50%; /* Hace que sea un círculo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px; /* Tamaño de la fuente del número */
+    font-weight: bold;
+    position: relative;
+    color: #333; /* Color del número */
+    border: 10px solid map-get(palette.$accent, 400);
   }
 }
 
-@media(min-width: 768px) {
-  .actions-column {
-    button {
-      width: 40px;
-    }
-  }
+@keyframes fill {
+  to {
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+}
 }

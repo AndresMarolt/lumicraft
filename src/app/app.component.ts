@@ -1,13 +1,5 @@
-import {
-  Component,
-  ElementRef,
-  HostListener,
-  OnInit,
-  ViewChild,
-  inject,
-} from '@angular/core';
+import { Component, HostListener, OnInit, inject } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { SidenavComponent } from './layouts/sidenav/sidenav.component';
 
 @Component({
   selector: 'app-root',
@@ -31,7 +23,6 @@ export class AppComponent implements OnInit {
 
   toggleSidebar(value: boolean): void {
     this.isSidebarVisible = value;
-    console.log(value);
   }
 
   @HostListener('window:resize', ['$event'])

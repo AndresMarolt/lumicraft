@@ -43,7 +43,8 @@
         Celular: <span>{{ user.phone }}</span>
       </p>
       <p>
-        Fecha de nacimiento: <span>{{ user.date_of_birth }}</span>
+        Fecha de nacimiento:
+        <span>{{ user.date_of_birth | date : "dd/MM/yyyy" }}</span>
       </p>
     </div>
   </div>

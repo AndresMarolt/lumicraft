@@ -2,7 +2,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Poppins, sans-serif; box-sizing: border-box; }
+body { margin: 0; }
+
+* {
+  box-sizing: border-box;
+}
+h1, h2, h3, h4, h5, h6, p, a, button, span, div {
+  font-family: Poppins, sans-serif !important;
+}
 
 p {
   font-size: 1rem;
