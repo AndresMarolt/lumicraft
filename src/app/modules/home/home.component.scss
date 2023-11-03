@@ -1,8 +1,16 @@
-.carousel {
-  height: 400px;
+mat-icon {
+  font-size: 3rem;
+  height: 3rem;
+  width: 50px;
+}
 
-  img {
-    height: 400px;
+.quickInfoText {
+  font-size: .8rem;
+  text-wrap: wrap;
+}
 
+@media(min-width: 768px) {
+  .content {
+    padding: 8px 50px !important;
   }
 }

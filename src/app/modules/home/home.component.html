@@ -1,42 +1,19 @@
-<div id="carouselExample" class="carousel slide">
-  <div class="carousel-inner">
+<div>
+  <app-hero-carousel></app-hero-carousel>
+
+  <div
+    class="content my-3 my-md-2 d-flex flex-row flex-wrap flex-md-nowrap justify-content-between align-items-start"
+  >
     <div
-      class="carousel-item active"
-      style="width: 100%; height: 400px; background-color: black"
-    ></div>
-    <div
-      class="carousel-item"
-      style="width: 100%; height: 400px; background-color: #627c85"
-    ></div>
-    <div
-      class="carousel-item"
-      style="width: 100%; height: 400px; background-color: #28294c"
-    ></div>
-    <div
-      class="carousel-item"
-      style="width: 100%; height: 400px; background-color: #ea638c"
-    ></div>
-    <div
-      class="carousel-item"
-      style="width: 100%; height: 400px; background-color: #fcd0a1"
-    ></div>
+      *ngFor="let item of quickInfoItems"
+      class="col-6 col-md-3 d-flex flex-column align-items-center"
+    >
+      <mat-icon class="material-icons-outlined quickInfoIcon">{{
+        item.icon
+      }}</mat-icon>
+      <div class="text-center">
+        <p class="m-0 quickInfoText">{{ item.text | uppercase }}</p>
+      </div>
+    </div>
   </div>
-  <button
-    class="carousel-control-prev"
-    type="button"
-    data-bs-target="#carouselExample"
-    data-bs-slide="prev"
-  >
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button
-    class="carousel-control-next"
-    type="button"
-    data-bs-target="#carouselExample"
-    data-bs-slide="next"
-  >
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
 </div>
