@@ -1,5 +1,5 @@
 <h3 mat-dialog-title>
-  {{ product ? "Editar " + product.title : "Crear producto" }}
+  {{ product ? "Editar " + product.model : "Crear producto" }}
 </h3>
 <div mat-dialog-content>
   <form
@@ -7,15 +7,27 @@
     (ngSubmit)="submit()"
     class="d-flex flex-column"
   >
-    <mat-form-field appearance="outline">
-      <mat-label>Título</mat-label>
-      <input matInput type="text" formControlName="title" />
-      <mat-error *ngIf="title.hasError('required')">
-        Debe ingresar un título para el producto.</mat-error
+    <mat-form-field>
+      <mat-label>Marca</mat-label>
+      <mat-select formControlName="brand">
+        <mat-option *ngFor="let brand of brands" [value]="brand">
+          {{ brand }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="model.hasError('required')">
+        Debe ingresar el modelo del producto.</mat-error
       >
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field>
+      <mat-label>Modelo</mat-label>
+      <input matInput type="text" formControlName="model" />
+      <mat-error *ngIf="model.hasError('required')">
+        Debe ingresar el modelo del producto.</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field>
       <mat-label>Precio</mat-label>
       <input matInput type="number" formControlName="price" />
       <mat-error *ngIf="price.hasError('required')">
@@ -26,7 +38,7 @@
       >
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field>
       <mat-label>Cantidad</mat-label>
       <input matInput type="number" formControlName="quantity" />
       <mat-error *ngIf="quantity.hasError('required')">
@@ -37,21 +49,22 @@
       >
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field>
       <mat-label>Categoría</mat-label>
       <mat-select formControlName="category">
-        <mat-option value="phone">Móvil</mat-option>
-        <mat-option value="tablet">Tablet</mat-option>
-        <mat-option value="computer">Ordenador</mat-option>
-        <mat-option value="smartwatch">Smartwatch</mat-option>
-        <mat-option value="accessory">Accesorio</mat-option>
+        <mat-option
+          *ngFor="let category of productCategories"
+          [value]="category.value"
+        >
+          {{ category.text }}
+        </mat-option>
       </mat-select>
       <mat-error *ngIf="category.hasError('required')">
         Debe seleccionar una categoría para el producto.</mat-error
       >
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field>
       <mat-label>Descripción</mat-label>
       <input matInput type="text" formControlName="description" />
       <mat-error *ngIf="description.hasError('required')">

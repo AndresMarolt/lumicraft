@@ -1,4 +1,10 @@
-import { Component, inject } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  inject,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Product } from 'src/app/models/product.interface';
 import { ProductService } from 'src/app/services/product/product.service';
@@ -15,15 +21,22 @@ import { ProductComponent } from '../admin-product/product.component';
   templateUrl: './admin-products.component.html',
   styleUrls: ['./admin-products.component.scss'],
 })
-export class AdminProductsComponent {
-  displayedColumns: string[] = ['title', 'price', 'quantity', 'actions'];
+export class AdminProductsComponent implements OnInit {
   productsList: Product[] = [];
-  form: boolean = false;
+  displayedColumns: string[] = ['title', 'price', 'quantity', 'actions'];
+  productCategories: { text: string; value: string | null }[] = [
+    { text: 'Todas', value: 'todas' },
+    { text: 'Móviles', value: 'phone' },
+    { text: 'Ordenadores', value: 'computer' },
+    { text: 'Tablets', value: 'tablet' },
+    { text: 'Smartwatches', value: 'smartwatch' },
+    { text: 'Accesorios', value: 'accessory' },
+  ];
   closeResult!: string;
   currentPage: number = 0;
   pageSize: number = 10;
   pageIndex = 0;
-
+  category = this.productCategories[0];
   private productService = inject(ProductService);
   private dialog = inject(MatDialog);
   private snackbarService = inject(SnackbarService);
@@ -38,8 +51,20 @@ export class AdminProductsComponent {
     this.getAllProducts();
   }
 
+  onCategoryChange(category: string) {
+    if (category === 'todas') {
+      this.getAllProducts();
+    } else {
+      this.getProductsByCategory(category);
+    }
+  }
+
   getAllProducts() {
     this.productService.getAllProducts().subscribe();
+  }
+
+  getProductsByCategory(category: string) {
+    this.productService.getProductsByCategory(category).subscribe();
   }
 
   openFormModal(product: Product | undefined = undefined) {
@@ -66,7 +91,7 @@ export class AdminProductsComponent {
       );
 
       this.snackbarService.showSnackbar(
-        `${product.title} eliminado exitosamente!`,
+        `${product.brand} ${product.model} eliminado exitosamente!`,
         SnackbarTone.Success
       );
     });

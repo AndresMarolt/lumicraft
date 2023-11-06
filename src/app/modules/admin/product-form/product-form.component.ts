@@ -20,6 +20,7 @@ import {
   SnackbarService,
   SnackbarTone,
 } from 'src/app/services/snackbar/snackbar.service';
+import { BRANDS } from 'src/assets/brands';
 
 @Component({
   selector: 'app-product-form',
@@ -27,7 +28,16 @@ import {
   styleUrls: ['./product-form.component.scss'],
 })
 export class ProductFormComponent implements OnInit {
+  productCategories: { text: string; value: string | null }[] = [
+    { text: 'Todas', value: null },
+    { text: 'Móvil', value: 'phone' },
+    { text: 'Ordenador', value: 'computer' },
+    { text: 'Tablet', value: 'tablet' },
+    { text: 'Smartwatch', value: 'smartwatch' },
+    { text: 'Accesorio', value: 'accessory' },
+  ];
   productForm!: FormGroup;
+  brands = BRANDS;
   @Input() product!: Product;
   @Output() closeEditModeEvent: EventEmitter<void> = new EventEmitter<void>();
   private formBuilder = inject(FormBuilder);
@@ -37,7 +47,8 @@ export class ProductFormComponent implements OnInit {
 
   constructor() {
     this.productForm = this.formBuilder.group({
-      title: [null, [Validators.required]],
+      model: [null, [Validators.required]],
+      brand: [null, [Validators.required]],
       price: [null, [Validators.required, this.nonNegativeValidator]],
       quantity: [null, [Validators.required, this.nonNegativeValidator]],
       category: [null, [Validators.required]],
@@ -48,7 +59,8 @@ export class ProductFormComponent implements OnInit {
   ngOnInit(): void {
     if (this.product) {
       this.productForm.patchValue({
-        title: this.product.title,
+        model: this.product.model,
+        brand: this.product.brand,
         price: this.product.price,
         quantity: this.product.quantity,
         category: this.product.category,
@@ -102,7 +114,7 @@ export class ProductFormComponent implements OnInit {
           `${
             this.product
               ? `Producto editado exitosamente.`
-              : `${res?.title} creado exitosamente`
+              : `${res?.brand} ${res?.model} creado exitosamente`
           }`,
           SnackbarTone.Success
         );
@@ -117,8 +129,11 @@ export class ProductFormComponent implements OnInit {
     }
   }
 
-  get title() {
-    return this.productForm.controls['title'];
+  get model() {
+    return this.productForm.controls['model'];
+  }
+  get brand() {
+    return this.productForm.controls['brand'];
   }
   get price() {
     return this.productForm.controls['price'];
