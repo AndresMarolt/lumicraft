@@ -32,6 +32,8 @@ export class ProductFormComponent implements OnInit {
       title: [null, [Validators.required]],
       price: [null, [Validators.required, this.nonNegativeValidator]],
       quantity: [null, [Validators.required, this.nonNegativeValidator]],
+      category: [null, [Validators.required]],
+      description: [null, [Validators.required, Validators.minLength(15)]],
     });
   }
 
@@ -41,6 +43,8 @@ export class ProductFormComponent implements OnInit {
         title: this.product.title,
         price: this.product.price,
         quantity: this.product.quantity,
+        category: this.product.category,
+        description: this.product.description,
       });
     }
   }
@@ -86,6 +90,8 @@ export class ProductFormComponent implements OnInit {
         })
       )
       .subscribe((res) => {
+        console.log(res);
+
         this.productService[
           `${this.product ? 'editProductEvent' : 'addProductEvent'}`
         ].emit(res!);
@@ -99,5 +105,21 @@ export class ProductFormComponent implements OnInit {
           SnackbarTone.Success
         );
       });
+  }
+
+  get title() {
+    return this.productForm.controls['title'];
+  }
+  get price() {
+    return this.productForm.controls['price'];
+  }
+  get quantity() {
+    return this.productForm.controls['quantity'];
+  }
+  get category() {
+    return this.productForm.controls['category'];
+  }
+  get description() {
+    return this.productForm.controls['description'];
   }
 }

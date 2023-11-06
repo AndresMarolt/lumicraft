@@ -3,4 +3,13 @@ export interface Product {
   title: string;
   price: number;
   quantity: number;
+  description: string;
+  category: Category;
 }
+
+export type Category =
+  | 'phone'
+  | 'tablet'
+  | 'computer'
+  | 'smartwatch'
+  | 'accessory';
