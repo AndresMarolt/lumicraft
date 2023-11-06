@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { AdminGuard } from 'src/app/guards/admin.guard';
-import { AdminProductsComponent } from './products/admin-products.component';
+import { AdminProductsComponent } from './admin-products/admin-products.component';
 
 const routes: Routes = [
   {

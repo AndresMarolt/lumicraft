@@ -1,4 +1,11 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  inject,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -22,6 +29,7 @@ import {
 export class ProductFormComponent implements OnInit {
   productForm!: FormGroup;
   @Input() product!: Product;
+  @Output() closeEditModeEvent: EventEmitter<void> = new EventEmitter<void>();
   private formBuilder = inject(FormBuilder);
   private productService = inject(ProductService);
   private dialogRef = inject(MatDialogRef<ProductFormComponent>);
@@ -65,11 +73,11 @@ export class ProductFormComponent implements OnInit {
         ...this.productForm.value,
         id: this.product.id,
       });
+      this.closeEditModeEvent.emit();
     } else {
       this.submitProduct({ ...this.productForm.value });
+      this.dialogRef.close();
     }
-
-    this.dialogRef.close();
   }
 
   submitProduct(product: Product) {
@@ -90,12 +98,6 @@ export class ProductFormComponent implements OnInit {
         })
       )
       .subscribe((res) => {
-        console.log(res);
-
-        this.productService[
-          `${this.product ? 'editProductEvent' : 'addProductEvent'}`
-        ].emit(res!);
-
         this.snackbarService.showSnackbar(
           `${
             this.product
@@ -105,6 +107,14 @@ export class ProductFormComponent implements OnInit {
           SnackbarTone.Success
         );
       });
+  }
+
+  closeProductForm() {
+    if (this.product) {
+      this.closeEditModeEvent.emit();
+    } else {
+      this.dialogRef.close();
+    }
   }
 
   get title() {
