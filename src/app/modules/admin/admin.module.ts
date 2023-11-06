@@ -8,10 +8,16 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/material/material.module';
 import { ProductFormComponent } from './product-form/product-form.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { AdminProductsComponent } from './products/admin-products.component';
+import { AdminProductsComponent } from './admin-products/admin-products.component';
+import { ProductComponent } from './admin-product/product.component';
 
 @NgModule({
-  declarations: [AdminComponent, ProductFormComponent, AdminProductsComponent],
+  declarations: [
+    AdminComponent,
+    ProductFormComponent,
+    AdminProductsComponent,
+    ProductComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,
