@@ -10,6 +10,7 @@ import { ProductFormComponent } from './product-form/product-form.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AdminProductsComponent } from './admin-products/admin-products.component';
 import { ProductComponent } from './admin-product/product.component';
+import { SearchBarComponent } from './search-bar/search-bar.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { ProductComponent } from './admin-product/product.component';
     ProductFormComponent,
     AdminProductsComponent,
     ProductComponent,
+    SearchBarComponent,
   ],
   imports: [
     CommonModule,

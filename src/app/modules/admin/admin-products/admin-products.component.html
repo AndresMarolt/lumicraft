@@ -10,7 +10,9 @@
     </div>
   </div>
 
-  <div>
+  <div class="d-flex justify-content-between">
+    <app-search-bar (inputChangeEvent)="search($event)"></app-search-bar>
+
     <mat-form-field>
       <mat-label>Categoría</mat-label>
       <mat-select
@@ -21,7 +23,7 @@
           *ngFor="let category of productCategories"
           [value]="category.value"
         >
-          {{ category.text }}
+          {{ category.text || "Todas" }}
         </mat-option>
       </mat-select>
     </mat-form-field>
