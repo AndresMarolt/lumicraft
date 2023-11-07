@@ -1,0 +1,57 @@
+@use '../../../styles/palette.scss' as palette;
+
+.footer_container {
+  padding: 6px 16px;
+}
+
+footer {
+  color: map-get(palette.$primary, 100);
+
+  .logo {
+    width: 200px;
+    
+    img {
+      width: 100%;
+    }
+  }
+
+  .help_link {
+    text-decoration: none;
+    color: map-get(palette.$primary, 100);
+    display: block;
+  }
+
+  .payment_method_logo {
+    padding: 2px;
+    width: 55px;
+    height: 38px;
+    background-color: white;
+    margin-right: 10px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+  }
+
+  .copyright {
+    border-top: 1px solid map-get(palette.$primary, 400);
+  }
+}
+
+@media(min-width: 768px) {
+  .footer_container {
+    padding: 40px 60px 5px 60px;
+  }
+  footer {
+
+    .logo {
+      width: 200px;
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+  
+}

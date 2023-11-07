@@ -12,9 +12,10 @@ import { AuthService } from './services/auth/auth.service';
 import { httpInterceptorProviders } from './services/auth/interceptor.service';
 import { UserDisplayComponent } from './layouts/user-display/user-display.component';
 import { SidenavComponent } from './layouts/sidenav/sidenav.component';
+import { FooterComponent } from './layouts/footer/footer.component';
 
 @NgModule({
-  declarations: [AppComponent, TopbarComponent, UserDisplayComponent, SidenavComponent],
+  declarations: [AppComponent, TopbarComponent, UserDisplayComponent, SidenavComponent, FooterComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
