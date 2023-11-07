@@ -1,0 +1,10 @@
+<mat-form-field class="d-flex">
+  <mat-icon class="me-2">search</mat-icon>
+  <input
+    matInput
+    type="text"
+    placeholder="Buscar productos"
+    [(ngModel)]="searchedValue"
+    (ngModelChange)="inputChangeEvent.emit(searchedValue)"
+  />
+</mat-form-field>

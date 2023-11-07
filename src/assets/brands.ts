@@ -1,0 +1,16 @@
+export const BRANDS: string[] = [
+  'Alcatel',
+  'Apple',
+  'Acer',
+  'Asus',
+  'BlackBerry',
+  'Dell',
+  'HP',
+  'Huawei',
+  'Lenovo',
+  'LG',
+  'Motorola',
+  'Samsung',
+  'Sony',
+  'Xiaomi',
+];

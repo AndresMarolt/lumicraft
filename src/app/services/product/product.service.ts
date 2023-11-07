@@ -26,6 +26,16 @@ export class ProductService {
       );
   }
 
+  getProductsByCategory(category: string): Observable<Product[]> {
+    return this.httpClient
+      .get<Product[]>(`${environment.ApiURL}/api/products/${category}`)
+      .pipe(
+        tap((res) => {
+          this.products.next(res);
+        })
+      );
+  }
+
   addProduct(product: Product): Observable<Product> {
     return this.httpClient
       .post<Product>(`${environment.ApiURL}/api/add-product`, product)
