@@ -32,7 +32,12 @@ export class SidenavComponent implements AfterViewInit {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         if (event.url === '/') {
-          this.sidebarOptions = [{ text: 'Móviles', link: 'phones' }];
+          this.sidebarOptions = [
+            { text: 'Móviles', link: 'phones' },
+            { text: 'Ordenadores', link: 'computers' },
+            { text: 'Tablets', link: 'tablets' },
+            { text: 'Smartwatch', link: 'smartwatches' },
+          ];
           this.sidenavTitle = 'CATEGORIAS';
         } else if (event.url.startsWith('/admin')) {
           this.sidebarOptions = [
