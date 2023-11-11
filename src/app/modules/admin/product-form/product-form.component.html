@@ -5,8 +5,22 @@
   <form
     [formGroup]="productForm"
     (ngSubmit)="submit()"
-    class="d-flex flex-column"
+    class="d-flex flex-column mt-3"
   >
+    <div class="mb-4">
+      <button
+        type="button"
+        color="accent"
+        mat-flat-button
+        (click)="fileInput.click()"
+      >
+        Choose File
+      </button>
+      <input hidden (change)="onFileSelected($event)" #fileInput type="file" />
+      <!-- <span *ngFor="let file of selectedFiles" class="file-name"
+        >{{ file.name }},&nbsp;
+      </span> -->
+    </div>
     <mat-form-field>
       <mat-label>Marca</mat-label>
       <mat-select formControlName="brand">

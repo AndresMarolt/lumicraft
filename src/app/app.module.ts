@@ -13,9 +13,16 @@ import { httpInterceptorProviders } from './services/auth/interceptor.service';
 import { UserDisplayComponent } from './layouts/user-display/user-display.component';
 import { SidenavComponent } from './layouts/sidenav/sidenav.component';
 import { FooterComponent } from './layouts/footer/footer.component';
+import { CloudinaryModule } from '@cloudinary/ng';
 
 @NgModule({
-  declarations: [AppComponent, TopbarComponent, UserDisplayComponent, SidenavComponent, FooterComponent],
+  declarations: [
+    AppComponent,
+    TopbarComponent,
+    UserDisplayComponent,
+    SidenavComponent,
+    FooterComponent,
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -23,6 +30,7 @@ import { FooterComponent } from './layouts/footer/footer.component';
     MaterialModule,
     AppRoutingModule,
     AdminModule,
+    CloudinaryModule,
   ],
   providers: [AuthService, httpInterceptorProviders],
   bootstrap: [AppComponent],

@@ -75,4 +75,20 @@ export class ProductService {
   selectProduct(product: Product) {
     this.selectedProduct.next(product);
   }
+
+  uploadCloudinaryImage(formData: FormData): Observable<any> {
+    // formData.forEach((value, key) => {
+    //   console.log(`${key}: ${value}`);
+    // });
+    return this.httpClient
+      .post<any>(
+        'https://api.cloudinary.com/v1_1/dpq3kpgdy/image/upload?folder=lumicraft',
+        formData
+      )
+      .pipe(
+        tap((response) => {
+          console.log(response);
+        })
+      );
+  }
 }

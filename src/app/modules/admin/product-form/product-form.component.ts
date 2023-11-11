@@ -15,12 +15,36 @@ import {
 import { MatDialogRef } from '@angular/material/dialog';
 import { Product } from 'src/app/models/product.interface';
 import { ProductService } from 'src/app/services/product/product.service';
-import { catchError, of } from 'rxjs';
+import { Observable, catchError, forkJoin, of } from 'rxjs';
 import {
   SnackbarService,
   SnackbarTone,
 } from 'src/app/services/snackbar/snackbar.service';
 import { BRANDS } from 'src/assets/brands';
+
+interface CloudinaryUploadResponse {
+  asset_id: string;
+  public_id: string;
+  version: number;
+  version_id: string;
+  signature: string;
+  width: number;
+  height: number;
+  format: string;
+  resource_type: string;
+  created_at: string;
+  tags: string[];
+  bytes: number;
+  type: string;
+  etag: string;
+  placeholder: boolean;
+  url: string;
+  secure_url: string;
+  folder: string;
+  access_mode: string;
+  original_filename: string;
+  original_extension: string;
+}
 
 @Component({
   selector: 'app-product-form',
@@ -38,6 +62,7 @@ export class ProductFormComponent implements OnInit {
   ];
   productForm!: FormGroup;
   brands = BRANDS;
+  selectedFiles: File[] = [];
   @Input() product!: Product;
   @Output() closeEditModeEvent: EventEmitter<void> = new EventEmitter<void>();
   private formBuilder = inject(FormBuilder);
@@ -53,6 +78,7 @@ export class ProductFormComponent implements OnInit {
       quantity: [null, [Validators.required, this.nonNegativeValidator]],
       category: [null, [Validators.required]],
       description: [null, [Validators.required, Validators.minLength(15)]],
+      images: [[]],
     });
   }
 
@@ -87,8 +113,14 @@ export class ProductFormComponent implements OnInit {
       });
       this.closeEditModeEvent.emit();
     } else {
-      this.submitProduct({ ...this.productForm.value });
-      this.dialogRef.close();
+      if (this.selectedFiles.length) {
+        this.fileUpload().subscribe((res: CloudinaryUploadResponse[]) => {
+          const filesUrls = res.map((obj) => ({ image: obj.url }));
+          this.submitProduct({ ...this.productForm.value, images: filesUrls });
+        });
+      } else {
+        this.submitProduct({ ...this.productForm.value });
+      }
     }
   }
 
@@ -110,6 +142,8 @@ export class ProductFormComponent implements OnInit {
         })
       )
       .subscribe((res) => {
+        console.log(res);
+        this.dialogRef.close();
         this.snackbarService.showSnackbar(
           `${
             this.product
@@ -127,6 +161,33 @@ export class ProductFormComponent implements OnInit {
     } else {
       this.dialogRef.close();
     }
+  }
+
+  onFileSelected(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    const files = inputElement.files;
+    this.selectedFiles.push(files![0]);
+    console.log(files);
+  }
+
+  fileUpload(): Observable<any> {
+    const observables: Observable<any>[] = [];
+
+    if (this.selectedFiles && this.selectedFiles.length) {
+      for (let i = 0; i < this.selectedFiles.length; i++) {
+        const file = this.selectedFiles[i];
+        const data = new FormData();
+        data.append('file', file);
+        data.append('upload_preset', 'angular_cloudinary');
+        data.append('cloud_name', 'dpq3kpgdy');
+
+        const uploadObservable =
+          this.productService.uploadCloudinaryImage(data);
+        observables.push(uploadObservable);
+      }
+    }
+
+    return forkJoin(observables);
   }
 
   get model() {

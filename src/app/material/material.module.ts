@@ -19,6 +19,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSliderModule } from '@angular/material/slider';
 
 const MODULES = [
   MatToolbarModule,
@@ -43,6 +45,8 @@ const MODULES = [
   MatChipsModule,
   MatDatepickerModule,
   MatNativeDateModule,
+  MatCheckboxModule,
+  MatSliderModule,
 ];
 
 @NgModule({

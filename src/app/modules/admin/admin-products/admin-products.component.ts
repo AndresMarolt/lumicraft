@@ -54,10 +54,12 @@ export class AdminProductsComponent implements OnInit {
   }
 
   onCategoryChange(category: string) {
+    console.log(category);
+
     if (category === 'todas') {
       this.getAllProducts();
     } else {
-      this.getProductsByCategory(category);
+      this.filterByCategory(category);
     }
   }
 
@@ -67,6 +69,12 @@ export class AdminProductsComponent implements OnInit {
 
   getProductsByCategory(category: string) {
     this.productService.getProductsByCategory(category).subscribe();
+  }
+
+  filterByCategory(category: string) {
+    this.productsList = this.productsList.filter(
+      (prod) => prod.category !== category
+    );
   }
 
   openFormModal(product: Product | undefined = undefined) {

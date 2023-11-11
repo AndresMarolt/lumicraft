@@ -8,6 +8,7 @@ const routes: Routes = [
   {
     path: 'products',
     component: AdminProductsComponent,
+    canActivate: [AdminGuard],
   },
   {
     path: '',

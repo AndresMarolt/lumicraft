@@ -1,0 +1,17 @@
+::ng-deep {
+  mat-slider {
+    margin: 0 !important;
+    width: 100% !important;
+  }
+}
+
+.aside_section {
+  &:not(:last-child) {
+    border-bottom: 2px solid rgb(138, 138, 138);
+  }
+}
+
+.scrolled_section { 
+  max-height: 400px;
+  overflow: scroll;
+}
