@@ -6,7 +6,7 @@ export interface Product {
   quantity: number;
   description: string;
   category: Category;
-  images?: string[];
+  images?: { id?: number; image: string }[];
 }
 
 export type Category =

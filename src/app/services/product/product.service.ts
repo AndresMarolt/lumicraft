@@ -77,18 +77,15 @@ export class ProductService {
   }
 
   uploadCloudinaryImage(formData: FormData): Observable<any> {
-    // formData.forEach((value, key) => {
-    //   console.log(`${key}: ${value}`);
-    // });
-    return this.httpClient
-      .post<any>(
-        'https://api.cloudinary.com/v1_1/dpq3kpgdy/image/upload?folder=lumicraft',
-        formData
-      )
-      .pipe(
-        tap((response) => {
-          console.log(response);
-        })
-      );
+    return this.httpClient.post<any>(
+      'https://api.cloudinary.com/v1_1/dpq3kpgdy/image/upload?folder=lumicraft',
+      formData
+    );
+  }
+
+  deleteImage(imageId: number) {
+    return this.httpClient.delete<void>(
+      `${environment.ApiURL}/api/product-image/delete/${imageId}`
+    );
   }
 }

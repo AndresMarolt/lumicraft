@@ -54,8 +54,6 @@ export class AdminProductsComponent implements OnInit {
   }
 
   onCategoryChange(category: string) {
-    console.log(category);
-
     if (category === 'todas') {
       this.getAllProducts();
     } else {
@@ -73,7 +71,7 @@ export class AdminProductsComponent implements OnInit {
 
   filterByCategory(category: string) {
     this.productsList = this.productsList.filter(
-      (prod) => prod.category !== category
+      (prod) => prod.category === category
     );
   }
 

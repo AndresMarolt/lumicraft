@@ -21,30 +21,7 @@ import {
   SnackbarTone,
 } from 'src/app/services/snackbar/snackbar.service';
 import { BRANDS } from 'src/assets/brands';
-
-interface CloudinaryUploadResponse {
-  asset_id: string;
-  public_id: string;
-  version: number;
-  version_id: string;
-  signature: string;
-  width: number;
-  height: number;
-  format: string;
-  resource_type: string;
-  created_at: string;
-  tags: string[];
-  bytes: number;
-  type: string;
-  etag: string;
-  placeholder: boolean;
-  url: string;
-  secure_url: string;
-  folder: string;
-  access_mode: string;
-  original_filename: string;
-  original_extension: string;
-}
+import { CloudinaryUploadResponse } from 'src/app/models/cloudinary-response.interface';
 
 @Component({
   selector: 'app-product-form',
@@ -91,6 +68,7 @@ export class ProductFormComponent implements OnInit {
         quantity: this.product.quantity,
         category: this.product.category,
         description: this.product.description,
+        images: this.product.images,
       });
     }
   }
@@ -106,21 +84,62 @@ export class ProductFormComponent implements OnInit {
   submit() {
     if (this.productForm.invalid) return;
 
-    if (this.product) {
-      this.submitProduct({
-        ...this.productForm.value,
-        id: this.product.id,
-      });
-      this.closeEditModeEvent.emit();
-    } else {
-      if (this.selectedFiles.length) {
+    const isEditing = !!this.product;
+    const hasSelectedFiles = this.selectedFiles.length > 0;
+
+    const handleEdition = () => {
+      if (hasSelectedFiles) {
+        // EL PRODUCTO EDITADO TIENE IMAGEN/ES
         this.fileUpload().subscribe((res: CloudinaryUploadResponse[]) => {
-          const filesUrls = res.map((obj) => ({ image: obj.url }));
+          const filesUrls = res.map((obj) => ({
+            image: obj.url,
+            publicId: obj.public_id,
+          }));
+          const existingImagesUrls = this.productForm
+            .get('images')!
+            .value.map((obj: any) => ({
+              image: obj.image,
+              publicId: obj.publicId,
+            }));
+
+          this.submitProduct({
+            ...this.productForm.value,
+            id: this.product.id,
+            images: [...filesUrls, ...existingImagesUrls],
+          });
+        });
+      } else {
+        // EL PRODUCTO EDITADO NO TIENE IMAGENES
+        this.submitProduct({
+          ...this.productForm.value,
+          id: this.product.id,
+        });
+      }
+      this.closeEditModeEvent.emit();
+    };
+
+    const handleCreation = () => {
+      // MODO DE CREACION DE PRODUCTO
+      if (hasSelectedFiles) {
+        // EL NUEVO PRODUCTO TIENE IMAGEN/ES
+        this.fileUpload().subscribe((res: CloudinaryUploadResponse[]) => {
+          const filesUrls = res.map((obj) => ({
+            image: obj.url,
+            publicId: obj.public_id,
+          }));
           this.submitProduct({ ...this.productForm.value, images: filesUrls });
         });
       } else {
+        // EL NUEVO PRODUCTO NO TIENE IMAGEN/ES
         this.submitProduct({ ...this.productForm.value });
       }
+    };
+
+    if (isEditing) {
+      // SI THIS.PRODUCT ES TRUTHY SIGNIFICA QUE ESTAMOS EDITANDO
+      handleEdition();
+    } else {
+      handleCreation();
     }
   }
 
@@ -142,7 +161,6 @@ export class ProductFormComponent implements OnInit {
         })
       )
       .subscribe((res) => {
-        console.log(res);
         this.dialogRef.close();
         this.snackbarService.showSnackbar(
           `${
@@ -167,7 +185,6 @@ export class ProductFormComponent implements OnInit {
     const inputElement = event.target as HTMLInputElement;
     const files = inputElement.files;
     this.selectedFiles.push(files![0]);
-    console.log(files);
   }
 
   fileUpload(): Observable<any> {
@@ -190,6 +207,15 @@ export class ProductFormComponent implements OnInit {
     return forkJoin(observables);
   }
 
+  handleDeleteImage(id: number) {
+    const nonDeletedImages = this.images.value.filter(
+      (img: { id: number; image: string }) => img.id !== id
+    );
+    this.productForm.patchValue({
+      images: nonDeletedImages,
+    });
+  }
+
   get model() {
     return this.productForm.controls['model'];
   }
@@ -207,5 +233,9 @@ export class ProductFormComponent implements OnInit {
   }
   get description() {
     return this.productForm.controls['description'];
+  }
+
+  get images() {
+    return this.productForm.controls['images'];
   }
 }

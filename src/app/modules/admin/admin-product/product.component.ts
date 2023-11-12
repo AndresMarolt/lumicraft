@@ -1,5 +1,13 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  Output,
+  inject,
+} from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 import { Product } from 'src/app/models/product.interface';
 import { ProductService } from 'src/app/services/product/product.service';
 import { ConfirmationComponent } from 'src/app/shared/components/confirmation/confirmation.component';
@@ -9,7 +17,8 @@ import { ConfirmationComponent } from 'src/app/shared/components/confirmation/co
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss'],
 })
-export class ProductComponent {
+export class ProductComponent implements OnDestroy {
+  subscriptions: Subscription[] = [];
   isEditing = false;
   product!: Product;
   @Output() deleteProductEvent: EventEmitter<Product> =
@@ -19,8 +28,16 @@ export class ProductComponent {
   private thisDialogRef = inject(MatDialogRef<ProductComponent>);
 
   constructor() {
-    this.productService.selectedProduct$.subscribe((product) => {
-      this.product = product;
+    this.subscriptions.push(
+      this.productService.selectedProduct$.subscribe((product) => {
+        this.product = product;
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub) => {
+      sub.unsubscribe();
     });
   }
 

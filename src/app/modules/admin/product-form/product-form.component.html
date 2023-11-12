@@ -17,9 +17,23 @@
         Choose File
       </button>
       <input hidden (change)="onFileSelected($event)" #fileInput type="file" />
-      <!-- <span *ngFor="let file of selectedFiles" class="file-name"
+      <span *ngFor="let file of selectedFiles" class="file-name"
         >{{ file.name }},&nbsp;
-      </span> -->
+      </span>
+    </div>
+
+    <div class="mb-4 col-12 d-flex justify-content-center align-items-center">
+      <ng-container *ngIf="product">
+        <div class="col-3 product_image" *ngFor="let item of product.images">
+          <img class="col-12" [src]="item.image" alt="image" />
+          <mat-icon
+            color="warn"
+            class="overlay"
+            (click)="handleDeleteImage(item.id!)"
+            >cancel</mat-icon
+          >
+        </div>
+      </ng-container>
     </div>
     <mat-form-field>
       <mat-label>Marca</mat-label>
