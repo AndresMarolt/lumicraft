@@ -40,6 +40,7 @@ export class ProductFormComponent implements OnInit {
   productForm!: FormGroup;
   brands = BRANDS;
   selectedFiles: File[] = [];
+  imagesToDelete: { id?: number; image: string }[] = [];
   @Input() product!: Product;
   @Output() closeEditModeEvent: EventEmitter<void> = new EventEmitter<void>();
   private formBuilder = inject(FormBuilder);
@@ -207,13 +208,35 @@ export class ProductFormComponent implements OnInit {
     return forkJoin(observables);
   }
 
-  handleDeleteImage(id: number) {
+  handleDeleteImage(
+    event: Event,
+    productImage: { id?: number; image: string }
+  ) {
+    event.preventDefault();
+
     const nonDeletedImages = this.images.value.filter(
-      (img: { id: number; image: string }) => img.id !== id
+      (img: { id: number; image: string }) => img.id !== productImage.id
     );
     this.productForm.patchValue({
       images: nonDeletedImages,
     });
+
+    const imageInDeleteListIndex = this.imagesToDelete.findIndex(
+      (img) => img.id === productImage.id
+    );
+
+    if (imageInDeleteListIndex === -1) {
+      this.imagesToDelete.push(productImage);
+    } else {
+      this.imagesToDelete.splice(imageInDeleteListIndex, 1);
+    }
+  }
+
+  isImageInImagesToDeleteList(productImage: {
+    id?: number;
+    image: string;
+  }): boolean {
+    return this.imagesToDelete.some((img) => img.id === productImage.id);
   }
 
   get model() {

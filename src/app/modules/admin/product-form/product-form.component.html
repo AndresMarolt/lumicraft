@@ -25,13 +25,34 @@
     <div class="mb-4 col-12 d-flex justify-content-center align-items-center">
       <ng-container *ngIf="product">
         <div class="col-3 product_image" *ngFor="let item of product.images">
-          <img class="col-12" [src]="item.image" alt="image" />
-          <mat-icon
-            color="warn"
-            class="overlay"
-            (click)="handleDeleteImage(item.id!)"
-            >cancel</mat-icon
-          >
+          <ng-container>
+            <img
+              class="col-12"
+              [src]="item.image"
+              [ngClass]="{
+                'image-deleted': isImageInImagesToDeleteList(item)
+              }"
+              alt="image"
+            />
+            <div class="overlay">
+              <mat-icon
+                color="accent"
+                class="w-100 h-100 text-center fs-1"
+                *ngIf="isImageInImagesToDeleteList(item)"
+              >
+                delete
+              </mat-icon>
+              <button
+                mat-flat-button
+                color="accent"
+                (click)="handleDeleteImage($event, item)"
+              >
+                {{
+                  isImageInImagesToDeleteList(item) ? "Cancelar" : "Eliminar"
+                }}
+              </button>
+            </div>
+          </ng-container>
         </div>
       </ng-container>
     </div>

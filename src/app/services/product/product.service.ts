@@ -67,9 +67,16 @@ export class ProductService {
   }
 
   deleteProduct(productId: number): Observable<void> {
-    return this.httpClient.delete<void>(
-      `${environment.ApiURL}/api/delete-product/${productId}`
-    );
+    return this.httpClient
+      .delete<void>(`${environment.ApiURL}/api/delete-product/${productId}`)
+      .pipe(
+        tap(() => {
+          let existingProducts = this.products.getValue();
+          const index = existingProducts.findIndex((p) => p.id === productId);
+          existingProducts.splice(index, 1);
+          this.products.next(existingProducts);
+        })
+      );
   }
 
   selectProduct(product: Product) {

@@ -70,7 +70,7 @@ export class AdminProductsComponent implements OnInit {
   }
 
   filterByCategory(category: string) {
-    this.productsList = this.productsList.filter(
+    this.filteredProductsList = this.productsList.filter(
       (prod) => prod.category === category
     );
   }
@@ -94,7 +94,7 @@ export class AdminProductsComponent implements OnInit {
 
     this.productService.selectProduct(product);
     modalRef.componentInstance.deleteProductEvent.subscribe(() => {
-      this.productsList = this.productsList.filter(
+      this.filteredProductsList = this.productsList.filter(
         (prod) => prod.id !== product.id
       );
 
@@ -113,7 +113,7 @@ export class AdminProductsComponent implements OnInit {
   search(searchTerm: string) {
     // ACA SE RECIBE LO INGRESADO EN LA BARRA DE BÙSQUEDA DEL SEARCH BAR COMPONENT
     if (!searchTerm) {
-      this.productsList = this.filteredProductsList;
+      this.filteredProductsList = this.productsList;
     }
 
     const searchTerms = searchTerm
@@ -124,7 +124,7 @@ export class AdminProductsComponent implements OnInit {
     // Obtiene la última palabra en el término de búsqueda.
     const lastWord = searchTerms.pop() || '';
 
-    this.productsList = this.filteredProductsList.filter((product) => {
+    this.filteredProductsList = this.productsList.filter((product) => {
       const brand = product.brand.toLowerCase();
       const model = product.model.toLowerCase();
 
@@ -144,6 +144,6 @@ export class AdminProductsComponent implements OnInit {
   get pagedProductsList(): Product[] {
     const startIndex = this.currentPage * this.pageSize;
     const endIndex = startIndex + this.pageSize;
-    return this.productsList.slice(startIndex, endIndex);
+    return this.filteredProductsList.slice(startIndex, endIndex);
   }
 }
