@@ -1,4 +1,4 @@
-<div class="content">
+<div class="content d-flex">
   <aside class="col-3">
     <div class="aside_section col-10 pb-4">
       <h4 class="fs-5">Marca</h4>
@@ -40,6 +40,21 @@
   </aside>
 
   <div class="products col-9">
-    <div *ngFor="let product of productsList" class="product"></div>
+    <mat-card *ngFor="let product of productsList" class="product">
+      <mat-card-content>
+        <img [src]="product.images![0].image" alt="" class="product-image" />
+
+        <div>
+          <div class="d-flex justify-content-between align-items-center">
+            <p class="my-3 fs-3 color-accent fw-bold">€{{ product.price }}</p>
+            <div>
+              <mat-icon color="accent">favorite_outline</mat-icon>
+              <mat-icon color="accent" class="d-none">favorite</mat-icon>
+            </div>
+          </div>
+          <h4 class="">{{ product.brand }} {{ product.model }}</h4>
+        </div>
+      </mat-card-content>
+    </mat-card>
   </div>
 </div>

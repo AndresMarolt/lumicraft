@@ -1,4 +1,10 @@
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  inject,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from 'src/app/models/product.interface';
 import { ProductService } from 'src/app/services/product/product.service';
@@ -22,28 +28,38 @@ export class ProductsComponent implements OnInit {
 
   constructor() {
     this.productService.products$.subscribe((products) => {
+      console.log(products);
+
       this.productsList = products;
     });
     this.route.params.subscribe((params) => {
+      console.log(params);
+
       switch (params['category']) {
         case 'phones':
           this.currentCategory = 'phone';
-          return;
+          break;
         case 'computers':
           this.currentCategory = 'computer';
-          return;
+          break;
         case 'smartwatches':
           this.currentCategory = 'smartwatch';
-          return;
+          break;
         case 'tablets':
           this.currentCategory = 'tablet';
-          return;
+          break;
       }
+
+      this.getProductsByCategory(this.currentCategory);
     });
   }
 
   ngOnInit(): void {
-    this.productService.getProductsByCategory(this.currentCategory).subscribe();
+    this.getProductsByCategory(this.currentCategory);
+  }
+
+  getProductsByCategory(category: string) {
+    this.productService.getProductsByCategory(category).subscribe();
   }
 
   filterByBrand(brand: string) {}

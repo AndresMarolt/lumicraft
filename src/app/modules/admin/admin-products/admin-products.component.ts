@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  inject,
-} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Product } from 'src/app/models/product.interface';
 import { ProductService } from 'src/app/services/product/product.service';
