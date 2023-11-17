@@ -37,6 +37,7 @@ export class ProductFormComponent implements OnInit {
     { text: 'Smartwatch', value: 'smartwatch' },
     { text: 'Accesorio', value: 'accessory' },
   ];
+  loading = false;
   productForm!: FormGroup;
   brands = BRANDS;
   selectedFiles: File[] = [];
@@ -82,8 +83,11 @@ export class ProductFormComponent implements OnInit {
     return null;
   }
 
-  submit() {
+  submit(event: Event) {
+    event.preventDefault();
     if (this.productForm.invalid) return;
+
+    this.loading = true;
 
     const isEditing = !!this.product;
     const hasSelectedFiles = this.selectedFiles.length > 0;
@@ -116,7 +120,6 @@ export class ProductFormComponent implements OnInit {
           id: this.product.id,
         });
       }
-      this.closeEditModeEvent.emit();
     };
 
     const handleCreation = () => {
@@ -162,6 +165,7 @@ export class ProductFormComponent implements OnInit {
         })
       )
       .subscribe((res) => {
+        this.loading = false;
         this.dialogRef.close();
         this.snackbarService.showSnackbar(
           `${

@@ -12,6 +12,10 @@
     <div class="aside_section col-10 mt-4">
       <h4 class="fs-5">Precio</h4>
       <div>
+        <span class="monto-seleccionado">
+          {{ minSelectedAmount | currency : "EUR" : "symbol" : "1.2-2" }} a
+          {{ maxSelectedAmount | currency : "EUR" : "symbol" : "1.2-2" }}
+        </span>
         <mat-slider
           class="col-12"
           min="0"
@@ -31,10 +35,6 @@
             [(ngModel)]="maxSelectedAmount"
           />
         </mat-slider>
-        <span class="monto-seleccionado">
-          {{ minSelectedAmount | currency : "EUR" : "symbol" : "1.2-2" }} a
-          {{ maxSelectedAmount | currency : "EUR" : "symbol" : "1.2-2" }}
-        </span>
       </div>
     </div>
   </aside>
