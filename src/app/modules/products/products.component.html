@@ -3,9 +3,13 @@
     <div class="aside_section col-10 pb-4">
       <h4 class="fs-5">Marca</h4>
       <div class="scrolled_section">
-        <mat-checkbox *ngFor="let brand of brands" class="col-12">{{
-          brand | uppercase
-        }}</mat-checkbox>
+        <mat-checkbox
+          *ngFor="let brand of brands"
+          class="col-12"
+          [checked]="brandFilters.includes(brand)"
+          (click)="filterByBrand(brand)"
+          >{{ brand | uppercase }}</mat-checkbox
+        >
       </div>
     </div>
 

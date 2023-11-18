@@ -13,7 +13,6 @@
     type="button"
     [attr.data-bs-target]="'#carousel_' + productImages[0].id"
     data-bs-slide="prev"
-    (click)="aux(carouselId)"
   >
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Previous</span>
@@ -23,7 +22,6 @@
     type="button"
     [attr.data-bs-target]="'#carousel_' + productImages[0].id"
     data-bs-slide="next"
-    (click)="aux(carouselId)"
   >
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>

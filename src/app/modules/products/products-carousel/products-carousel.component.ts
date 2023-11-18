@@ -11,10 +11,5 @@ export class ProductsCarouselComponent {
 
   ngOnInit() {
     this.carouselId = this.productImages[0].image;
-    console.log(this.carouselId);
-  }
-
-  aux(productImages: any) {
-    console.log(productImages);
   }
 }
