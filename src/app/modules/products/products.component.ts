@@ -19,11 +19,10 @@ export class ProductsComponent implements OnInit {
   productsList: Product[] = [];
   brandFilters: string[] = [];
   brands = BRANDS;
-  brand: any = undefined;
   minSelectedAmount: number = 0;
   maxSelectedAmount: number = 3000;
-  sliderRelease = false;
   currentCategory!: string;
+  loading = true;
   private productService = inject(ProductService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
@@ -33,6 +32,7 @@ export class ProductsComponent implements OnInit {
       this.productsList = products;
     });
     this.route.params.subscribe((params) => {
+      this.loading = true;
       switch (params['category']) {
         case 'phones':
           this.currentCategory = 'phone';
@@ -82,6 +82,7 @@ export class ProductsComponent implements OnInit {
       .getFilteredProducts(this.currentCategory, filters)
       .subscribe((res) => {
         this.productsList = res;
+        this.loading = false;
       });
   }
 
@@ -97,7 +98,7 @@ export class ProductsComponent implements OnInit {
 
     let newParams = {
       ...currentParams,
-      brands: this.brandFilters,
+      brands: this.brandFilters.length ? this.brandFilters.join(',') : null,
     };
 
     this.router.navigate([], {

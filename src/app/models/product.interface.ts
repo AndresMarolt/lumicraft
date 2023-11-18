@@ -2,6 +2,7 @@ export interface Product {
   id?: number;
   model: string;
   brand: string;
+  slug?: string;
   price: number;
   quantity: number;
   description: string;

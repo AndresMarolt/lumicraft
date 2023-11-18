@@ -5,6 +5,7 @@
 
 .carousel-control-next,
 .carousel-control-prev /*, .carousel-indicators */ {
+  z-index: 1000;
   background-color: white;
   height: 50px !important;
   border-radius: 100%;
