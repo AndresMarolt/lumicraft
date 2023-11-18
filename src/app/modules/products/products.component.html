@@ -3,9 +3,13 @@
     <div class="aside_section col-10 pb-4">
       <h4 class="fs-5">Marca</h4>
       <div class="scrolled_section">
-        <mat-checkbox *ngFor="let brand of brands" class="col-12">{{
-          brand | uppercase
-        }}</mat-checkbox>
+        <mat-checkbox
+          *ngFor="let brand of brands"
+          class="col-12"
+          [checked]="brandFilters.includes(brand)"
+          (click)="filterByBrand(brand)"
+          >{{ brand | uppercase }}</mat-checkbox
+        >
       </div>
     </div>
 
@@ -42,8 +46,17 @@
   <div class="products col-9">
     <mat-card *ngFor="let product of productsList" class="product">
       <mat-card-content>
-        <img [src]="product.images![0].image" alt="" class="product-image" />
-
+        <img
+          [src]="product.images![0].image"
+          *ngIf="product.images!.length === 1; else multipleImages"
+          alt=""
+          class="product-image"
+        />
+        <ng-template #multipleImages>
+          <app-products-carousel
+            [productImages]="product.images!"
+          ></app-products-carousel>
+        </ng-template>
         <div>
           <div class="d-flex justify-content-between align-items-center">
             <p class="my-3 fs-3 color-accent fw-bold">€{{ product.price }}</p>

@@ -36,6 +36,30 @@ export class ProductService {
       );
   }
 
+  getFilteredProducts(
+    category: string,
+    filters: {
+      minSelectedAmount?: number;
+      maxSelectedAmount?: number;
+      brands?: string[];
+    }
+  ) {
+    let url = `${environment.ApiURL}/api/products/filter?category=${category}`;
+
+    if (filters.brands && filters.brands.length > 0) {
+      url += `&brands=${filters.brands.join(',')}`;
+    }
+
+    if (
+      filters.minSelectedAmount !== undefined &&
+      filters.maxSelectedAmount !== undefined
+    ) {
+      url += `&minPrice=${filters.minSelectedAmount}&maxPrice=${filters.maxSelectedAmount}`;
+    }
+
+    return this.httpClient.get<Product[]>(url);
+  }
+
   addProduct(product: Product): Observable<Product> {
     return this.httpClient
       .post<Product>(`${environment.ApiURL}/api/add-product`, product)
