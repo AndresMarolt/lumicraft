@@ -43,31 +43,40 @@
     </div>
   </aside>
 
-  <div class="products col-9">
+  <div class="products col-9" *ngIf="!loading; else loadingSpinner">
     <mat-card *ngFor="let product of productsList" class="product">
-      <mat-card-content>
-        <img
-          [src]="product.images![0].image"
-          *ngIf="product.images!.length === 1; else multipleImages"
-          alt=""
-          class="product-image"
-        />
-        <ng-template #multipleImages>
-          <app-products-carousel
-            [productImages]="product.images!"
-          ></app-products-carousel>
-        </ng-template>
-        <div>
-          <div class="d-flex justify-content-between align-items-center">
-            <p class="my-3 fs-3 color-accent fw-bold">€{{ product.price }}</p>
-            <div>
-              <mat-icon color="accent">favorite_outline</mat-icon>
-              <mat-icon color="accent" class="d-none">favorite</mat-icon>
+      <a [routerLink]="['/product', product.slug]">
+        <mat-card-content>
+          <img
+            [src]="product.images![0].image"
+            *ngIf="product.images!.length === 1; else multipleImages"
+            alt=""
+            class="product-image"
+          />
+          <ng-template #multipleImages>
+            <app-products-carousel
+              (click)="$event.stopPropagation()"
+              [productImages]="product.images!"
+            ></app-products-carousel>
+          </ng-template>
+          <div>
+            <div class="d-flex justify-content-between align-items-center">
+              <p class="my-3 fs-3 color-accent fw-bold">€{{ product.price }}</p>
+              <div>
+                <mat-icon color="accent">favorite_outline</mat-icon>
+                <mat-icon color="accent" class="d-none">favorite</mat-icon>
+              </div>
             </div>
+            <h4 class="">{{ product.brand }} {{ product.model }}</h4>
           </div>
-          <h4 class="">{{ product.brand }} {{ product.model }}</h4>
-        </div>
-      </mat-card-content>
+        </mat-card-content>
+      </a>
     </mat-card>
   </div>
+
+  <ng-template #loadingSpinner>
+    <div class="loading-spinner-container">
+      <app-loading-spinner class="loading-spinner"></app-loading-spinner>
+    </div>
+  </ng-template>
 </div>
