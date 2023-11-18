@@ -1,0 +1,28 @@
+.product-image {
+  width: 300px;
+  height: 250px;
+}
+
+.carousel-control-next,
+.carousel-control-prev /*, .carousel-indicators */ {
+  background-color: white;
+  height: 50px !important;
+  border-radius: 100%;
+  -webkit-border-radius: 100%;
+  -moz-border-radius: 100%;
+  -ms-border-radius: 100%;
+  -o-border-radius: 100%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  span {
+    filter: invert(70%);
+    -webkit-filter: invert(100%);
+
+  }
+
+}
