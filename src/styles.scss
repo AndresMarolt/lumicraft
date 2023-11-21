@@ -36,7 +36,6 @@ p {
 }
 
 // THEME COLOR VARIABLES
-
 .background-primary {
   background-color: map-get(palette.$primary, 500);
 }
@@ -54,7 +53,6 @@ p {
 }
 
 // INPUTS
-
 .mat-mdc-text-field-wrapper.mdc-text-field.mdc-text-field--filled {
   border-radius: 30px !important;
   -webkit-border-radius: 30px !important;
@@ -68,7 +66,6 @@ p {
 }
 
 // MEDIA QUERIES
-
 @media(min-width: 768px) {
   .content {
     padding: 35px 60px !important;

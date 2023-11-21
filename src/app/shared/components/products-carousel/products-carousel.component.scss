@@ -1,13 +1,9 @@
-.product-image {
-  width: 300px;
-  height: 250px;
-}
-
 .carousel-control-next,
 .carousel-control-prev /*, .carousel-indicators */ {
   z-index: 1000;
   background-color: white;
   height: 50px !important;
+  width: 50px !important;
   border-radius: 100%;
   -webkit-border-radius: 100%;
   -moz-border-radius: 100%;
@@ -25,5 +21,19 @@
     -webkit-filter: invert(100%);
 
   }
+}
 
+.mini-image {
+  width: 80px;
+  height: 60px;
+  cursor: pointer;
+  transition: .2s ease-in-out;
+  -webkit-transition: .2s ease-in-out;
+  -moz-transition: .2s ease-in-out;
+  -ms-transition: .2s ease-in-out;
+  -o-transition: .2s ease-in-out;
+  
+  &:hover {
+    box-shadow: 0px 0px 3px 2px rgb(216, 216, 216);
+  }
 }

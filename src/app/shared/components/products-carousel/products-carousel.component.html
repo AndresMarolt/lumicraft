@@ -2,10 +2,17 @@
   <div class="carousel-inner">
     <div
       *ngFor="let item of productImages; let i = index"
-      class="carousel-item"
+      class="carousel-item text-center"
       [class.active]="i === 0"
+      [id]="'slide_' + i"
     >
-      <img [src]="item.image" alt="product_img" class="product-image" />
+      <img
+        [src]="item.image"
+        alt="product_img"
+        class="product-image"
+        [style.width]="imageWidth"
+        [style.height]="imageHeight"
+      />
     </div>
   </div>
   <button
@@ -26,4 +33,21 @@
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>
   </button>
+
+  <!-- <ng-container *ngIf="showSmallImagesBelow">
+    <div class="d-flex gap-2 flex-wrap justify-content-center my-3">
+      <button
+        class="border-0"
+        *ngFor="let productImage of productImages; let i = index"
+        [attr.data-bs-target]="'#carousel_' + productImages[i].id"
+        data-bs-slide-to="`slide_ ${i}`"
+      >
+        <img
+          [src]="productImage.image"
+          alt="product_img"
+          class="mini-image py-1"
+        />
+      </button>
+    </div>
+  </ng-container> -->
 </div>
