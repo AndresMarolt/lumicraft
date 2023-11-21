@@ -36,6 +36,12 @@ export class ProductService {
       );
   }
 
+  getProductsBySlug(slug: string): Observable<Product> {
+    return this.httpClient.get<Product>(
+      `${environment.ApiURL}/api/product/${slug}`
+    );
+  }
+
   getFilteredProducts(
     category: string,
     filters: {

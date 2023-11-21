@@ -5,11 +5,10 @@ import { ProductsRoutingModule } from './products-routing.module';
 import { ProductsComponent } from './products.component';
 import { MaterialModule } from 'src/app/material/material.module';
 import { FormsModule } from '@angular/forms';
-import { ProductsCarouselComponent } from './products-carousel/products-carousel.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
-  declarations: [ProductsComponent, ProductsCarouselComponent],
+  declarations: [ProductsComponent],
   imports: [
     CommonModule,
     FormsModule,
