@@ -1,7 +1,13 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Product } from 'src/app/models/product.interface';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { ProductService } from 'src/app/services/product/product.service';
+import { ShoppingCartService } from 'src/app/services/shopping-cart/shopping-cart.service';
+import {
+  SnackbarService,
+  SnackbarTone,
+} from 'src/app/services/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-product',
@@ -14,6 +20,9 @@ export class ProductComponent implements OnInit {
   public product!: Product;
   private route = inject(ActivatedRoute);
   private productService = inject(ProductService);
+  private shoppingCartService = inject(ShoppingCartService);
+  private authService = inject(AuthService);
+  private snackbarService = inject(SnackbarService);
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
@@ -37,5 +46,18 @@ export class ProductComponent implements OnInit {
           this.loading = false;
         });
     });
+  }
+
+  addToCart(product: Product) {
+    const { id: userId } = this.authService.decodeToken(
+      this.authService.getToken()!
+    )!;
+
+    this.shoppingCartService.addProduct(userId, product).subscribe();
+
+    this.snackbarService.showSnackbar(
+      `${product.brand} ${product.model} agregado al carrito.`,
+      SnackbarTone.Success
+    );
   }
 }

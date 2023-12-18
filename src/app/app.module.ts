@@ -14,6 +14,7 @@ import { UserDisplayComponent } from './layouts/user-display/user-display.compon
 import { SidenavComponent } from './layouts/sidenav/sidenav.component';
 import { FooterComponent } from './layouts/footer/footer.component';
 import { CloudinaryModule } from '@cloudinary/ng';
+import { CartModule } from './modules/cart/cart.module';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { CloudinaryModule } from '@cloudinary/ng';
     AppRoutingModule,
     AdminModule,
     CloudinaryModule,
+    CartModule,
   ],
   providers: [AuthService, httpInterceptorProviders],
   bootstrap: [AppComponent],
