@@ -25,6 +25,9 @@ export class ShoppingCartService {
     const url = `${environment.ApiURL}/api/cart/${userId}`;
     this.httpClient.get<ShoppingCartProduct[]>(url).subscribe((res) => {
       this.cart.mutate((currentCart) => {
+        currentCart.totalAmount = 0;
+        currentCart.allProducts = [];
+        currentCart.totalQuantity = 0;
         res.map((cartItem) => {
           currentCart.totalAmount += cartItem.quantity * cartItem.product.price;
           currentCart.allProducts.push(cartItem);
@@ -59,24 +62,39 @@ export class ShoppingCartService {
 
     const url = `${environment.ApiURL}/api/cart/${userId}/add?productId=${product.id}&quantity=1`;
 
-    return this.httpClient.post<any>(url, {}).pipe(
-      tap((res) => {
-        console.log(res);
-      })
-    );
+    return this.httpClient.post<any>(url, {});
   }
 
-  removeProduct(productId: number) {
+  substractOneItem(userId: number, product: Product) {
+    this.cart.mutate((currentCart) => {
+      currentCart.allProducts.map((prod, index) => {
+        if (prod.product === product) {
+          currentCart.allProducts[index].quantity--;
+          currentCart.totalAmount -=
+            currentCart.allProducts[index].product.price;
+          currentCart.totalQuantity--;
+        }
+      });
+    });
+    const url = `${environment.ApiURL}/api/cart/${userId}/substract-item/${product.id}`;
+    return this.httpClient.delete<void>(url);
+  }
+
+  removeProduct(userId: number, product: Product) {
     this.cart.mutate((currentCart) => {
       const itemIndex = currentCart.allProducts.findIndex(
-        (p) => p.product.id === productId
+        (p) => p.product.id === product.id
       );
       if (itemIndex !== -1) {
         const removedItem = currentCart.allProducts[itemIndex];
         currentCart.totalAmount -=
           removedItem.product.price * removedItem.quantity;
+        currentCart.totalQuantity -= removedItem.quantity;
         currentCart.allProducts.splice(itemIndex, 1);
       }
     });
+
+    const url = `${environment.ApiURL}/api/cart/${userId}/delete-item/${product.id}`;
+    return this.httpClient.delete<void>(url);
   }
 }

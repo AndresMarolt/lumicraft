@@ -23,6 +23,10 @@ const routes: Routes = [
     loadChildren: () => import('./modules').then((m) => m.ProductModule),
   },
   {
+    path: 'cart',
+    loadChildren: () => import('./modules').then((m) => m.CartModule),
+  },
+  {
     path: '',
     loadChildren: () => import('./modules').then((m) => m.HomeModule),
   },
