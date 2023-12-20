@@ -3,6 +3,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
   ViewChild,
   inject,
@@ -15,7 +16,7 @@ import { NavigationEnd, Router } from '@angular/router';
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss'],
 })
-export class SidenavComponent implements AfterViewInit {
+export class SidenavComponent implements OnInit, AfterViewInit {
   sidebarOptions!: { text: string; link: string }[];
   sidenavTitle!: string;
   @Input() isMobile: boolean = false;
@@ -24,10 +25,14 @@ export class SidenavComponent implements AfterViewInit {
   @ViewChild('drawer') drawerElement!: MatDrawer;
   private router = inject(Router);
 
-  ngAfterViewInit(): void {
-    this.drawerElement.openedChange.subscribe((status) => {
-      this.toggleSidebar.emit(status);
-    });
+  ngOnInit(): void {
+    this.sidebarOptions = [
+      { text: 'Móviles', link: 'products/phones' },
+      { text: 'Ordenadores', link: 'products/computers' },
+      { text: 'Tablets', link: 'products/tablets' },
+      { text: 'Smartwatch', link: 'products/smartwatches' },
+    ];
+    this.sidenavTitle = 'CATEGORIAS';
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -37,18 +42,16 @@ export class SidenavComponent implements AfterViewInit {
             { text: 'Productos', link: 'admin/products' },
           ];
           this.sidenavTitle = 'ADMINISTRADOR';
-        } else {
-          this.sidebarOptions = [
-            { text: 'Móviles', link: 'products/phones' },
-            { text: 'Ordenadores', link: 'products/computers' },
-            { text: 'Tablets', link: 'products/tablets' },
-            { text: 'Smartwatch', link: 'products/smartwatches' },
-          ];
-          this.sidenavTitle = 'CATEGORIAS';
         }
 
         this.toggleSidebar.emit(false);
       }
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.drawerElement.openedChange.subscribe((status) => {
+      this.toggleSidebar.emit(status);
     });
   }
 }
