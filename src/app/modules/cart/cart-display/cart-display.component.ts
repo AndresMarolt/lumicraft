@@ -1,4 +1,5 @@
-import { Component, computed, effect, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { User } from 'src/app/models/user.interface';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ShoppingCartService } from 'src/app/services/shopping-cart/shopping-cart.service';
 
@@ -11,12 +12,21 @@ export class CartDisplayComponent implements OnInit {
   private shoppingCartService = inject(ShoppingCartService);
   private authService = inject(AuthService);
   public cartItems = this.shoppingCartService.cart();
+  public isUserLoggedIn = false;
 
   ngOnInit(): void {
-    const { id: userId } = this.authService.decodeToken(
-      this.authService.getToken()!
-    )!;
+    this.isUserLoggedIn = this.authService.isLoggedIn();
 
-    this.shoppingCartService.getCartProducts(userId);
+    this.authService.user$.subscribe((user) => {
+      this.isUserLoggedIn = this.authService.isLoggedIn();
+
+      if (this.isUserLoggedIn) {
+        const { id: userId } = this.authService.decodeToken(
+          this.authService.getToken()!
+        )!;
+
+        this.shoppingCartService.getCartProducts(userId);
+      }
+    });
   }
 }
