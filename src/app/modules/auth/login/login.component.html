@@ -39,7 +39,12 @@
     </button>
   </form>
 
-  <span class="change__auth" (click)="changeAuthTypeEvent.emit()"
-    >Ir a Signup</span
-  >
+  <div>
+    ¿No tienes una cuenta?
+    <span
+      class="change__auth text-decoration-underline"
+      (click)="changeAuthTypeEvent.emit()"
+      >Regístrate</span
+    >
+  </div>
 </mat-card>

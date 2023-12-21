@@ -8,6 +8,8 @@ import {
   SnackbarService,
   SnackbarTone,
 } from 'src/app/services/snackbar/snackbar.service';
+import { LoginRedirectModalComponent } from './login-redirect-modal/login-redirect-modal.component';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-product',
@@ -23,6 +25,7 @@ export class ProductComponent implements OnInit {
   private shoppingCartService = inject(ShoppingCartService);
   private authService = inject(AuthService);
   private snackbarService = inject(SnackbarService);
+  private dialog = inject(MatDialog);
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
@@ -49,15 +52,21 @@ export class ProductComponent implements OnInit {
   }
 
   addToCart(product: Product) {
-    const { id: userId } = this.authService.decodeToken(
-      this.authService.getToken()!
-    )!;
+    if (this.authService.isLoggedIn()) {
+      const { id: userId } = this.authService.decodeToken(
+        this.authService.getToken()!
+      )!;
 
-    this.shoppingCartService.addProduct(userId, product).subscribe();
+      this.shoppingCartService.addProduct(userId, product).subscribe();
 
-    this.snackbarService.showSnackbar(
-      `${product.brand} ${product.model} agregado al carrito.`,
-      SnackbarTone.Success
-    );
+      this.snackbarService.showSnackbar(
+        `${product.brand} ${product.model} agregado al carrito.`,
+        SnackbarTone.Success
+      );
+    } else {
+      this.dialog.open(LoginRedirectModalComponent, {
+        height: 'auto',
+      });
+    }
   }
 }
