@@ -77,7 +77,12 @@
         </p>
       </div>
       <div>
-        <button mat-raised-button color="accent" class="p-4 fs-6 col-12">
+        <button
+          mat-raised-button
+          color="accent"
+          class="p-4 fs-6 col-12"
+          [disabled]="cart.totalQuantity === 0"
+        >
           Comprar
         </button>
       </div>
