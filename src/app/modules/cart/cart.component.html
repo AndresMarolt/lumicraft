@@ -63,7 +63,7 @@
     <div class="buy_column" style="position: sticky; top: 0">
       <div class="d-flex justify-content-between">
         <p>Subtotal:</p>
-        <p>€{{ cart.totalAmount }}</p>
+        <p>€{{ cart.totalAmount | number : "1.0-2" }}</p>
       </div>
       <div class="d-flex justify-content-between">
         <p>Costo de envío:</p>
@@ -72,7 +72,9 @@
       <hr class="w-100" />
       <div class="d-flex justify-content-between">
         <p>Total:</p>
-        <p class="fw-bold fs-5 color-accent">€{{ cart.totalAmount + 0 }}</p>
+        <p class="fw-bold fs-5 color-accent">
+          €{{ cart.totalAmount + 0 | number : "1.0-2" }}
+        </p>
       </div>
       <div>
         <button mat-raised-button color="accent" class="p-4 fs-6 col-12">

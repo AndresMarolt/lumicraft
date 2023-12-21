@@ -24,24 +24,29 @@ export class SidenavComponent implements OnInit, AfterViewInit {
   @Output() toggleSidebar: EventEmitter<boolean> = new EventEmitter<boolean>();
   @ViewChild('drawer') drawerElement!: MatDrawer;
   private router = inject(Router);
+  private userOptions = [
+    { text: 'Móviles', link: 'products/phones' },
+    { text: 'Ordenadores', link: 'products/computers' },
+    { text: 'Tablets', link: 'products/tablets' },
+    { text: 'Smartwatch', link: 'products/smartwatches' },
+  ];
+  private adminOptions = [
+    { text: 'Dashboard', link: 'admin' },
+    { text: 'Productos', link: 'admin/products' },
+  ];
 
   ngOnInit(): void {
-    this.sidebarOptions = [
-      { text: 'Móviles', link: 'products/phones' },
-      { text: 'Ordenadores', link: 'products/computers' },
-      { text: 'Tablets', link: 'products/tablets' },
-      { text: 'Smartwatch', link: 'products/smartwatches' },
-    ];
+    this.sidebarOptions = this.userOptions;
     this.sidenavTitle = 'CATEGORIAS';
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         if (event.url.startsWith('/admin')) {
-          this.sidebarOptions = [
-            { text: 'Dashboard', link: 'admin' },
-            { text: 'Productos', link: 'admin/products' },
-          ];
+          this.sidebarOptions = this.adminOptions;
           this.sidenavTitle = 'ADMINISTRADOR';
+        } else if (event.url.startsWith('/')) {
+          this.sidebarOptions = this.userOptions;
+          this.sidenavTitle = 'CATEGORIAS';
         }
 
         this.toggleSidebar.emit(false);
