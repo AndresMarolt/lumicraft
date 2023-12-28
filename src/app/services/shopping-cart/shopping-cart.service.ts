@@ -97,4 +97,22 @@ export class ShoppingCartService {
     const url = `${environment.ApiURL}/api/cart/${userId}/delete-item/${product.id}`;
     return this.httpClient.delete<void>(url);
   }
+
+  clearCart() {
+    this.cart.mutate((currentCart) => {
+      currentCart.allProducts = [];
+      currentCart.totalAmount = 0;
+      currentCart.totalQuantity = 0;
+    });
+  }
+
+  getOrders(userId: number) {
+    const url = `${environment.ApiURL}/api/order/${userId}`;
+    return this.httpClient.get(url);
+  }
+
+  generateOrder(userId: number) {
+    const url = `${environment.ApiURL}/api/order/create`;
+    return this.httpClient.post(url, userId);
+  }
 }

@@ -1,12 +1,10 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Product } from 'src/app/models/product.interface';
-import {
-  ShoppingCart,
-  ShoppingCartProduct,
-} from 'src/app/models/shopping-cart';
-import { User } from 'src/app/models/user.interface';
+import { ShoppingCartProduct } from 'src/app/models/shopping-cart';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ShoppingCartService } from 'src/app/services/shopping-cart/shopping-cart.service';
+import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
+import { SnackbarTone } from 'src/app/services/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-cart',
@@ -16,6 +14,7 @@ import { ShoppingCartService } from 'src/app/services/shopping-cart/shopping-car
 export class CartComponent implements OnInit {
   private authService = inject(AuthService);
   private shoppingCartService = inject(ShoppingCartService);
+  private snackbarService = inject(SnackbarService);
   public cart = this.shoppingCartService.cart();
   public userId!: number;
 
@@ -44,5 +43,15 @@ export class CartComponent implements OnInit {
     this.shoppingCartService
       .removeProduct(this.userId, item.product)
       .subscribe();
+  }
+
+  generateOrder() {
+    this.shoppingCartService.generateOrder(this.userId).subscribe((res) => {
+      this.snackbarService.showSnackbar(
+        'Orden de compra generada exitosamente',
+        SnackbarTone.Success
+      );
+      this.shoppingCartService.clearCart();
+    });
   }
 }

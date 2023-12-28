@@ -82,6 +82,7 @@
           color="accent"
           class="p-4 fs-6 col-12"
           [disabled]="cart.totalQuantity === 0"
+          (click)="generateOrder()"
         >
           Comprar
         </button>

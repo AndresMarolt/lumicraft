@@ -17,8 +17,6 @@ export class SidenavService {
   ) {
     this.sidenavOptions.mutate((currentOptions) => {
       currentOptions = sidenavOptions;
-      console.log('CURRENT OPTIONS');
-      console.log(currentOptions);
     });
     this.sidenavTitle.mutate((currentTitle) => {
       currentTitle = sidenavTitle;

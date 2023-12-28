@@ -65,6 +65,15 @@ p {
   display: none;
 }
 
+// NOTIFICATION
+.mat-mdc-snack-bar-container .mdc-snackbar__surface {
+  background-color: unset !important;
+}
+.notification-success {
+  background-color: #4caf50 !important;
+  font-size: 4rem;
+}
+
 // MEDIA QUERIES
 @media(min-width: 768px) {
   .content {
