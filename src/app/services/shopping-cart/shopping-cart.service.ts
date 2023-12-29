@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { Product } from 'src/app/models/product.interface';
-import { tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import {
   ShoppingCart,
   ShoppingCartProduct,
 } from 'src/app/models/shopping-cart';
 import { environment } from 'src/environments/environment.development';
+import { Order } from 'src/app/models/order.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -106,9 +107,11 @@ export class ShoppingCartService {
     });
   }
 
-  getOrders(userId: number) {
+  getOrders(userId: number): Observable<Order[]> {
+    console.log(userId);
+
     const url = `${environment.ApiURL}/api/order/${userId}`;
-    return this.httpClient.get(url);
+    return this.httpClient.get<Order[]>(url);
   }
 
   generateOrder(userId: number) {
