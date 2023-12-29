@@ -5,7 +5,7 @@
         {{ user.username }}
       </h2>
 
-      <mat-icon color="accent" class="edit_icon" (click)="openModal()"
+      <mat-icon color="accent" class="edit_icon" (click)="openUserModal()"
         >edit</mat-icon
       >
     </div>
@@ -51,16 +51,24 @@
 
   <div class="orders mt-5">
     <p class="fs-3 underline_divider mb-4">Órdenes de compra</p>
-    <div class="d-flex flex-wrap justify-content-between">
-      <mat-card *ngFor="let order of orders" class="order mb-3">
+    <div class="d-flex flex-wrap gap-2">
+      <mat-card
+        *ngFor="let order of orders"
+        class="order mb-3"
+        (click)="openOrderModal(order)"
+      >
         <mat-card-content>
           <p class="text-center fw-bold">N° de orden: {{ order.id }}</p>
+          <p>
+            Fecha: {{ order.timestamp | date : "dd/MM/yyyy" }} -
+            {{ order.timestamp | date : "HH:mm" }}hs.
+          </p>
           <p>
             Estado:
             {{ order.status === "PENDING" ? "Pendiente" : "Completada" }}
           </p>
           <p>Cantidad de productos: {{ order.totalQuantity }}</p>
-          <p>Total: ${{ order.totalAmount }}</p>
+          <p>Total: €{{ order.totalAmount }}</p>
         </mat-card-content>
       </mat-card>
     </div>
