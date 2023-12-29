@@ -7,8 +7,9 @@ import { MaterialModule } from 'src/app/material/material.module';
 import { EditUserModalComponent } from './edit-user-modal/edit-user-modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { UserOrdersModalComponent } from './user-orders-modal/user-orders-modal.component';
 @NgModule({
-  declarations: [ProfileComponent, EditUserModalComponent],
+  declarations: [ProfileComponent, EditUserModalComponent, UserOrdersModalComponent],
   imports: [
     CommonModule,
     ProfileRoutingModule,

@@ -1,0 +1,35 @@
+<div class="dialog">
+  <h2 mat-dialog-title>N° de orden: {{ order.id }}</h2>
+
+  <div mat-dialog-content>
+    <p>
+      Fecha: {{ order.timestamp | date : "dd/MM/yyyy" }} -
+      {{ order.timestamp | date : "HH:mm" }}hs.
+    </p>
+    <p>
+      Estado:
+      {{ order.status === "PENDING" ? "Pendiente" : "Completada" }}
+    </p>
+    <div>
+      <p>Productos:</p>
+      <div *ngFor="let product of order.orderItems.slice(0, 12)">
+        <li class="mb-3 list-unstyled">
+          -
+          <img
+            class="product_image"
+            [src]="product.product.images![0].image"
+            alt="product-image"
+          />
+          <p class="d-inline">
+            {{ product.product.brand }} {{ product.product.model }} - €{{
+              product.product.price
+            }}
+            (x{{ product.quantity }})
+          </p>
+        </li>
+      </div>
+    </div>
+
+    <p>Total: €{{ order.totalAmount }}</p>
+  </div>
+</div>

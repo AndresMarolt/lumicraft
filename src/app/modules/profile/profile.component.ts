@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { EditUserModalComponent } from './edit-user-modal/edit-user-modal.component';
 import { ShoppingCartService } from 'src/app/services/shopping-cart/shopping-cart.service';
 import { Order } from 'src/app/models/order.interface';
+import { UserOrdersModalComponent } from './user-orders-modal/user-orders-modal.component';
 
 @Component({
   selector: 'app-profile',
@@ -26,12 +27,11 @@ export class ProfileComponent implements OnInit {
         this.authService.decodeToken(this.authService.getToken()!)?.id!
       )
       .subscribe((res) => {
-        console.log(res);
         this.orders = res;
       });
   }
 
-  openModal() {
+  openUserModal() {
     const editUserModalRef = this.dialog.open(EditUserModalComponent, {
       autoFocus: false,
     });
@@ -40,6 +40,12 @@ export class ProfileComponent implements OnInit {
     editUserModalRef.componentInstance.updateProfileData.subscribe(() => {
       this.getUser();
     });
+  }
+
+  openOrderModal(order: Order) {
+    const orderModalRef = this.dialog.open(UserOrdersModalComponent);
+
+    orderModalRef.componentInstance.order = order;
   }
 
   getUser() {
