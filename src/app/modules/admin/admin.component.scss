@@ -6,17 +6,17 @@
   align-items: center;
   justify-content: center;
 
-  &_chart {
-    width: 150px; /* El tamaño del círculo */
+  &_circle {
+    width: 150px;
     height: 150px;
-    border-radius: 50%; /* Hace que sea un círculo */
+    border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 24px; /* Tamaño de la fuente del número */
+    font-size: 24px;
     font-weight: bold;
     position: relative;
-    color: #333; /* Color del número */
+    color: #333;
     border: 10px solid map-get(palette.$accent, 400);
   }
 }

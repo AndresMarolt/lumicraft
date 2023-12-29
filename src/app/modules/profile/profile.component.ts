@@ -23,7 +23,7 @@ export class ProfileComponent implements OnInit {
     this.user = this.authService.getUser()!;
     this.authService.decodeToken(this.authService.getToken()!);
     this.shoppingCartService
-      .getOrders(
+      .getUserOrders(
         this.authService.decodeToken(this.authService.getToken()!)?.id!
       )
       .subscribe((res) => {

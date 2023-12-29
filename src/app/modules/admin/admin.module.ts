@@ -11,6 +11,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { AdminProductsComponent } from './admin-products/admin-products.component';
 import { ProductComponent } from './admin-product/product.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { SearchBarComponent } from './search-bar/search-bar.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    NgChartsModule,
     NgbModule,
     AdminRoutingModule,
     SharedModule,

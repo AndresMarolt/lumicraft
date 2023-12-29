@@ -107,15 +107,18 @@ export class ShoppingCartService {
     });
   }
 
-  getOrders(userId: number): Observable<Order[]> {
-    console.log(userId);
-
-    const url = `${environment.ApiURL}/api/order/${userId}`;
+  getUserOrders(userId: number): Observable<Order[]> {
+    const url = `${environment.ApiURL}/api/order/user/${userId}`;
     return this.httpClient.get<Order[]>(url);
   }
 
-  generateOrder(userId: number) {
+  getAllOrders(): Observable<Order[]> {
+    const url = `${environment.ApiURL}/api/order/all`;
+    return this.httpClient.get<Order[]>(url);
+  }
+
+  generateOrder(userId: number): Observable<Order> {
     const url = `${environment.ApiURL}/api/order/create`;
-    return this.httpClient.post(url, userId);
+    return this.httpClient.post<Order>(url, userId);
   }
 }
