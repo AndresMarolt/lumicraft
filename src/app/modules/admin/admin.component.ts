@@ -11,6 +11,7 @@ import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 import { Order } from 'src/app/models/order.interface';
 import { ShoppingCartService } from 'src/app/services/shopping-cart/shopping-cart.service';
+import { Product } from 'src/app/models/product.interface';
 
 @Component({
   selector: 'app-admin',
@@ -22,6 +23,7 @@ export class AdminComponent implements OnInit {
     | QueryList<BaseChartDirective>
     | undefined;
   public orders: Order[] = [];
+  public amountOfItemsSold!: number;
   public completedOrders: Order[] = [];
   public pendingOrders: Order[] = [];
   public averageSaleAmount: number = 0;
@@ -55,6 +57,11 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {
     this.shoppingCartService.getAllOrders().subscribe((res) => {
       this.orders = res;
+      this.amountOfItemsSold = this.orders.reduce(
+        (sum, order) => order.totalQuantity + sum,
+        0
+      );
+
       this.completedOrders = res.filter(
         (order) => order.status === 'DELIVERED'
       );

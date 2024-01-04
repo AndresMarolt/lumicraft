@@ -25,13 +25,6 @@
       </div>
       <div class="d-flex flex-wrap">
         <div class="data col-4 mb-4">
-          <span class="data_title">Artículos vendidos</span>
-          <div class="data_circle data_circle-animation mt-3">
-            {{ orders.length }}
-          </div>
-        </div>
-
-        <div class="data col-4 mb-4">
           <span class="data_title">Órdenes entregadas</span>
           <div class="data_circle data_circle-animation mt-3">
             {{ completedOrders.length }}
@@ -42,6 +35,13 @@
           <span class="data_title">Órdenes pendientes</span>
           <div class="data_circle data_circle-animation mt-3">
             {{ pendingOrders.length }}
+          </div>
+        </div>
+
+        <div class="data col-4 mb-4">
+          <span class="data_title">Artículos vendidos</span>
+          <div class="data_circle data_circle-animation mt-3">
+            {{ amountOfItemsSold }}
           </div>
         </div>
 
