@@ -68,7 +68,7 @@ export class AdminComponent implements OnInit {
       this.salesQuantityChartData.labels = this.salesAmountChartData.labels =
         this.generateLastMonths();
 
-      const { monthAmountValues, monthCountValues } = this.obtainSalesData(res);
+      let { monthAmountValues, monthCountValues } = this.obtainSalesData(res);
 
       this.salesQuantityChartData.datasets.push({
         data: monthCountValues,
@@ -87,13 +87,27 @@ export class AdminComponent implements OnInit {
 
   public generateLastMonths() {
     const currentYear = new Date().getFullYear();
-    const currentMonth = new Date().getMonth();
+    let currentMonth = new Date().getMonth() + 1;
+    let aux = currentMonth;
+
     return Array.from({ length: 7 }, (_, index) => {
-      const month = ((currentMonth - index + 12) % 12) + 1;
-      return `${currentYear}-${month.toString().padStart(2, '0')}`;
+      let month;
+      let year = currentYear;
+      if (aux > 0) {
+        month = currentMonth - index;
+      } else {
+        currentMonth = 12;
+        month = 12;
+      }
+      aux = currentMonth - 1;
+
+      if (month - 1 > 0) {
+        year = currentYear - 1;
+      }
+
+      return `${month.toString().padStart(2, '0')}/${year}`;
     }).reverse();
   }
-
   public obtainSalesData(orders: Order[]) {
     const last7Months = this.generateLastMonths();
     const monthCount: { [key: string]: number } = {};
@@ -121,6 +135,6 @@ export class AdminComponent implements OnInit {
   private getOrderMonthKey(order: Order) {
     const orderMonth = new Date(order.timestamp).getMonth() + 1;
     const orderYear = new Date(order.timestamp).getFullYear();
-    return `${orderYear}-${orderMonth.toString().padStart(2, '0')}`;
+    return `${orderMonth.toString().padStart(2, '0')}/${orderYear}`;
   }
 }
