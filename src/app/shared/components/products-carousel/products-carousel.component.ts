@@ -15,14 +15,4 @@ export class ProductsCarouselComponent {
   ngOnInit() {
     this.carouselId = this.productImages[0].image;
   }
-
-  // selectImage(index: number): void {
-  // Cambiar la imagen activa en el carousel
-  // Puedes usar la propiedad ngbCarousel para acceder al carousel
-  // Asegúrate de importar NgbCarousel y NgbSlide en tu componente
-  // y de tener configurado correctamente NgbModule en tu módulo.
-  // if (this.showSmallImagesBelow) {
-  // this.carousel.select(index);
-  // }
-  // }
 }

@@ -1,8 +1,9 @@
 import { EventEmitter, Injectable, inject } from '@angular/core';
 import { environment } from 'src/environments/environment.development';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, filter, tap } from 'rxjs';
 import { Product } from '../../models/product.interface';
+import { PaginatedResponse } from 'src/app/models/paged-products.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -16,54 +17,57 @@ export class ProductService {
   private selectedProduct: Subject<Product> = new Subject<Product>();
   public selectedProduct$ = this.selectedProduct.asObservable();
 
-  getAllProducts(): Observable<Product[]> {
-    return this.httpClient
-      .get<Product[]>(`${environment.ApiURL}/api/products`)
-      .pipe(
-        tap((res) => {
-          this.products.next(res);
-        })
-      );
+  getProducts(page: number, size: number): Observable<PaginatedResponse> {
+    let url = `${environment.ApiURL}/api/products?page=${page}&size=${size}`;
+    return this.httpClient.get<PaginatedResponse>(url).pipe(
+      tap((res) => {
+        const productsList = res.content.map((prod) => prod);
+        this.products.next(productsList);
+      })
+    );
   }
 
-  getProductsByCategory(category: string): Observable<Product[]> {
-    return this.httpClient
-      .get<Product[]>(`${environment.ApiURL}/api/products/${category}`)
-      .pipe(
-        tap((res) => {
-          this.products.next(res);
-        })
-      );
+  getFilteredProducts(
+    page: number,
+    size: number,
+    category?: string,
+    filters?: {
+      minSelectedAmount?: number;
+      maxSelectedAmount?: number;
+      brands?: string[];
+    }
+  ): Observable<PaginatedResponse> {
+    let url = `${environment.ApiURL}/api/products?page=${page}&size=${size}`;
+
+    if (category) {
+      url += `&category=${category}`;
+    }
+
+    if (filters) {
+      if (filters.brands && filters.brands.length > 0) {
+        url += `&brands=${filters.brands.join(',')}`;
+      }
+
+      if (
+        filters.minSelectedAmount !== undefined &&
+        filters.maxSelectedAmount !== undefined
+      ) {
+        url += `&minPrice=${filters.minSelectedAmount}&maxPrice=${filters.maxSelectedAmount}`;
+      }
+    }
+
+    return this.httpClient.get<PaginatedResponse>(url).pipe(
+      tap((res) => {
+        const productsList = res.content.map((prod) => prod);
+        this.products.next(productsList);
+      })
+    );
   }
 
   getProductsBySlug(slug: string): Observable<Product> {
     return this.httpClient.get<Product>(
       `${environment.ApiURL}/api/product/${slug}`
     );
-  }
-
-  getFilteredProducts(
-    category: string,
-    filters: {
-      minSelectedAmount?: number;
-      maxSelectedAmount?: number;
-      brands?: string[];
-    }
-  ) {
-    let url = `${environment.ApiURL}/api/products/filter?category=${category}`;
-
-    if (filters.brands && filters.brands.length > 0) {
-      url += `&brands=${filters.brands.join(',')}`;
-    }
-
-    if (
-      filters.minSelectedAmount !== undefined &&
-      filters.maxSelectedAmount !== undefined
-    ) {
-      url += `&minPrice=${filters.minSelectedAmount}&maxPrice=${filters.maxSelectedAmount}`;
-    }
-
-    return this.httpClient.get<Product[]>(url);
   }
 
   addProduct(product: Product): Observable<Product> {

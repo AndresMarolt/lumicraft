@@ -9,6 +9,8 @@ import {
 import { ProductFormComponent } from '../product-form/product-form.component';
 import { PageEvent } from '@angular/material/paginator';
 import { ProductComponent } from '../admin-product/product.component';
+import { PaginatedResponse } from 'src/app/models/paged-products.interface';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-products',
@@ -29,12 +31,14 @@ export class AdminProductsComponent implements OnInit {
   ];
   closeResult!: string;
   currentPage: number = 0;
-  pageSize: number = 10;
   pageIndex = 0;
+  productListLength: number = 0;
   category = 'todas';
   private productService = inject(ProductService);
   private dialog = inject(MatDialog);
   private snackbarService = inject(SnackbarService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
 
   constructor() {
     this.productService.products$.subscribe((products) => {
@@ -44,29 +48,51 @@ export class AdminProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllProducts();
+    this.route.queryParams.subscribe((queryParams) => {
+      this.pageIndex = queryParams['page'] || 0;
+      this.category = queryParams['category'] || 'todas';
+      this.getProducts(this.pageIndex, this.category);
+    });
   }
 
   onCategoryChange(category: string) {
-    if (category === 'todas') {
-      this.getAllProducts();
+    const currentParams = this.router.routerState.snapshot.root.queryParams;
+    let newParams;
+    if (category && category !== 'todas') {
+      newParams = {
+        ...currentParams,
+        page: 0,
+        category,
+      };
+      this.addURLParams(newParams);
     } else {
-      this.filterByCategory(category);
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: { page: 0 },
+      });
     }
+
+    this.productService
+      .getFilteredProducts(
+        this.currentPage,
+        10,
+        category === 'todas' ? undefined : category
+      )
+      .subscribe((res) => {
+        this.productListLength = res.totalElements;
+      });
   }
 
-  getAllProducts() {
-    this.productService.getAllProducts().subscribe();
-  }
-
-  getProductsByCategory(category: string) {
-    this.productService.getProductsByCategory(category).subscribe();
-  }
-
-  filterByCategory(category: string) {
-    this.filteredProductsList = this.productsList.filter(
-      (prod) => prod.category === category
-    );
+  getProducts(page: number, category: string | undefined) {
+    this.productService
+      .getFilteredProducts(
+        page,
+        10,
+        category === 'todas' ? undefined : category
+      )
+      .subscribe((res) => {
+        this.productListLength = res.totalElements;
+      });
   }
 
   openFormModal(product: Product | undefined = undefined) {
@@ -78,6 +104,14 @@ export class AdminProductsComponent implements OnInit {
     if (product) {
       modalRef.componentInstance.product = product;
     }
+
+    modalRef.componentInstance.addProductEvent.subscribe(() => {
+      this.getProducts(0, this.category);
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: { page: 0, category: this.category },
+      });
+    });
   }
 
   openProductModal(product: Product) {
@@ -96,16 +130,32 @@ export class AdminProductsComponent implements OnInit {
         `${product.brand} ${product.model} eliminado exitosamente!`,
         SnackbarTone.Success
       );
+
+      this.getProducts(1, this.category);
+
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: { page: 0, category: this.category },
+      });
     });
   }
 
   onPageChange(event: PageEvent): void {
     this.currentPage = event.pageIndex;
-    this.pageSize = event.pageSize;
+    const currentParams = this.router.routerState.snapshot.root.queryParams;
+    const newParams = {
+      ...currentParams,
+      page: this.currentPage,
+    };
+    this.addURLParams(newParams);
+    this.productService
+      .getFilteredProducts(this.currentPage, 10, this.category)
+      .subscribe((res) => {
+        this.productListLength = res.totalElements;
+      });
   }
 
   search(searchTerm: string) {
-    // ACA SE RECIBE LO INGRESADO EN LA BARRA DE BÙSQUEDA DEL SEARCH BAR COMPONENT
     if (!searchTerm) {
       this.filteredProductsList = this.productsList;
     }
@@ -134,10 +184,11 @@ export class AdminProductsComponent implements OnInit {
       return matchAllWords && partialMatchLastWord;
     });
   }
-
-  get pagedProductsList(): Product[] {
-    const startIndex = this.currentPage * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
-    return this.filteredProductsList.slice(startIndex, endIndex);
+  private addURLParams(newParams: any) {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: newParams,
+      queryParamsHandling: 'merge', // Para fusionar con los parámetros existentes
+    });
   }
 }
