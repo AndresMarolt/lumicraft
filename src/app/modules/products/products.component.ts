@@ -1,10 +1,5 @@
-import {
-  Component,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  inject,
-} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'src/app/models/product.interface';
 import { ProductService } from 'src/app/services/product/product.service';
@@ -17,20 +12,25 @@ import { BRANDS } from 'src/assets/brands';
 })
 export class ProductsComponent implements OnInit {
   productsList: Product[] = [];
+  productListLength: number = 0;
   brandFilters: string[] = [];
   brands = BRANDS;
   minSelectedAmount: number = 0;
   maxSelectedAmount: number = 3000;
   currentCategory!: string;
   loading = true;
+  currentPage: number = 0;
+  pageSize: number = 9;
+  pageIndex = 0;
   private productService = inject(ProductService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
-  constructor() {
+  ngOnInit(): void {
     this.productService.products$.subscribe((products) => {
       this.productsList = products;
     });
+
     this.route.params.subscribe((params) => {
       this.loading = true;
       switch (params['category']) {
@@ -50,38 +50,45 @@ export class ProductsComponent implements OnInit {
 
       this.minSelectedAmount = 0;
       this.maxSelectedAmount = 3000;
+      this.pageIndex = 0;
+      this.currentPage = 0;
       this.brandFilters = [];
 
       this.getProductsByCategoryAndFilter();
     });
-  }
 
-  ngOnInit(): void {
     this.route.queryParams.subscribe((queryParams) => {
-      const minPriceFromUrl = queryParams['priceMin'] || 0;
-      const maxPriceFromUrl = queryParams['priceMax'] || 3000;
+      if (Object.keys(queryParams).length !== 0) {
+        const minPriceFromUrl = queryParams['priceMin'] || 0;
+        const maxPriceFromUrl = queryParams['priceMax'] || 3000;
+        this.pageIndex = queryParams['page'] || 0;
+        this.currentPage = queryParams['page'] || 0;
 
-      this.minSelectedAmount = +minPriceFromUrl;
-      this.maxSelectedAmount = +maxPriceFromUrl;
+        this.minSelectedAmount = +minPriceFromUrl;
+        this.maxSelectedAmount = +maxPriceFromUrl;
 
-      const brandsFromUrl = queryParams['brands'];
-      this.brandFilters = brandsFromUrl ? brandsFromUrl.split(',') : [];
-
-      this.getProductsByCategoryAndFilter();
+        const brandsFromUrl = queryParams['brands'];
+        this.brandFilters = brandsFromUrl ? brandsFromUrl.split(',') : [];
+        this.getProductsByCategoryAndFilter();
+      }
     });
   }
 
   getProductsByCategoryAndFilter() {
     let filters = {
-      minSelectedAmount: this.minSelectedAmount,
-      maxSelectedAmount: this.maxSelectedAmount,
-      brands: this.brandFilters,
+      minSelectedAmount: this.minSelectedAmount || 0,
+      maxSelectedAmount: this.maxSelectedAmount || 3000,
+      brands: this.brandFilters || undefined,
     };
-
     this.productService
-      .getFilteredProducts(this.currentCategory, filters)
+      .getFilteredProducts(
+        this.currentPage,
+        9,
+        this.currentCategory || undefined,
+        filters
+      )
       .subscribe((res) => {
-        this.productsList = res;
+        this.productListLength = res.totalElements;
         this.loading = false;
       });
   }
@@ -101,21 +108,7 @@ export class ProductsComponent implements OnInit {
       brands: this.brandFilters.length ? this.brandFilters.join(',') : null,
     };
 
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: newParams,
-      queryParamsHandling: 'merge', // Para fusionar con los parámetros existentes
-    });
-
-    this.productService
-      .getFilteredProducts(this.currentCategory, {
-        minSelectedAmount: this.minSelectedAmount,
-        maxSelectedAmount: this.maxSelectedAmount,
-        brands: this.brandFilters,
-      })
-      .subscribe((res) => {
-        this.productsList = res;
-      });
+    this.addURLParams(newParams);
   }
 
   onSliderChange() {
@@ -127,12 +120,26 @@ export class ProductsComponent implements OnInit {
       priceMax: this.maxSelectedAmount,
     };
 
+    this.addURLParams(newParams);
+  }
+
+  onPageChange(event: PageEvent): void {
+    const currentParams = this.router.routerState.snapshot.root.queryParams;
+
+    this.currentPage = event.pageIndex;
+
+    const newParams = {
+      ...currentParams,
+      page: this.currentPage,
+    };
+    this.addURLParams(newParams);
+  }
+
+  private addURLParams(newParams: any) {
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: newParams,
       queryParamsHandling: 'merge', // Para fusionar con los parámetros existentes
     });
-
-    this.getProductsByCategoryAndFilter();
   }
 }

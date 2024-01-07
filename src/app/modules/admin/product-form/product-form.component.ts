@@ -44,6 +44,7 @@ export class ProductFormComponent implements OnInit {
   imagesToDelete: { id?: number; image: string }[] = [];
   @Input() product!: Product;
   @Output() closeEditModeEvent: EventEmitter<void> = new EventEmitter<void>();
+  @Output() addProductEvent: EventEmitter<void> = new EventEmitter<void>();
   private formBuilder = inject(FormBuilder);
   private productService = inject(ProductService);
   private dialogRef = inject(MatDialogRef<ProductFormComponent>);
@@ -137,10 +138,11 @@ export class ProductFormComponent implements OnInit {
         // EL NUEVO PRODUCTO NO TIENE IMAGEN/ES
         this.submitProduct({ ...this.productForm.value });
       }
+
+      this.addProductEvent.emit();
     };
 
     if (isEditing) {
-      // SI THIS.PRODUCT ES TRUTHY SIGNIFICA QUE ESTAMOS EDITANDO
       handleEdition();
     } else {
       handleCreation();
