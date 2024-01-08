@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -7,6 +7,7 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./login-redirect-modal.component.scss'],
 })
 export class LoginRedirectModalComponent {
+  @Input() text: string = '';
   private dialogRef = inject(MatDialogRef<LoginRedirectModalComponent>);
 
   closeModal() {

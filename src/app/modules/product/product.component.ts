@@ -9,7 +9,7 @@ import {
   SnackbarTone,
 } from 'src/app/services/snackbar/snackbar.service';
 import { LoginRedirectModalComponent } from './login-redirect-modal/login-redirect-modal.component';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-product',
@@ -64,9 +64,28 @@ export class ProductComponent implements OnInit {
         SnackbarTone.Success
       );
     } else {
-      this.dialog.open(LoginRedirectModalComponent, {
-        height: 'auto',
-      });
+      const loginRedirectModalRef = this.dialog.open(
+        LoginRedirectModalComponent,
+        {
+          height: 'auto',
+        }
+      );
+      loginRedirectModalRef.componentInstance.text =
+        'Para agregar un producto al carrito debes iniciar sesión.';
+    }
+  }
+
+  addToFavs(product: Product) {
+    if (this.authService.isLoggedIn()) {
+    } else {
+      const loginRedirectModalRef = this.dialog.open(
+        LoginRedirectModalComponent,
+        {
+          height: 'auto',
+        }
+      );
+      loginRedirectModalRef.componentInstance.text =
+        'Para agregar un producto a favoritos debes iniciar sesión.';
     }
   }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'src/app/models/product.interface';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { ProductService } from 'src/app/services/product/product.service';
 import { BRANDS } from 'src/assets/brands';
 
@@ -25,6 +26,8 @@ export class ProductsComponent implements OnInit {
   private productService = inject(ProductService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private authService = inject(AuthService);
+  isUserLoggedIn: boolean = this.authService.isLoggedIn();
 
   ngOnInit(): void {
     this.productService.products$.subscribe((products) => {

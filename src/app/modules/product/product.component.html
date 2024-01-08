@@ -35,7 +35,12 @@
       <mat-card-content class="py-5 px-4">
         <div class="d-flex justify-content-between">
           <h3 class="color-accent fs-2 fw-bold">€{{ product.price }}</h3>
-          <mat-icon color="accent">favorite_outline</mat-icon>
+          <div>
+            <mat-icon color="accent" (click)="addToFavs(product)"
+              >favorite_outline</mat-icon
+            >
+            <mat-icon color="accent" class="d-none">favorite</mat-icon>
+          </div>
         </div>
 
         <div class="mt-4 d-flex align-items-center">
