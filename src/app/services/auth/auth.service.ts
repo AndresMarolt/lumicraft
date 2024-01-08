@@ -135,13 +135,17 @@ export class AuthService {
     const expiration = localStorage.getItem('lumicraft_token_expiration');
     if (token && expiration) {
       const expirationDate = new Date(parseInt(expiration));
-      return expirationDate > new Date();
+      if (expirationDate > new Date()) {
+        return true;
+      } else {
+        this.logout();
+      }
     }
     return false;
   }
 
   private saveNewToken(token: string) {
-    const expirationDate = new Date().getTime() + 3600000 * 24 * 2; // 1 hora * 24 * 2 = Expira luego de 2 días
+    const expirationDate = new Date().getTime() + 3600000 * 24; // 1 hora * 24 = Expira luego de 1 día
     localStorage.setItem('lumicraft_token', token);
     localStorage.setItem(
       'lumicraft_token_expiration',
