@@ -50,16 +50,26 @@
           <a [routerLink]="['/product', product.slug]">
             <mat-card-content>
               <img
-                [src]="product.images![0].image"
-                *ngIf="product.images!.length === 1; else multipleImages"
+                [src]="
+                  'https://mitrahukum.org/wp-content/uploads/2012/09/dummy-post-square-1-768x768.jpg'
+                "
+                *ngIf="product.images!.length === 0; else oneOrMoreImages"
                 alt=""
                 class="product-image"
               />
-              <ng-template #multipleImages>
-                <app-products-carousel
-                  (click)="$event.stopPropagation()"
-                  [productImages]="product.images!"
-                ></app-products-carousel>
+              <ng-template #oneOrMoreImages>
+                <img
+                  [src]="product.images![0].image"
+                  *ngIf="product.images!.length === 1; else multipleImages"
+                  alt=""
+                  class="product-image"
+                />
+                <ng-template #multipleImages>
+                  <app-products-carousel
+                    (click)="$event.stopPropagation()"
+                    [productImages]="product.images!"
+                  ></app-products-carousel>
+                </ng-template>
               </ng-template>
               <div>
                 <div class="d-flex justify-content-between align-items-center">
