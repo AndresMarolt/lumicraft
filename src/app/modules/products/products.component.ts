@@ -105,6 +105,7 @@ export class ProductsComponent implements OnInit {
 
     let newParams = {
       ...currentParams,
+      page: 0,
       brands: this.brandFilters.length ? this.brandFilters.join(',') : null,
     };
 
