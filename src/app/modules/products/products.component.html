@@ -1,4 +1,4 @@
-<div class="content d-flex">
+<div class="content d-flex" *ngIf="!httpResponseHasError">
   <aside class="col-3">
     <div class="aside_section col-10 pb-4">
       <h4 class="fs-5">Marca</h4>
@@ -103,3 +103,7 @@
     </div>
   </ng-template>
 </div>
+
+<ng-container *ngIf="httpResponseHasError">
+  <app-not-found></app-not-found>
+</ng-container>

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { NotFoundComponent } from './shared/components/errors/not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,10 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./modules').then((m) => m.HomeModule),
+  },
+  {
+    path: '**',
+    component: NotFoundComponent,
   },
 ];
 

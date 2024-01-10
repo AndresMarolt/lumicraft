@@ -25,10 +25,10 @@ export class SidenavComponent implements OnInit, AfterViewInit {
   @ViewChild('drawer') drawerElement!: MatDrawer;
   private router = inject(Router);
   private userOptions = [
-    { text: 'Móviles', link: 'products/phones' },
-    { text: 'Ordenadores', link: 'products/computers' },
-    { text: 'Tablets', link: 'products/tablets' },
-    { text: 'Smartwatch', link: 'products/smartwatches' },
+    { text: 'Móviles', link: 'products/phone' },
+    { text: 'Ordenadores', link: 'products/computer' },
+    { text: 'Tablets', link: 'products/tablet' },
+    { text: 'Smartwatch', link: 'products/smartwatch' },
   ];
   private adminOptions = [
     { text: 'Dashboard', link: 'admin' },

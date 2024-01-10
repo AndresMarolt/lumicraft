@@ -15,6 +15,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MaterialModule,
     SharedModule,
     ProductsRoutingModule,
+    SharedModule,
   ],
 })
 export class ProductsModule {}

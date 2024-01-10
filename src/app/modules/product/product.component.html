@@ -1,83 +1,89 @@
-<div class="m-4 bg-white" *ngIf="!loading; else loadingSpinner">
-  <div class="d-flex content gap-2">
-    <div class="col-8">
-      <h2 class="fs-3 fw-bold mb-5">{{ product.brand }} {{ product.model }}</h2>
+<ng-container *ngIf="!loading; else loadingSpinner">
+  <div class="m-4 bg-white" *ngIf="!httpResponseHasError">
+    <div class="d-flex content gap-2">
+      <div class="col-8">
+        <h2 class="fs-3 fw-bold mb-5">
+          {{ product.brand }} {{ product.model }}
+        </h2>
 
-      <!-- =========================== -->
-
-      <img
-        [src]="
-          'https://mitrahukum.org/wp-content/uploads/2012/09/dummy-post-square-1-768x768.jpg'
-        "
-        *ngIf="product.images!.length === 0; else oneOrMoreImages"
-        alt="img-product"
-        class="single_image"
-      />
-      <ng-template #oneOrMoreImages>
         <img
-          [src]="product.images![0].image"
-          *ngIf="product.images!.length === 1; else multipleImages"
-          alt=""
-          class="product-image"
+          [src]="
+            'https://mitrahukum.org/wp-content/uploads/2012/09/dummy-post-square-1-768x768.jpg'
+          "
+          *ngIf="product.images!.length === 0; else oneOrMoreImages"
+          alt="img-product"
+          class="single_image"
         />
-        <ng-template #multipleImages>
-          <app-products-carousel
-            [productImages]="product.images!"
-            [imageWidth]="'550px'"
-            [imageHeight]="'450px'"
-            [showSmallImagesBelow]="true"
-          ></app-products-carousel>
+        <ng-template #oneOrMoreImages>
+          <img
+            [src]="product.images![0].image"
+            *ngIf="product.images!.length === 1; else multipleImages"
+            alt=""
+            class="product-image"
+          />
+          <ng-template #multipleImages>
+            <app-products-carousel
+              [productImages]="product.images!"
+              [imageWidth]="'550px'"
+              [imageHeight]="'450px'"
+              [showSmallImagesBelow]="true"
+            ></app-products-carousel>
+          </ng-template>
         </ng-template>
-      </ng-template>
+      </div>
+
+      <mat-card class="col-4 h-100">
+        <mat-card-content class="py-5 px-4">
+          <div class="d-flex justify-content-between">
+            <h3 class="color-accent fs-2 fw-bold">€{{ product.price }}</h3>
+            <div>
+              <mat-icon color="accent" (click)="addToFavs(product)"
+                >favorite_outline</mat-icon
+              >
+              <mat-icon color="accent" class="d-none">favorite</mat-icon>
+            </div>
+          </div>
+
+          <div class="mt-4 d-flex align-items-center">
+            <mat-icon color="accent" class="me-2 check_icon">done</mat-icon>
+            <p class="mb-0">
+              {{
+                isShippingFree ? "Envío Gratis" : "Gastos de envío desde €29.99"
+              }}
+            </p>
+          </div>
+
+          <div class="mt-4 d-flex align-items-center">
+            <mat-icon color="accent" class="me-2 check_icon">done</mat-icon>
+            <p class="mb-0">Entrega en 2 a 5 días laborables</p>
+          </div>
+
+          <div class="mt-4">
+            <button
+              mat-raised-button
+              color="accent"
+              class="p-4 fs-6 col-12"
+              (click)="addToCart(product)"
+            >
+              <mat-icon>shopping_cart_outline</mat-icon>
+              Agregar al carrito
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
     </div>
 
-    <mat-card class="col-4 h-100">
-      <mat-card-content class="py-5 px-4">
-        <div class="d-flex justify-content-between">
-          <h3 class="color-accent fs-2 fw-bold">€{{ product.price }}</h3>
-          <div>
-            <mat-icon color="accent" (click)="addToFavs(product)"
-              >favorite_outline</mat-icon
-            >
-            <mat-icon color="accent" class="d-none">favorite</mat-icon>
-          </div>
-        </div>
+    <section class="content">
+      <h4 class="fs-3">Descripción</h4>
 
-        <div class="mt-4 d-flex align-items-center">
-          <mat-icon color="accent" class="me-2 check_icon">done</mat-icon>
-          <p class="mb-0">
-            {{
-              isShippingFree ? "Envío Gratis" : "Gastos de envío desde €29.99"
-            }}
-          </p>
-        </div>
-
-        <div class="mt-4 d-flex align-items-center">
-          <mat-icon color="accent" class="me-2 check_icon">done</mat-icon>
-          <p class="mb-0">Entrega en 2 a 5 días laborables</p>
-        </div>
-
-        <div class="mt-4">
-          <button
-            mat-raised-button
-            color="accent"
-            class="p-4 fs-6 col-12"
-            (click)="addToCart(product)"
-          >
-            <mat-icon>shopping_cart_outline</mat-icon>
-            Agregar al carrito
-          </button>
-        </div>
-      </mat-card-content>
-    </mat-card>
+      <p>{{ product.description }}</p>
+    </section>
   </div>
 
-  <section class="content">
-    <h4 class="fs-3">Descripción</h4>
-
-    <p>{{ product.description }}</p>
-  </section>
-</div>
+  <ng-container *ngIf="httpResponseHasError">
+    <app-not-found></app-not-found>
+  </ng-container>
+</ng-container>
 
 <ng-template #loadingSpinner>
   <div class="loading-spinner-container">

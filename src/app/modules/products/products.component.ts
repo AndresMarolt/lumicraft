@@ -23,6 +23,7 @@ export class ProductsComponent implements OnInit {
   currentPage: number = 0;
   pageSize: number = 9;
   pageIndex = 0;
+  httpResponseHasError: boolean = false;
   private productService = inject(ProductService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
@@ -36,20 +37,8 @@ export class ProductsComponent implements OnInit {
 
     this.route.params.subscribe((params) => {
       this.loading = true;
-      switch (params['category']) {
-        case 'phones':
-          this.currentCategory = 'phone';
-          break;
-        case 'computers':
-          this.currentCategory = 'computer';
-          break;
-        case 'smartwatches':
-          this.currentCategory = 'smartwatch';
-          break;
-        case 'tablets':
-          this.currentCategory = 'tablet';
-          break;
-      }
+
+      this.currentCategory = params['category'];
 
       this.minSelectedAmount = 0;
       this.maxSelectedAmount = 3000;
@@ -85,16 +74,19 @@ export class ProductsComponent implements OnInit {
       brands: this.brandFilters || undefined,
     };
     this.productService
-      .getFilteredProducts(
-        this.currentPage,
-        9,
-        this.currentCategory || undefined,
-        filters
-      )
-      .subscribe((res) => {
-        this.productListLength = res.totalElements;
-        this.loading = false;
-      });
+      .getFilteredProducts(this.currentPage, 9, this.currentCategory, filters)
+      .subscribe(
+        (res) => {
+          this.productListLength = res.totalElements;
+          this.loading = false;
+        },
+        (error) => {
+          if (error.status === 404) {
+            this.httpResponseHasError = true;
+          }
+          this.loading = false;
+        }
+      );
   }
 
   filterByBrand(brand: string) {

@@ -20,6 +20,7 @@ export class ProductComponent implements OnInit {
   public isShippingFree = false;
   public loading = true;
   public product!: Product;
+  public httpResponseHasError: boolean = false;
   private route = inject(ActivatedRoute);
   private productService = inject(ProductService);
   private shoppingCartService = inject(ShoppingCartService);
@@ -29,9 +30,8 @@ export class ProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      this.productService
-        .getProductsBySlug(params['slug'])
-        .subscribe((prod: Product) => {
+      this.productService.getProductsBySlug(params['slug']).subscribe(
+        (prod: Product) => {
           this.product = prod;
           if (
             prod.category === 'accessory' ||
@@ -47,7 +47,14 @@ export class ProductComponent implements OnInit {
           }
 
           this.loading = false;
-        });
+        },
+        (error) => {
+          this.loading = false;
+          if (error.status === 404) {
+            this.httpResponseHasError = true;
+          }
+        }
+      );
     });
   }
 
