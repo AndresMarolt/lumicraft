@@ -30,8 +30,8 @@ export class ProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      this.productService.getProductsBySlug(params['slug']).subscribe(
-        (prod: Product) => {
+      this.productService.getProductsBySlug(params['slug']).subscribe({
+        next: (prod: Product) => {
           this.product = prod;
           if (
             prod.category === 'accessory' ||
@@ -45,16 +45,17 @@ export class ProductComponent implements OnInit {
           ) {
             this.isShippingFree = false;
           }
-
-          this.loading = false;
         },
-        (error) => {
-          this.loading = false;
-          if (error.status === 404) {
+        error: (e) => {
+          if (e.status === 404) {
             this.httpResponseHasError = true;
           }
-        }
-      );
+          this.loading = false;
+        },
+        complete: () => {
+          this.loading = false;
+        },
+      });
     });
   }
 

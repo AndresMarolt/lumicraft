@@ -34,6 +34,7 @@ export class AdminProductsComponent implements OnInit {
   pageIndex = 0;
   productListLength: number = 0;
   category = 'todas';
+  httpResponseHasError: boolean = false;
   private productService = inject(ProductService);
   private dialog = inject(MatDialog);
   private snackbarService = inject(SnackbarService);
@@ -90,9 +91,19 @@ export class AdminProductsComponent implements OnInit {
         10,
         category === 'todas' ? undefined : category
       )
-      .subscribe((res) => {
-        this.productListLength = res.totalElements;
-        this.loading = false;
+      .subscribe({
+        next: (res) => {
+          this.productListLength = res.totalElements;
+        },
+        error: (e) => {
+          if (e.status === 404) {
+            this.httpResponseHasError = true;
+          }
+          this.loading = false;
+        },
+        complete: () => {
+          this.loading = false;
+        },
       });
   }
 

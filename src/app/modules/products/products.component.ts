@@ -36,6 +36,8 @@ export class ProductsComponent implements OnInit {
     });
 
     this.route.params.subscribe((params) => {
+      console.log(params);
+
       this.loading = true;
 
       this.currentCategory = params['category'];
@@ -75,18 +77,21 @@ export class ProductsComponent implements OnInit {
     };
     this.productService
       .getFilteredProducts(this.currentPage, 9, this.currentCategory, filters)
-      .subscribe(
-        (res) => {
+      .subscribe({
+        next: (res) => {
           this.productListLength = res.totalElements;
-          this.loading = false;
+          this.httpResponseHasError = false;
         },
-        (error) => {
-          if (error.status === 404) {
+        error: (e) => {
+          if (e.status === 404) {
             this.httpResponseHasError = true;
           }
           this.loading = false;
-        }
-      );
+        },
+        complete: () => {
+          this.loading = false;
+        },
+      });
   }
 
   filterByBrand(brand: string) {
