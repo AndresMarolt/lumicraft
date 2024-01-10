@@ -62,6 +62,7 @@ export class ProductsComponent implements OnInit {
 
     this.route.queryParams.subscribe((queryParams) => {
       if (Object.keys(queryParams).length !== 0) {
+        this.loading = true;
         const minPriceFromUrl = queryParams['priceMin'] || 0;
         const maxPriceFromUrl = queryParams['priceMax'] || 3000;
         this.pageIndex = queryParams['page'] || 0;

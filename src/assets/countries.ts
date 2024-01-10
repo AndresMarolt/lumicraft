@@ -6,14 +6,9 @@ interface Country {
 
 export const COUNTRIES: Country[] = [
   {
-    name: 'Afghanistan',
+    name: 'Afganistán',
     dial_code: '+93',
     code: 'AF',
-  },
-  {
-    name: 'Aland Islands',
-    dial_code: '+358',
-    code: 'AX',
   },
   {
     name: 'Albania',
@@ -21,14 +16,9 @@ export const COUNTRIES: Country[] = [
     code: 'AL',
   },
   {
-    name: 'Algeria',
-    dial_code: '+213',
-    code: 'DZ',
-  },
-  {
-    name: 'American Samoa',
-    dial_code: '+1684',
-    code: 'AS',
+    name: 'Alemania',
+    dial_code: '+49',
+    code: 'DE',
   },
   {
     name: 'Andorra',
@@ -41,19 +31,34 @@ export const COUNTRIES: Country[] = [
     code: 'AO',
   },
   {
-    name: 'Anguilla',
+    name: 'Anguila',
     dial_code: '+1264',
     code: 'AI',
   },
   {
-    name: 'Antarctica',
+    name: 'Antigua y Barbuda',
+    dial_code: '+1268',
+    code: 'AG',
+  },
+  {
+    name: 'Antillas Neerlandesas',
+    dial_code: '+599',
+    code: 'AN',
+  },
+  {
+    name: 'Antártida',
     dial_code: '+672',
     code: 'AQ',
   },
   {
-    name: 'Antigua and Barbuda',
-    dial_code: '+1268',
-    code: 'AG',
+    name: 'Arabia Saudita',
+    dial_code: '+966',
+    code: 'SA',
+  },
+  {
+    name: 'Argelia',
+    dial_code: '+213',
+    code: 'DZ',
   },
   {
     name: 'Argentina',
@@ -81,7 +86,7 @@ export const COUNTRIES: Country[] = [
     code: 'AT',
   },
   {
-    name: 'Azerbaijan',
+    name: 'Azerbaiyán',
     dial_code: '+994',
     code: 'AZ',
   },
@@ -89,11 +94,6 @@ export const COUNTRIES: Country[] = [
     name: 'Bahamas',
     dial_code: '+1242',
     code: 'BS',
-  },
-  {
-    name: 'Bahrain',
-    dial_code: '+973',
-    code: 'BH',
   },
   {
     name: 'Bangladesh',
@@ -106,62 +106,52 @@ export const COUNTRIES: Country[] = [
     code: 'BB',
   },
   {
-    name: 'Belarus',
-    dial_code: '+375',
-    code: 'BY',
+    name: 'Baréin',
+    dial_code: '+973',
+    code: 'BH',
   },
   {
-    name: 'Belgium',
-    dial_code: '+32',
-    code: 'BE',
-  },
-  {
-    name: 'Belize',
+    name: 'Belice',
     dial_code: '+501',
     code: 'BZ',
   },
   {
-    name: 'Benin',
+    name: 'Benín',
     dial_code: '+229',
     code: 'BJ',
   },
   {
-    name: 'Bermuda',
+    name: 'Bermudas',
     dial_code: '+1441',
     code: 'BM',
   },
   {
-    name: 'Bhutan',
-    dial_code: '+975',
-    code: 'BT',
+    name: 'Bielorrusia',
+    dial_code: '+375',
+    code: 'BY',
   },
   {
-    name: 'Bolivia, Plurinational State of',
+    name: 'Bolivia, Estado Plurinacional de',
     dial_code: '+591',
     code: 'BO',
   },
   {
-    name: 'Bosnia and Herzegovina',
+    name: 'Bosnia y Herzegovina',
     dial_code: '+387',
     code: 'BA',
   },
   {
-    name: 'Botswana',
+    name: 'Botsuana',
     dial_code: '+267',
     code: 'BW',
   },
   {
-    name: 'Brazil',
+    name: 'Brasil',
     dial_code: '+55',
     code: 'BR',
   },
   {
-    name: 'British Indian Ocean Territory',
-    dial_code: '+246',
-    code: 'IO',
-  },
-  {
-    name: 'Brunei Darussalam',
+    name: 'Brunéi Darussalam',
     dial_code: '+673',
     code: 'BN',
   },
@@ -181,34 +171,39 @@ export const COUNTRIES: Country[] = [
     code: 'BI',
   },
   {
-    name: 'Cambodia',
-    dial_code: '+855',
-    code: 'KH',
+    name: 'Bután',
+    dial_code: '+975',
+    code: 'BT',
   },
   {
-    name: 'Cameroon',
-    dial_code: '+237',
-    code: 'CM',
+    name: 'Bélgica',
+    dial_code: '+32',
+    code: 'BE',
   },
   {
-    name: 'Canada',
-    dial_code: '+1',
-    code: 'CA',
-  },
-  {
-    name: 'Cape Verde',
+    name: 'Cabo Verde',
     dial_code: '+238',
     code: 'CV',
   },
   {
-    name: 'Cayman Islands',
-    dial_code: '+ 345',
-    code: 'KY',
+    name: 'Camboya',
+    dial_code: '+855',
+    code: 'KH',
   },
   {
-    name: 'Central African Republic',
-    dial_code: '+236',
-    code: 'CF',
+    name: 'Camerún',
+    dial_code: '+237',
+    code: 'CM',
+  },
+  {
+    name: 'Canadá',
+    dial_code: '+1',
+    code: 'CA',
+  },
+  {
+    name: 'Catar',
+    dial_code: '+974',
+    code: 'QA',
   },
   {
     name: 'Chad',
@@ -226,14 +221,9 @@ export const COUNTRIES: Country[] = [
     code: 'CN',
   },
   {
-    name: 'Christmas Island',
-    dial_code: '+61',
-    code: 'CX',
-  },
-  {
-    name: 'Cocos (Keeling) Islands',
-    dial_code: '+61',
-    code: 'CC',
+    name: 'Chipre',
+    dial_code: '+357',
+    code: 'CY',
   },
   {
     name: 'Colombia',
@@ -241,7 +231,7 @@ export const COUNTRIES: Country[] = [
     code: 'CO',
   },
   {
-    name: 'Comoros',
+    name: 'Comoras',
     dial_code: '+269',
     code: 'KM',
   },
@@ -251,14 +241,19 @@ export const COUNTRIES: Country[] = [
     code: 'CG',
   },
   {
-    name: 'Congo, The Democratic Republic of the Congo',
-    dial_code: '+243',
-    code: 'CD',
+    name: 'Corea del Sur',
+    dial_code: '+82',
+    code: 'KR',
   },
   {
-    name: 'Cook Islands',
-    dial_code: '+682',
-    code: 'CK',
+    name: 'Corea del Norte',
+    dial_code: '+850',
+    code: 'KP',
+  },
+  {
+    name: 'Costa de Marfil',
+    dial_code: '+225',
+    code: 'CI',
   },
   {
     name: 'Costa Rica',
@@ -266,12 +261,7 @@ export const COUNTRIES: Country[] = [
     code: 'CR',
   },
   {
-    name: "Cote d'Ivoire",
-    dial_code: '+225',
-    code: 'CI',
-  },
-  {
-    name: 'Croatia',
+    name: 'Croacia',
     dial_code: '+385',
     code: 'HR',
   },
@@ -281,24 +271,9 @@ export const COUNTRIES: Country[] = [
     code: 'CU',
   },
   {
-    name: 'Cyprus',
-    dial_code: '+357',
-    code: 'CY',
-  },
-  {
-    name: 'Czech Republic',
-    dial_code: '+420',
-    code: 'CZ',
-  },
-  {
-    name: 'Denmark',
+    name: 'Dinamarca',
     dial_code: '+45',
     code: 'DK',
-  },
-  {
-    name: 'Djibouti',
-    dial_code: '+253',
-    code: 'DJ',
   },
   {
     name: 'Dominica',
@@ -306,17 +281,12 @@ export const COUNTRIES: Country[] = [
     code: 'DM',
   },
   {
-    name: 'Dominican Republic',
-    dial_code: '+1849',
-    code: 'DO',
-  },
-  {
     name: 'Ecuador',
     dial_code: '+593',
     code: 'EC',
   },
   {
-    name: 'Egypt',
+    name: 'Egipto',
     dial_code: '+20',
     code: 'EG',
   },
@@ -326,9 +296,9 @@ export const COUNTRIES: Country[] = [
     code: 'SV',
   },
   {
-    name: 'Equatorial Guinea',
-    dial_code: '+240',
-    code: 'GQ',
+    name: 'Emiratos Árabes Unidos',
+    dial_code: '+971',
+    code: 'AE',
   },
   {
     name: 'Eritrea',
@@ -336,52 +306,62 @@ export const COUNTRIES: Country[] = [
     code: 'ER',
   },
   {
+    name: 'Eslovaquia',
+    dial_code: '+421',
+    code: 'SK',
+  },
+  {
+    name: 'Eslovenia',
+    dial_code: '+386',
+    code: 'SI',
+  },
+  {
+    name: 'España',
+    dial_code: '+34',
+    code: 'ES',
+  },
+  {
+    name: 'Estados Federados de Micronesia',
+    dial_code: '+691',
+    code: 'FM',
+  },
+  {
+    name: 'Estados Unidos',
+    dial_code: '+1',
+    code: 'US',
+  },
+  {
     name: 'Estonia',
     dial_code: '+372',
     code: 'EE',
   },
   {
-    name: 'Ethiopia',
+    name: 'Etiopía',
     dial_code: '+251',
     code: 'ET',
   },
   {
-    name: 'Falkland Islands (Malvinas)',
-    dial_code: '+500',
-    code: 'FK',
+    name: 'Filipinas',
+    dial_code: '+63',
+    code: 'PH',
   },
   {
-    name: 'Faroe Islands',
-    dial_code: '+298',
-    code: 'FO',
-  },
-  {
-    name: 'Fiji',
-    dial_code: '+679',
-    code: 'FJ',
-  },
-  {
-    name: 'Finland',
+    name: 'Finlandia',
     dial_code: '+358',
     code: 'FI',
   },
   {
-    name: 'France',
+    name: 'Fiyi',
+    dial_code: '+679',
+    code: 'FJ',
+  },
+  {
+    name: 'Francia',
     dial_code: '+33',
     code: 'FR',
   },
   {
-    name: 'French Guiana',
-    dial_code: '+594',
-    code: 'GF',
-  },
-  {
-    name: 'French Polynesia',
-    dial_code: '+689',
-    code: 'PF',
-  },
-  {
-    name: 'Gabon',
+    name: 'Gabón',
     dial_code: '+241',
     code: 'GA',
   },
@@ -396,11 +376,6 @@ export const COUNTRIES: Country[] = [
     code: 'GE',
   },
   {
-    name: 'Germany',
-    dial_code: '+49',
-    code: 'DE',
-  },
-  {
     name: 'Ghana',
     dial_code: '+233',
     code: 'GH',
@@ -411,22 +386,22 @@ export const COUNTRIES: Country[] = [
     code: 'GI',
   },
   {
-    name: 'Greece',
-    dial_code: '+30',
-    code: 'GR',
-  },
-  {
-    name: 'Greenland',
-    dial_code: '+299',
-    code: 'GL',
-  },
-  {
-    name: 'Grenada',
+    name: 'Granada',
     dial_code: '+1473',
     code: 'GD',
   },
   {
-    name: 'Guadeloupe',
+    name: 'Grecia',
+    dial_code: '+30',
+    code: 'GR',
+  },
+  {
+    name: 'Groenlandia',
+    dial_code: '+299',
+    code: 'GL',
+  },
+  {
+    name: 'Guadalupe',
     dial_code: '+590',
     code: 'GP',
   },
@@ -441,6 +416,11 @@ export const COUNTRIES: Country[] = [
     code: 'GT',
   },
   {
+    name: 'Guayana Francesa',
+    dial_code: '+594',
+    code: 'GF',
+  },
+  {
     name: 'Guernsey',
     dial_code: '+44',
     code: 'GG',
@@ -449,6 +429,11 @@ export const COUNTRIES: Country[] = [
     name: 'Guinea',
     dial_code: '+224',
     code: 'GN',
+  },
+  {
+    name: 'Guinea Ecuatorial',
+    dial_code: '+240',
+    code: 'GQ',
   },
   {
     name: 'Guinea-Bissau',
@@ -461,14 +446,9 @@ export const COUNTRIES: Country[] = [
     code: 'GY',
   },
   {
-    name: 'Haiti',
+    name: 'Haití',
     dial_code: '+509',
     code: 'HT',
-  },
-  {
-    name: 'Holy See (Vatican City State)',
-    dial_code: '+379',
-    code: 'VA',
   },
   {
     name: 'Honduras',
@@ -481,14 +461,9 @@ export const COUNTRIES: Country[] = [
     code: 'HK',
   },
   {
-    name: 'Hungary',
+    name: 'Hungría',
     dial_code: '+36',
     code: 'HU',
-  },
-  {
-    name: 'Iceland',
-    dial_code: '+354',
-    code: 'IS',
   },
   {
     name: 'India',
@@ -501,24 +476,104 @@ export const COUNTRIES: Country[] = [
     code: 'ID',
   },
   {
-    name: 'Iran, Islamic Republic of Persian Gulf',
-    dial_code: '+98',
-    code: 'IR',
-  },
-  {
     name: 'Iraq',
     dial_code: '+964',
     code: 'IQ',
   },
   {
-    name: 'Ireland',
+    name: 'Irlanda',
     dial_code: '+353',
     code: 'IE',
   },
   {
-    name: 'Isle of Man',
+    name: 'Irán',
+    dial_code: '+98',
+    code: 'IR',
+  },
+  {
+    name: 'Isla de Man',
     dial_code: '+44',
     code: 'IM',
+  },
+  {
+    name: 'Isla de Navidad',
+    dial_code: '+61',
+    code: 'CX',
+  },
+  {
+    name: 'Isla Norfolk',
+    dial_code: '+672',
+    code: 'NF',
+  },
+  {
+    name: 'Islandia',
+    dial_code: '+354',
+    code: 'IS',
+  },
+  {
+    name: 'Islas Aland',
+    dial_code: '+358',
+    code: 'AX',
+  },
+  {
+    name: 'Islas Caimán',
+    dial_code: '+345',
+    code: 'KY',
+  },
+  {
+    name: 'Islas Cocos (Keeling)',
+    dial_code: '+61',
+    code: 'CC',
+  },
+  {
+    name: 'Islas Cook',
+    dial_code: '+682',
+    code: 'CK',
+  },
+  {
+    name: 'Islas Feroe',
+    dial_code: '+298',
+    code: 'FO',
+  },
+  {
+    name: 'Islas Georgias del Sur y Sandwich del Sur',
+    dial_code: '+500',
+    code: 'GS',
+  },
+  {
+    name: 'Islas Malvinas (Falkland)',
+    dial_code: '+500',
+    code: 'FK',
+  },
+  {
+    name: 'Islas Marianas del Norte',
+    dial_code: '+1670',
+    code: 'MP',
+  },
+  {
+    name: 'Islas Marshall',
+    dial_code: '+692',
+    code: 'MH',
+  },
+  {
+    name: 'Islas Salomón',
+    dial_code: '+677',
+    code: 'SB',
+  },
+  {
+    name: 'Islas Turcas y Caicos',
+    dial_code: '+1649',
+    code: 'TC',
+  },
+  {
+    name: 'Islas Vírgenes Británicas',
+    dial_code: '+1284',
+    code: 'VG',
+  },
+  {
+    name: 'Islas Vírgenes de los Estados Unidos',
+    dial_code: '+1340',
+    code: 'VI',
   },
   {
     name: 'Israel',
@@ -526,9 +581,14 @@ export const COUNTRIES: Country[] = [
     code: 'IL',
   },
   {
-    name: 'Italy',
+    name: 'Italia',
     dial_code: '+39',
     code: 'IT',
+  },
+  {
+    name: 'Jamahiriya Árabe Libia',
+    dial_code: '+218',
+    code: 'LY',
   },
   {
     name: 'Jamaica',
@@ -536,7 +596,7 @@ export const COUNTRIES: Country[] = [
     code: 'JM',
   },
   {
-    name: 'Japan',
+    name: 'Japón',
     dial_code: '+81',
     code: 'JP',
   },
@@ -546,19 +606,24 @@ export const COUNTRIES: Country[] = [
     code: 'JE',
   },
   {
-    name: 'Jordan',
+    name: 'Jordania',
     dial_code: '+962',
     code: 'JO',
   },
   {
-    name: 'Kazakhstan',
+    name: 'Kazajistán',
     dial_code: '+77',
     code: 'KZ',
   },
   {
-    name: 'Kenya',
+    name: 'Kenia',
     dial_code: '+254',
     code: 'KE',
+  },
+  {
+    name: 'Kirguistán',
+    dial_code: '+996',
+    code: 'KG',
   },
   {
     name: 'Kiribati',
@@ -566,24 +631,9 @@ export const COUNTRIES: Country[] = [
     code: 'KI',
   },
   {
-    name: "Korea, Democratic People's Republic of Korea",
-    dial_code: '+850',
-    code: 'KP',
-  },
-  {
-    name: 'Korea, Republic of South Korea',
-    dial_code: '+82',
-    code: 'KR',
-  },
-  {
     name: 'Kuwait',
     dial_code: '+965',
     code: 'KW',
-  },
-  {
-    name: 'Kyrgyzstan',
-    dial_code: '+996',
-    code: 'KG',
   },
   {
     name: 'Laos',
@@ -591,19 +641,14 @@ export const COUNTRIES: Country[] = [
     code: 'LA',
   },
   {
-    name: 'Latvia',
-    dial_code: '+371',
-    code: 'LV',
-  },
-  {
-    name: 'Lebanon',
-    dial_code: '+961',
-    code: 'LB',
-  },
-  {
-    name: 'Lesotho',
+    name: 'Lesoto',
     dial_code: '+266',
     code: 'LS',
+  },
+  {
+    name: 'Letonia',
+    dial_code: '+371',
+    code: 'LV',
   },
   {
     name: 'Liberia',
@@ -611,24 +656,24 @@ export const COUNTRIES: Country[] = [
     code: 'LR',
   },
   {
-    name: 'Libyan Arab Jamahiriya',
-    dial_code: '+218',
-    code: 'LY',
-  },
-  {
     name: 'Liechtenstein',
     dial_code: '+423',
     code: 'LI',
   },
   {
-    name: 'Lithuania',
+    name: 'Lituania',
     dial_code: '+370',
     code: 'LT',
   },
   {
-    name: 'Luxembourg',
+    name: 'Luxemburgo',
     dial_code: '+352',
     code: 'LU',
+  },
+  {
+    name: 'Líbano',
+    dial_code: '+961',
+    code: 'LB',
   },
   {
     name: 'Macao',
@@ -646,24 +691,19 @@ export const COUNTRIES: Country[] = [
     code: 'MG',
   },
   {
-    name: 'Malawi',
-    dial_code: '+265',
-    code: 'MW',
-  },
-  {
-    name: 'Malaysia',
+    name: 'Malasia',
     dial_code: '+60',
     code: 'MY',
   },
   {
-    name: 'Maldives',
-    dial_code: '+960',
-    code: 'MV',
+    name: 'Malaui',
+    dial_code: '+265',
+    code: 'MW',
   },
   {
-    name: 'Mali',
-    dial_code: '+223',
-    code: 'ML',
+    name: 'Maldivas',
+    dial_code: '+960',
+    code: 'MV',
   },
   {
     name: 'Malta',
@@ -671,14 +711,24 @@ export const COUNTRIES: Country[] = [
     code: 'MT',
   },
   {
-    name: 'Marshall Islands',
-    dial_code: '+692',
-    code: 'MH',
+    name: 'Malí',
+    dial_code: '+223',
+    code: 'ML',
   },
   {
-    name: 'Martinique',
+    name: 'Marruecos',
+    dial_code: '+212',
+    code: 'MA',
+  },
+  {
+    name: 'Martinica',
     dial_code: '+596',
     code: 'MQ',
+  },
+  {
+    name: 'Mauricio',
+    dial_code: '+230',
+    code: 'MU',
   },
   {
     name: 'Mauritania',
@@ -686,34 +736,14 @@ export const COUNTRIES: Country[] = [
     code: 'MR',
   },
   {
-    name: 'Mauritius',
-    dial_code: '+230',
-    code: 'MU',
-  },
-  {
     name: 'Mayotte',
     dial_code: '+262',
     code: 'YT',
   },
   {
-    name: 'Mexico',
-    dial_code: '+52',
-    code: 'MX',
-  },
-  {
-    name: 'Micronesia, Federated States of Micronesia',
-    dial_code: '+691',
-    code: 'FM',
-  },
-  {
-    name: 'Moldova',
+    name: 'Moldavia',
     dial_code: '+373',
     code: 'MD',
-  },
-  {
-    name: 'Monaco',
-    dial_code: '+377',
-    code: 'MC',
   },
   {
     name: 'Mongolia',
@@ -731,11 +761,6 @@ export const COUNTRIES: Country[] = [
     code: 'MS',
   },
   {
-    name: 'Morocco',
-    dial_code: '+212',
-    code: 'MA',
-  },
-  {
     name: 'Mozambique',
     dial_code: '+258',
     code: 'MZ',
@@ -744,6 +769,16 @@ export const COUNTRIES: Country[] = [
     name: 'Myanmar',
     dial_code: '+95',
     code: 'MM',
+  },
+  {
+    name: 'México',
+    dial_code: '+52',
+    code: 'MX',
+  },
+  {
+    name: 'Mónaco',
+    dial_code: '+377',
+    code: 'MC',
   },
   {
     name: 'Namibia',
@@ -761,34 +796,9 @@ export const COUNTRIES: Country[] = [
     code: 'NP',
   },
   {
-    name: 'Netherlands',
-    dial_code: '+31',
-    code: 'NL',
-  },
-  {
-    name: 'Netherlands Antilles',
-    dial_code: '+599',
-    code: 'AN',
-  },
-  {
-    name: 'New Caledonia',
-    dial_code: '+687',
-    code: 'NC',
-  },
-  {
-    name: 'New Zealand',
-    dial_code: '+64',
-    code: 'NZ',
-  },
-  {
     name: 'Nicaragua',
     dial_code: '+505',
     code: 'NI',
-  },
-  {
-    name: 'Niger',
-    dial_code: '+227',
-    code: 'NE',
   },
   {
     name: 'Nigeria',
@@ -801,27 +811,32 @@ export const COUNTRIES: Country[] = [
     code: 'NU',
   },
   {
-    name: 'Norfolk Island',
-    dial_code: '+672',
-    code: 'NF',
-  },
-  {
-    name: 'Northern Mariana Islands',
-    dial_code: '+1670',
-    code: 'MP',
-  },
-  {
-    name: 'Norway',
+    name: 'Noruega',
     dial_code: '+47',
     code: 'NO',
   },
   {
-    name: 'Oman',
+    name: 'Nueva Caledonia',
+    dial_code: '+687',
+    code: 'NC',
+  },
+  {
+    name: 'Nueva Zelanda',
+    dial_code: '+64',
+    code: 'NZ',
+  },
+  {
+    name: 'Níger',
+    dial_code: '+227',
+    code: 'NE',
+  },
+  {
+    name: 'Omán',
     dial_code: '+968',
     code: 'OM',
   },
   {
-    name: 'Pakistan',
+    name: 'Pakistán',
     dial_code: '+92',
     code: 'PK',
   },
@@ -831,17 +846,12 @@ export const COUNTRIES: Country[] = [
     code: 'PW',
   },
   {
-    name: 'Palestinian Territory, Occupied',
-    dial_code: '+970',
-    code: 'PS',
-  },
-  {
-    name: 'Panama',
+    name: 'Panamá',
     dial_code: '+507',
     code: 'PA',
   },
   {
-    name: 'Papua New Guinea',
+    name: 'Papúa Nueva Guinea',
     dial_code: '+675',
     code: 'PG',
   },
@@ -851,14 +861,14 @@ export const COUNTRIES: Country[] = [
     code: 'PY',
   },
   {
-    name: 'Peru',
-    dial_code: '+51',
-    code: 'PE',
+    name: 'Países Bajos',
+    dial_code: '+31',
+    code: 'NL',
   },
   {
-    name: 'Philippines',
-    dial_code: '+63',
-    code: 'PH',
+    name: 'Perú',
+    dial_code: '+51',
+    code: 'PE',
   },
   {
     name: 'Pitcairn',
@@ -866,7 +876,12 @@ export const COUNTRIES: Country[] = [
     code: 'PN',
   },
   {
-    name: 'Poland',
+    name: 'Polinesia Francesa',
+    dial_code: '+689',
+    code: 'PF',
+  },
+  {
+    name: 'Polonia',
     dial_code: '+48',
     code: 'PL',
   },
@@ -881,64 +896,49 @@ export const COUNTRIES: Country[] = [
     code: 'PR',
   },
   {
-    name: 'Qatar',
-    dial_code: '+974',
-    code: 'QA',
+    name: 'Reino Unido',
+    dial_code: '+44',
+    code: 'GB',
   },
   {
-    name: 'Romania',
-    dial_code: '+40',
-    code: 'RO',
+    name: 'República Centroafricana',
+    dial_code: '+236',
+    code: 'CF',
   },
   {
-    name: 'Russia',
-    dial_code: '+7',
-    code: 'RU',
+    name: 'República Checa',
+    dial_code: '+420',
+    code: 'CZ',
   },
   {
-    name: 'Rwanda',
-    dial_code: '+250',
-    code: 'RW',
+    name: 'República Democrática del Congo',
+    dial_code: '+243',
+    code: 'CD',
   },
   {
-    name: 'Reunion',
+    name: 'República Dominicana',
+    dial_code: '+1849',
+    code: 'DO',
+  },
+  {
+    name: 'Reunión',
     dial_code: '+262',
     code: 'RE',
   },
   {
-    name: 'Saint Barthelemy',
-    dial_code: '+590',
-    code: 'BL',
+    name: 'Ruanda',
+    dial_code: '+250',
+    code: 'RW',
   },
   {
-    name: 'Saint Helena, Ascension and Tristan Da Cunha',
-    dial_code: '+290',
-    code: 'SH',
+    name: 'Rumanía',
+    dial_code: '+40',
+    code: 'RO',
   },
   {
-    name: 'Saint Kitts and Nevis',
-    dial_code: '+1869',
-    code: 'KN',
-  },
-  {
-    name: 'Saint Lucia',
-    dial_code: '+1758',
-    code: 'LC',
-  },
-  {
-    name: 'Saint Martin',
-    dial_code: '+590',
-    code: 'MF',
-  },
-  {
-    name: 'Saint Pierre and Miquelon',
-    dial_code: '+508',
-    code: 'PM',
-  },
-  {
-    name: 'Saint Vincent and the Grenadines',
-    dial_code: '+1784',
-    code: 'VC',
+    name: 'Rusia',
+    dial_code: '+7',
+    code: 'RU',
   },
   {
     name: 'Samoa',
@@ -946,19 +946,59 @@ export const COUNTRIES: Country[] = [
     code: 'WS',
   },
   {
+    name: 'Samoa Americana',
+    dial_code: '+1684',
+    code: 'AS',
+  },
+  {
+    name: 'San Bartolomé',
+    dial_code: '+590',
+    code: 'BL',
+  },
+  {
+    name: 'San Cristóbal y Nieves',
+    dial_code: '+1869',
+    code: 'KN',
+  },
+  {
     name: 'San Marino',
     dial_code: '+378',
     code: 'SM',
   },
   {
-    name: 'Sao Tome and Principe',
-    dial_code: '+239',
-    code: 'ST',
+    name: 'San Martín',
+    dial_code: '+590',
+    code: 'MF',
   },
   {
-    name: 'Saudi Arabia',
-    dial_code: '+966',
-    code: 'SA',
+    name: 'San Pedro y Miquelón',
+    dial_code: '+508',
+    code: 'PM',
+  },
+  {
+    name: 'San Vicente y las Granadinas',
+    dial_code: '+1784',
+    code: 'VC',
+  },
+  {
+    name: 'Santa Elena, Ascensión y Tristán de Acuña',
+    dial_code: '+290',
+    code: 'SH',
+  },
+  {
+    name: 'Santa Lucía',
+    dial_code: '+1758',
+    code: 'LC',
+  },
+  {
+    name: 'Santa Sede (Ciudad del Vaticano)',
+    dial_code: '+379',
+    code: 'VA',
+  },
+  {
+    name: 'Santo Tomé y Príncipe',
+    dial_code: '+239',
+    code: 'ST',
   },
   {
     name: 'Senegal',
@@ -976,29 +1016,19 @@ export const COUNTRIES: Country[] = [
     code: 'SC',
   },
   {
-    name: 'Sierra Leone',
+    name: 'Sierra Leona',
     dial_code: '+232',
     code: 'SL',
   },
   {
-    name: 'Singapore',
+    name: 'Singapur',
     dial_code: '+65',
     code: 'SG',
   },
   {
-    name: 'Slovakia',
-    dial_code: '+421',
-    code: 'SK',
-  },
-  {
-    name: 'Slovenia',
-    dial_code: '+386',
-    code: 'SI',
-  },
-  {
-    name: 'Solomon Islands',
-    dial_code: '+677',
-    code: 'SB',
+    name: 'Siria',
+    dial_code: '+963',
+    code: 'SY',
   },
   {
     name: 'Somalia',
@@ -1006,87 +1036,82 @@ export const COUNTRIES: Country[] = [
     code: 'SO',
   },
   {
-    name: 'South Africa',
-    dial_code: '+27',
-    code: 'ZA',
-  },
-  {
-    name: 'South Sudan',
-    dial_code: '+211',
-    code: 'SS',
-  },
-  {
-    name: 'South Georgia and the South Sandwich Islands',
-    dial_code: '+500',
-    code: 'GS',
-  },
-  {
-    name: 'Spain',
-    dial_code: '+34',
-    code: 'ES',
-  },
-  {
     name: 'Sri Lanka',
     dial_code: '+94',
     code: 'LK',
   },
   {
-    name: 'Sudan',
-    dial_code: '+249',
-    code: 'SD',
-  },
-  {
-    name: 'Suriname',
-    dial_code: '+597',
-    code: 'SR',
-  },
-  {
-    name: 'Svalbard and Jan Mayen',
-    dial_code: '+47',
-    code: 'SJ',
-  },
-  {
-    name: 'Swaziland',
+    name: 'Suazilandia',
     dial_code: '+268',
     code: 'SZ',
   },
   {
-    name: 'Sweden',
+    name: 'Sudáfrica',
+    dial_code: '+27',
+    code: 'ZA',
+  },
+  {
+    name: 'Sudán',
+    dial_code: '+249',
+    code: 'SD',
+  },
+  {
+    name: 'Sudán del Sur',
+    dial_code: '+211',
+    code: 'SS',
+  },
+  {
+    name: 'Suecia',
     dial_code: '+46',
     code: 'SE',
   },
   {
-    name: 'Switzerland',
+    name: 'Suiza',
     dial_code: '+41',
     code: 'CH',
   },
   {
-    name: 'Syrian Arab Republic',
-    dial_code: '+963',
-    code: 'SY',
+    name: 'Surinam',
+    dial_code: '+597',
+    code: 'SR',
   },
   {
-    name: 'Taiwan',
-    dial_code: '+886',
-    code: 'TW',
+    name: 'Svalbard y Jan Mayen',
+    dial_code: '+47',
+    code: 'SJ',
   },
   {
-    name: 'Tajikistan',
-    dial_code: '+992',
-    code: 'TJ',
-  },
-  {
-    name: 'Tanzania, United Republic of Tanzania',
-    dial_code: '+255',
-    code: 'TZ',
-  },
-  {
-    name: 'Thailand',
+    name: 'Tailandia',
     dial_code: '+66',
     code: 'TH',
   },
   {
-    name: 'Timor-Leste',
+    name: 'Taiwán',
+    dial_code: '+886',
+    code: 'TW',
+  },
+  {
+    name: 'Tanzania, República Unida de Tanzania',
+    dial_code: '+255',
+    code: 'TZ',
+  },
+  {
+    name: 'Tayikistán',
+    dial_code: '+992',
+    code: 'TJ',
+  },
+  {
+    name: 'Territorio Británico del Océano Índico',
+    dial_code: '+246',
+    code: 'IO',
+  },
+  {
+    name: 'Territorio Palestino Ocupado',
+    dial_code: '+970',
+    code: 'PS',
+  },
+  {
+    name: 'Timor Oriental',
     dial_code: '+670',
     code: 'TL',
   },
@@ -1106,29 +1131,19 @@ export const COUNTRIES: Country[] = [
     code: 'TO',
   },
   {
-    name: 'Trinidad and Tobago',
+    name: 'Trinidad y Tobago',
     dial_code: '+1868',
     code: 'TT',
   },
   {
-    name: 'Tunisia',
-    dial_code: '+216',
-    code: 'TN',
-  },
-  {
-    name: 'Turkey',
-    dial_code: '+90',
-    code: 'TR',
-  },
-  {
-    name: 'Turkmenistan',
+    name: 'Turkmenistán',
     dial_code: '+993',
     code: 'TM',
   },
   {
-    name: 'Turks and Caicos Islands',
-    dial_code: '+1649',
-    code: 'TC',
+    name: 'Turquía',
+    dial_code: '+90',
+    code: 'TR',
   },
   {
     name: 'Tuvalu',
@@ -1136,29 +1151,19 @@ export const COUNTRIES: Country[] = [
     code: 'TV',
   },
   {
-    name: 'Uganda',
-    dial_code: '+256',
-    code: 'UG',
+    name: 'Túnez',
+    dial_code: '+216',
+    code: 'TN',
   },
   {
-    name: 'Ukraine',
+    name: 'Ucrania',
     dial_code: '+380',
     code: 'UA',
   },
   {
-    name: 'United Arab Emirates',
-    dial_code: '+971',
-    code: 'AE',
-  },
-  {
-    name: 'United Kingdom',
-    dial_code: '+44',
-    code: 'GB',
-  },
-  {
-    name: 'United States',
-    dial_code: '+1',
-    code: 'US',
+    name: 'Uganda',
+    dial_code: '+256',
+    code: 'UG',
   },
   {
     name: 'Uruguay',
@@ -1166,7 +1171,7 @@ export const COUNTRIES: Country[] = [
     code: 'UY',
   },
   {
-    name: 'Uzbekistan',
+    name: 'Uzbekistán',
     dial_code: '+998',
     code: 'UZ',
   },
@@ -1176,7 +1181,7 @@ export const COUNTRIES: Country[] = [
     code: 'VU',
   },
   {
-    name: 'Venezuela, Bolivarian Republic of Venezuela',
+    name: 'Venezuela, República Bolivariana de Venezuela',
     dial_code: '+58',
     code: 'VE',
   },
@@ -1186,17 +1191,7 @@ export const COUNTRIES: Country[] = [
     code: 'VN',
   },
   {
-    name: 'Virgin Islands, British',
-    dial_code: '+1284',
-    code: 'VG',
-  },
-  {
-    name: 'Virgin Islands, U.S.',
-    dial_code: '+1340',
-    code: 'VI',
-  },
-  {
-    name: 'Wallis and Futuna',
+    name: 'Wallis y Futuna',
     dial_code: '+681',
     code: 'WF',
   },
@@ -1206,12 +1201,17 @@ export const COUNTRIES: Country[] = [
     code: 'YE',
   },
   {
+    name: 'Yibuti',
+    dial_code: '+253',
+    code: 'DJ',
+  },
+  {
     name: 'Zambia',
     dial_code: '+260',
     code: 'ZM',
   },
   {
-    name: 'Zimbabwe',
+    name: 'Zimbabue',
     dial_code: '+263',
     code: 'ZW',
   },

@@ -22,6 +22,7 @@ export class AdminComponent implements OnInit {
   @ViewChildren(BaseChartDirective) charts:
     | QueryList<BaseChartDirective>
     | undefined;
+  public loading = true;
   public orders: Order[] = [];
   public amountOfItemsSold!: number;
   public completedOrders: Order[] = [];
@@ -87,6 +88,7 @@ export class AdminComponent implements OnInit {
         label: 'Ingreso por ventas',
         backgroundColor: '#ec4e20',
       });
+      this.loading = false;
       this.charts?.toArray()[0].update();
       this.charts?.toArray()[1].update();
     });

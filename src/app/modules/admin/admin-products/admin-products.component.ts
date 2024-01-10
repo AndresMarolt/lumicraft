@@ -9,7 +9,6 @@ import {
 import { ProductFormComponent } from '../product-form/product-form.component';
 import { PageEvent } from '@angular/material/paginator';
 import { ProductComponent } from '../admin-product/product.component';
-import { PaginatedResponse } from 'src/app/models/paged-products.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -18,6 +17,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./admin-products.component.scss'],
 })
 export class AdminProductsComponent implements OnInit {
+  public loading = true;
   productsList: Product[] = [];
   filteredProductsList: Product[] = [];
   displayedColumns: string[] = ['title', 'price', 'quantity', 'actions'];
@@ -92,6 +92,7 @@ export class AdminProductsComponent implements OnInit {
       )
       .subscribe((res) => {
         this.productListLength = res.totalElements;
+        this.loading = false;
       });
   }
 

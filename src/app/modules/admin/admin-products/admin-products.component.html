@@ -1,4 +1,4 @@
-<div class="content">
+<div class="content" *ngIf="!loading; else loadingSpinner">
   <div class="mx-auto d-flex justify-content-between mb-4">
     <h2 class="fs-3">Productos</h2>
 
@@ -94,3 +94,9 @@
     </h3>
   </ng-template>
 </div>
+
+<ng-template #loadingSpinner>
+  <div class="loading-spinner-container">
+    <app-loading-spinner class="loading-spinner"></app-loading-spinner>
+  </div>
+</ng-template>

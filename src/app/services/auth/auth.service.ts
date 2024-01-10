@@ -154,6 +154,10 @@ export class AuthService {
   }
 
   public updateUser(user: User): Observable<User> {
+    console.log('EN UPDATE USER');
+    console.log(user);
+    console.log(`${environment.ApiURL}/user/${user.id}`);
+
     return this.httpClient.put<User>(
       `${environment.ApiURL}/user/${user.id}`,
       user

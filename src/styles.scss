@@ -15,6 +15,18 @@ p {
   font-size: 1rem;
 }
 
+.mat-toolbar {
+  height: 80px !important;
+}
+
+footer {
+  height: 340px !important;
+}
+
+main {
+  min-height: calc(100svh - 80px - 340px);
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }

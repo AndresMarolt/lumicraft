@@ -1,4 +1,4 @@
-<div class="content">
+<div class="content" *ngIf="!loading; else loadingSpinner">
   <mat-card class="col-12 mx-auto">
     <mat-card-content class="d-flex flex-column flex-wrap px-5 py-5">
       <h2 class="fs-3">Dashboard</h2>
@@ -55,3 +55,9 @@
     </mat-card-content>
   </mat-card>
 </div>
+
+<ng-template #loadingSpinner>
+  <div class="loading-spinner-container">
+    <app-loading-spinner class="loading-spinner"></app-loading-spinner>
+  </div>
+</ng-template>
