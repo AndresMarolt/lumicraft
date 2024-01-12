@@ -30,10 +30,6 @@ export class SidenavComponent implements OnInit, AfterViewInit {
     { text: 'Tablets', link: 'products/tablet' },
     { text: 'Smartwatch', link: 'products/smartwatch' },
   ];
-  private adminOptions = [
-    { text: 'Dashboard', link: 'admin' },
-    { text: 'Productos', link: 'admin/products' },
-  ];
 
   ngOnInit(): void {
     this.sidebarOptions = this.userOptions;
@@ -41,14 +37,8 @@ export class SidenavComponent implements OnInit, AfterViewInit {
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        if (event.url.startsWith('/admin')) {
-          this.sidebarOptions = this.adminOptions;
-          this.sidenavTitle = 'ADMINISTRADOR';
-        } else if (event.url.startsWith('/')) {
-          this.sidebarOptions = this.userOptions;
-          this.sidenavTitle = 'CATEGORIAS';
-        }
-
+        this.sidebarOptions = this.userOptions;
+        this.sidenavTitle = 'CATEGORIAS';
         this.toggleSidebar.emit(false);
       }
     });

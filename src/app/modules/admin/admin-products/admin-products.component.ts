@@ -10,6 +10,7 @@ import { ProductFormComponent } from '../product-form/product-form.component';
 import { PageEvent } from '@angular/material/paginator';
 import { ProductComponent } from '../admin-product/product.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ErrorService } from 'src/app/services/error/error.service';
 
 @Component({
   selector: 'app-products',
@@ -40,6 +41,7 @@ export class AdminProductsComponent implements OnInit {
   private snackbarService = inject(SnackbarService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private errorService = inject(ErrorService);
 
   constructor() {
     this.productService.products$.subscribe((products) => {
@@ -98,10 +100,12 @@ export class AdminProductsComponent implements OnInit {
         error: (e) => {
           if (e.status === 404) {
             this.httpResponseHasError = true;
+            this.errorService.setError(true);
           }
           this.loading = false;
         },
         complete: () => {
+          this.httpResponseHasError = false;
           this.loading = false;
         },
       });

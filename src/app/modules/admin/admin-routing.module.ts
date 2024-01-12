@@ -1,19 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminComponent } from './admin.component';
-import { AdminGuard } from 'src/app/guards/admin.guard';
-import { AdminProductsComponent } from './admin-products/admin-products.component';
 
 const routes: Routes = [
   {
     path: 'products',
-    component: AdminProductsComponent,
-    canActivate: [AdminGuard],
+    loadChildren: () =>
+      import('./admin-products/admin-products.module').then(
+        (m) => m.AdminProductsModule
+      ),
   },
   {
-    path: '',
-    component: AdminComponent,
-    canActivate: [AdminGuard],
+    path: 'dashboard',
+    loadChildren: () =>
+      import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
   },
 ];
 

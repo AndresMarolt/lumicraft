@@ -12,6 +12,7 @@ import { AdminProductsComponent } from './admin-products/admin-products.componen
 import { ProductComponent } from './admin-product/product.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { NgChartsModule } from 'ng2-charts';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { NgChartsModule } from 'ng2-charts';
     AdminProductsComponent,
     ProductComponent,
     SearchBarComponent,
+    DashboardComponent,
   ],
   imports: [
     CommonModule,

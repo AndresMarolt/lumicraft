@@ -7,7 +7,11 @@
 
 <mat-menu #menu="matMenu">
   <a mat-menu-item class="profile_btn" [routerLink]="['profile']">Mi perfil</a>
-  <a mat-menu-item class="admin_btn" *ngIf="isAdmin" [routerLink]="['admin']"
+  <a
+    mat-menu-item
+    class="admin_btn"
+    *ngIf="isAdmin"
+    [routerLink]="['admin/dashboard']"
     >Admin</a
   >
   <button mat-menu-item class="logout_btn" (click)="logout()">
