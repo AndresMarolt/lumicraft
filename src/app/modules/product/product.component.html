@@ -36,12 +36,20 @@
         <mat-card-content class="py-5 px-4">
           <div class="d-flex justify-content-between">
             <h3 class="color-accent fs-2 fw-bold">€{{ product.price }}</h3>
-            <div>
-              <mat-icon color="accent" (click)="addToFavs(product)"
-                >favorite_outline</mat-icon
+            <h5>{{ isFav() }}</h5>
+            <mat-icon
+              color="accent"
+              *ngIf="isFav() === false; else isFavorite"
+              (click)="addToFavs(product)"
+              >favorite_outline</mat-icon
+            >
+            <ng-template #isFavorite>
+              <mat-icon
+                color="accent"
+                (click)="removeItemFromFavorites(product)"
+                >favorite</mat-icon
               >
-              <mat-icon color="accent" class="d-none">favorite</mat-icon>
-            </div>
+            </ng-template>
           </div>
 
           <div class="mt-4 d-flex align-items-center">

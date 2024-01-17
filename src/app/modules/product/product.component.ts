@@ -1,5 +1,13 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import {
+  Component,
+  OnInit,
+  inject,
+  Signal,
+  computed,
+  effect,
+  WritableSignal,
+} from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Product } from 'src/app/models/product.interface';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ProductService } from 'src/app/services/product/product.service';
@@ -10,6 +18,7 @@ import {
 } from 'src/app/services/snackbar/snackbar.service';
 import { LoginRedirectModalComponent } from './login-redirect-modal/login-redirect-modal.component';
 import { MatDialog } from '@angular/material/dialog';
+import { FavoriteService } from 'src/app/services/favorite/favorite.service';
 
 @Component({
   selector: 'app-product',
@@ -21,18 +30,36 @@ export class ProductComponent implements OnInit {
   public loading = true;
   public product!: Product;
   public httpResponseHasError: boolean = false;
+  private userId!: number;
   private route = inject(ActivatedRoute);
   private productService = inject(ProductService);
   private shoppingCartService = inject(ShoppingCartService);
   private authService = inject(AuthService);
+  private favoriteService = inject(FavoriteService);
   private snackbarService = inject(SnackbarService);
   private dialog = inject(MatDialog);
+  public favorites: WritableSignal<Product[]> = this.favoriteService.favorites;
+  public isFav: Signal<boolean> = computed(() => {
+    return this.favorites().some((fav) => fav.id === this.product.id);
+  });
+
+  constructor() {
+    effect(() => {});
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       this.productService.getProductsBySlug(params['slug']).subscribe({
         next: (prod: Product) => {
           this.product = prod;
+
+          if (this.authService.isLoggedIn()) {
+            this.userId = this.authService.decodeToken(
+              this.authService.getToken()!
+            )!.id;
+            this.favoriteService.getFavorites(this.userId);
+          }
+
           if (
             prod.category === 'accessory' ||
             prod.category === 'phone' ||
@@ -85,6 +112,10 @@ export class ProductComponent implements OnInit {
 
   addToFavs(product: Product) {
     if (this.authService.isLoggedIn()) {
+      const { id: userId } = this.authService.decodeToken(
+        this.authService.getToken()!
+      )!;
+      this.favoriteService.addToFavorites(userId, product.id!);
     } else {
       const loginRedirectModalRef = this.dialog.open(
         LoginRedirectModalComponent,
@@ -95,5 +126,9 @@ export class ProductComponent implements OnInit {
       loginRedirectModalRef.componentInstance.text =
         'Para agregar un producto a favoritos debes iniciar sesión.';
     }
+  }
+
+  removeItemFromFavorites(item: Product) {
+    this.favoriteService.removeFromFavorites(this.userId, item.id!);
   }
 }

@@ -4,7 +4,7 @@
       <h2 class="fs-3 mb-2">Mi carrito</h2>
       <p>{{ cart.totalQuantity }} artículos</p>
 
-      <div class="d-flex justify-content-between">
+      <div class="d-flex justify-content-between gap-3">
         <div class="items_column" *ngIf="cart.totalQuantity; else noItems">
           <a
             *ngFor="let item of cart.allProducts"
@@ -61,8 +61,8 @@
         </div>
 
         <ng-template #noItems>
-          <div class="no_items">
-            <span class="no_items-content">Carrito vacío</span>
+          <div class="no_items_container">
+            <app-no-items [text]="'Carrito vacío'"></app-no-items>
           </div>
         </ng-template>
 
