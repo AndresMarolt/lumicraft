@@ -30,6 +30,10 @@ const routes: Routes = [
     loadChildren: () => import('./modules').then((m) => m.CartModule),
   },
   {
+    path: 'my-favorites',
+    loadChildren: () => import('./modules').then((m) => m.FavoritesModule),
+  },
+  {
     path: '',
     loadChildren: () => import('./modules').then((m) => m.HomeModule),
   },
