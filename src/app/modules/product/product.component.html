@@ -36,7 +36,6 @@
         <mat-card-content class="py-5 px-4">
           <div class="d-flex justify-content-between">
             <h3 class="color-accent fs-2 fw-bold">€{{ product.price }}</h3>
-            <h5>{{ isFav() }}</h5>
             <mat-icon
               color="accent"
               *ngIf="isFav() === false; else isFavorite"
