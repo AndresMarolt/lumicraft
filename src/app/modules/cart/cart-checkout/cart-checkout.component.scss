@@ -1,0 +1,7 @@
+@use '../../../../styles/palette.scss';
+
+::ng-deep {
+  .mat-mdc-tab-list {
+    background-color: white;
+  }
+}

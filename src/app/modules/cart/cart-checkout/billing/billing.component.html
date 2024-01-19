@@ -1,0 +1,83 @@
+<mat-card>
+  <mat-card-content class="px-5 py-4">
+    <form [formGroup]="billingForm" (ngSubmit)="nextStep()">
+      <h2 class="fs-3 w-100 pb-2 mb-4">Datos de facturación</h2>
+
+      <div
+        mat-dialog-content
+        class="d-flex flex-column flex-md-row justify-content-between w-100"
+      >
+        <div class="form_column">
+          <div class="d-flex align-items-center mb-2">
+            <mat-icon>person_outline</mat-icon>
+            <h3 class="fw-bold d-inline mb-0">Datos personales</h3>
+          </div>
+          <mat-form-field [autofocus]="false" class="col-12" appearance="fill">
+            <mat-label>Nombre</mat-label>
+            <input type="text" matInput formControlName="first_name" />
+            <mat-error *ngIf="first_name.hasError('required')"
+              >Este campo no puede ir vacío</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field [autofocus]="false">
+            <mat-label>Apellido</mat-label>
+            <input type="text" matInput formControlName="last_name" />
+            <mat-error>Este campo no puede ir vacío</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form_column">
+          <div class="d-flex align-items-center mb-2">
+            <mat-icon>location_on</mat-icon>
+            <h3 class="fw-bold d-inline mb-0">Datos de envío</h3>
+          </div>
+          <mat-form-field [autofocus]="false">
+            <mat-label>Domicilio</mat-label>
+            <input type="text" matInput formControlName="address" />
+            <mat-error *ngIf="address.hasError('required')"
+              >Este campo no puede ir vacío</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field [autofocus]="false">
+            <mat-label>Ciudad</mat-label>
+            <input type="text" matInput formControlName="city" />
+            <mat-error *ngIf="city.hasError('required')"
+              >Este campo no puede ir vacío</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field [autofocus]="false">
+            <mat-label>País</mat-label>
+            <mat-select formControlName="country">
+              <mat-option
+                *ngFor="let country of countries"
+                [value]="country.name"
+              >
+                {{ country.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="country.hasError('required')"
+              >Este campo no puede ir vacío</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field [autofocus]="false">
+            <mat-label>Teléfono</mat-label>
+            <input type="text" matInput formControlName="phone" />
+            <mat-error *ngIf="phone.hasError('required')"
+              >Este campo no puede ir vacío</mat-error
+            >
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div mat-dialog-actions class="d-flex justify-content-end gap-2">
+        <button mat-raised-button color="accent" type="submit">
+          Siguiente
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

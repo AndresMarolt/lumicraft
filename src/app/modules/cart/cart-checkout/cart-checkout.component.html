@@ -1,0 +1,16 @@
+<div class="">
+  <mat-tab-group mat-stretch-tabs="true" mat-align-tabs="center">
+    <mat-tab label="FACTURACIÓN"
+      ><div class="content">
+        <app-billing (goToNextStep)="nextStep()"></app-billing></div
+    ></mat-tab>
+    <mat-tab label="MÉTODO DE ENVÍO" [disabled]="enabledIndex < 1"
+      ><div class="content">
+        <app-delivery></app-delivery>
+      </div>
+    </mat-tab>
+    <mat-tab label="FINALIZAR COMPRA" [disabled]="enabledIndex < 2"
+      ><div class="content">Content 1</div></mat-tab
+    >
+  </mat-tab-group>
+</div>
