@@ -40,14 +40,4 @@ export class CartComponent implements OnInit {
       .removeProduct(this.userId, item.product)
       .subscribe();
   }
-
-  // generateOrder() {
-  //   this.shoppingCartService.generateOrder(this.userId).subscribe((res) => {
-  //     this.snackbarService.showSnackbar(
-  //       'Orden de compra generada exitosamente',
-  //       SnackbarTone.Success
-  //     );
-  //     this.shoppingCartService.clearCart();
-  //   });
-  // }
 }

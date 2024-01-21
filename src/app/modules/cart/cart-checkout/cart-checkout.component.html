@@ -4,20 +4,28 @@
       ><div class="content">
         <app-billing
           [user]="user"
-          (goToNextStep)="nextStep($event)"
+          (changeStep)="changeStep($event)"
           (updateUserBillingData)="updateUserBillingData($event)"
         ></app-billing></div
     ></mat-tab>
-    <mat-tab label="MÉTODO DE ENVÍO" [disabled]="enabledIndex < 1"
+    <mat-tab label="MÉTODO DE ENTREGA" [disabled]="enabledIndex < 1"
       ><div class="content">
         <app-delivery
           [user]="user"
-          (goToNextStep)="nextStep($event)"
+          (changeStep)="changeStep($event)"
+          (setDeliveryMethod)="setDeliveryMethod($event)"
         ></app-delivery>
       </div>
     </mat-tab>
     <mat-tab label="FINALIZAR COMPRA" [disabled]="enabledIndex < 2"
-      ><div class="content">Content 1</div></mat-tab
-    >
+      ><div class="content">
+        <app-summary
+          [user]="user"
+          [userId]="userId"
+          [deliveryMethod]="deliveryMethod"
+          [cart]="cart"
+          (changeStep)="changeStep($event)"
+        ></app-summary></div
+    ></mat-tab>
   </mat-tab-group>
 </div>

@@ -14,7 +14,7 @@ export class BillingComponent {
   public countries = COUNTRIES;
   private formBuilder = inject(FormBuilder);
   private authService = inject(AuthService);
-  @Output() goToNextStep: EventEmitter<number> = new EventEmitter<number>();
+  @Output() changeStep: EventEmitter<number> = new EventEmitter<number>();
   @Output() updateUserBillingData: EventEmitter<User> =
     new EventEmitter<User>();
   @Input() user!: User;
@@ -34,7 +34,7 @@ export class BillingComponent {
 
   submit() {
     if (this.billingForm.valid) {
-      this.goToNextStep.emit(1);
+      this.changeStep.emit(1);
       this.updateUserBillingData.emit(this.billingForm.value);
     }
   }

@@ -1,1 +1,79 @@
-<p>summary works!</p>
+<mat-card>
+  <mat-card-content class="px-5 py-4">
+    <h2 class="fs-3 w-100 pb-2 mb-4 section-title">Resúmen de compra</h2>
+
+    <div class="mb-4">
+      <h3 class="fs-5 mb-3">Datos de facturación</h3>
+      <div>
+        <p>Nombre y apellido: {{ user.first_name }} {{ user.last_name }}</p>
+        <p>Domicilio: {{ user.address }}</p>
+        <p>Ciudad: {{ user.city }}</p>
+        <p>País: {{ user.country }}</p>
+        <p>Teléfono: {{ user.phone }}</p>
+        <p>
+          Entrega:
+          {{
+            deliveryMethod === "DOMICILIO"
+              ? "Envío a domicilio"
+              : "Retira en tienda"
+          }}
+        </p>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <h3 class="fs-5 mb-3">Detalle de compra</h3>
+      <div class="products_list">
+        <div
+          *ngFor="let item of cart.allProducts"
+          class="product d-flex align-items-center"
+        >
+          <img
+            class="product_image"
+            [src]="item.product.images![0].image"
+            [alt]="item.product.images![0].image"
+          />
+          <div>
+            <h3 class="fw-bold mb-0">
+              {{ item.product.brand }} {{ item.product.model }}
+            </h3>
+            <p class="fw-bold color-accent mb-0">€{{ item.product.price }}</p>
+            <p class="text-muted fst-italic">Cantidad: {{ item.quantity }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <h3 class="fs-5 mb-3">Total a pagar</h3>
+      <p *ngIf="deliveryMethod === 'DOMICILIO'">
+        Subtotal:
+        <span class="fw-bold color-accent fs-5"
+          >€{{ cart.totalAmount | number : "1.0-2" }}</span
+        >
+      </p>
+      <p *ngIf="deliveryMethod === 'DOMICILIO'">
+        Costo de envío: <span class="fw-bold color-accent fs-5">€0</span>
+      </p>
+      <p>
+        TOTAL:
+        <span class="fw-bold color-accent fs-5">€{{ cart.totalAmount }}</span>
+      </p>
+    </div>
+
+    <div mat-dialog-actions class="mt-5 d-flex justify-content-between">
+      <button mat-stroked-button (click)="previousStep()" type="button">
+        Atrás
+      </button>
+
+      <button
+        mat-raised-button
+        color="accent"
+        type="button"
+        (click)="createOrder()"
+      >
+        COMPRAR
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>
