@@ -1,0 +1,36 @@
+@use './../../../../../styles/palette.scss' as palette;
+
+h2 {
+  border-bottom: 1px solid rgb(216, 216, 216);
+}
+
+.delivery-method {
+  padding: 16px 0;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 10px;
+  border: 2px solid rgb(212, 212, 212);
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+
+  fa-icon {
+    color: rgb(160, 160, 160);
+    color: map-get(palette.$primary, 400);
+  }
+
+}
+
+.selected-method {
+  background-color: map-get(palette.$primary, 400);
+  color: white;
+  transition: .2s ease-in-out;
+  -webkit-transition: .2s ease-in-out;
+  -moz-transition: .2s ease-in-out;
+  -ms-transition: .2s ease-in-out;
+  -o-transition: .2s ease-in-out;
+  fa-icon {
+    color: white;
+  }
+}

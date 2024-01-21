@@ -1,0 +1,31 @@
+<div class="">
+  <mat-tab-group mat-stretch-tabs="true" mat-align-tabs="center">
+    <mat-tab label="FACTURACIÓN"
+      ><div class="content">
+        <app-billing
+          [user]="user"
+          (changeStep)="changeStep($event)"
+          (updateUserBillingData)="updateUserBillingData($event)"
+        ></app-billing></div
+    ></mat-tab>
+    <mat-tab label="MÉTODO DE ENTREGA" [disabled]="enabledIndex < 1"
+      ><div class="content">
+        <app-delivery
+          [user]="user"
+          (changeStep)="changeStep($event)"
+          (setDeliveryMethod)="setDeliveryMethod($event)"
+        ></app-delivery>
+      </div>
+    </mat-tab>
+    <mat-tab label="FINALIZAR COMPRA" [disabled]="enabledIndex < 2"
+      ><div class="content">
+        <app-summary
+          [user]="user"
+          [userId]="userId"
+          [deliveryMethod]="deliveryMethod"
+          [cart]="cart"
+          (changeStep)="changeStep($event)"
+        ></app-summary></div
+    ></mat-tab>
+  </mat-tab-group>
+</div>

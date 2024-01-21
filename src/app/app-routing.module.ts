@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NotFoundComponent } from './shared/components/errors/not-found/not-found.component';
 import { AdminComponent } from './modules';
+import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
   {
@@ -12,6 +13,7 @@ const routes: Routes = [
     path: 'admin',
     component: AdminComponent,
     loadChildren: () => import('./modules').then((m) => m.AdminModule),
+    canActivate: [AdminGuard],
   },
   {
     path: 'profile',

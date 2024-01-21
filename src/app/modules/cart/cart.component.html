@@ -83,15 +83,15 @@
             </p>
           </div>
           <div>
-            <button
+            <a
               mat-raised-button
               color="accent"
               class="p-4 fs-6 col-12"
               [disabled]="cart.totalQuantity === 0"
-              (click)="generateOrder()"
+              [routerLink]="'checkout'"
             >
               Comprar
-            </button>
+            </a>
           </div>
         </div>
       </div>

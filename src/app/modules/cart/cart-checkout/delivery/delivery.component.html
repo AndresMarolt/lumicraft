@@ -1,0 +1,50 @@
+<form [formGroup]="deliveryMethodForm" (ngSubmit)="nextStep()">
+  <mat-card>
+    <mat-card-content class="px-5 py-4">
+      <h2 class="fs-3 w-100 pb-2 mb-4">Método de envío</h2>
+
+      <div class="col-8 mx-auto">
+        <div class="d-flex justify-content-around align-items-start mb-4">
+          <div
+            class="delivery-method col-5"
+            (click)="selectMethod('DOMICILIO')"
+            [ngClass]="{ 'selected-method': method.value === 'DOMICILIO' }"
+          >
+            <fa-icon [icon]="faHome" class="fs-1"></fa-icon>
+            <p class="mt-2 my-4 fw-bold">Envío a domicilio</p>
+            <div>
+              <p class="mb-0">{{ user.first_name }} {{ user.last_name }}</p>
+              <p class="mb-0">{{ user.address }}</p>
+              <p class="mb-0">{{ user.city }}, {{ user.country }}</p>
+              <fa-icon [icon]="faPhone"></fa-icon> {{ user.phone }}
+            </div>
+          </div>
+
+          <div
+            class="delivery-method col-5"
+            (click)="selectMethod('TIENDA')"
+            [ngClass]="{ 'selected-method': method.value === 'TIENDA' }"
+          >
+            <fa-icon [icon]="faShop" class="fs-1"></fa-icon>
+            <p class="mt-2 my-4 fw-bold">Retiro en tienda</p>
+            <div>
+              <p class="mb-0">Calle Mayor 9999</p>
+              <p class="mb-0">Madrid, Comunidad de Madrid</p>
+              <p class="mb-0">España</p>
+              <fa-icon [icon]="faPhone"></fa-icon> +34 91 234 56 78
+            </div>
+          </div>
+        </div>
+      </div>
+      <div mat-dialog-actions class="mt-5 d-flex justify-content-between">
+        <button mat-stroked-button (click)="previousStep()" type="button">
+          Atrás
+        </button>
+
+        <button mat-raised-button color="accent" type="submit">
+          Siguiente
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</form>
