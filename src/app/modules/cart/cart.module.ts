@@ -10,6 +10,7 @@ import { BillingComponent } from './cart-checkout/billing/billing.component';
 import { DeliveryComponent } from './cart-checkout/delivery/delivery.component';
 import { SummaryComponent } from './cart-checkout/summary/summary.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     CartRoutingModule,
     SharedModule,
     MaterialModule,
+    FontAwesomeModule,
   ],
   exports: [CartDisplayComponent],
 })

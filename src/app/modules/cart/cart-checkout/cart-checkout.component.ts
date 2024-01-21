@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatTabGroup } from '@angular/material/tabs';
+import { User } from 'src/app/models/user.interface';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ShoppingCartService } from 'src/app/services/shopping-cart/shopping-cart.service';
-import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-cart-checkout',
@@ -11,6 +11,15 @@ import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
 })
 export class CartCheckoutComponent implements OnInit {
   public userId!: number;
+  public user: User = {
+    username: '',
+    email: '',
+    first_name: '',
+    last_name: '',
+    address: null,
+    city: null,
+    country: null,
+  };
   public enabledIndex = 0;
   private shoppingCartService = inject(ShoppingCartService);
   private authService = inject(AuthService);
@@ -21,8 +30,11 @@ export class CartCheckoutComponent implements OnInit {
     this.userId = id;
   }
 
-  nextStep() {
-    this.enabledIndex++;
-    this.tabGroup.selectedIndex = this.enabledIndex;
+  nextStep(tabNumber: number) {
+    this.enabledIndex = this.tabGroup.selectedIndex = tabNumber;
+  }
+
+  updateUserBillingData(user: User) {
+    this.user = { id: this.userId, ...user };
   }
 }

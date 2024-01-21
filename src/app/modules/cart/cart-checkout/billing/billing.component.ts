@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user.interface';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -10,12 +10,14 @@ import { COUNTRIES } from 'src/assets/countries';
   styleUrls: ['./billing.component.scss'],
 })
 export class BillingComponent {
-  public user!: User;
   public billingForm!: FormGroup;
   public countries = COUNTRIES;
-  @Output() goToNextStep: EventEmitter<void> = new EventEmitter<void>();
   private formBuilder = inject(FormBuilder);
   private authService = inject(AuthService);
+  @Output() goToNextStep: EventEmitter<number> = new EventEmitter<number>();
+  @Output() updateUserBillingData: EventEmitter<User> =
+    new EventEmitter<User>();
+  @Input() user!: User;
 
   constructor() {
     this.user = this.authService.getUser()!;
@@ -30,9 +32,10 @@ export class BillingComponent {
     });
   }
 
-  nextStep() {
+  submit() {
     if (this.billingForm.valid) {
-      this.goToNextStep.emit();
+      this.goToNextStep.emit(1);
+      this.updateUserBillingData.emit(this.billingForm.value);
     }
   }
 

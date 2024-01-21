@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-content class="px-5 py-4">
-    <form [formGroup]="billingForm" (ngSubmit)="nextStep()">
+    <form [formGroup]="billingForm" (ngSubmit)="submit()">
       <h2 class="fs-3 w-100 pb-2 mb-4">Datos de facturación</h2>
 
       <div
@@ -73,7 +73,7 @@
         </div>
       </div>
 
-      <div mat-dialog-actions class="d-flex justify-content-end gap-2">
+      <div mat-dialog-actions class="d-flex justify-content-end">
         <button mat-raised-button color="accent" type="submit">
           Siguiente
         </button>
