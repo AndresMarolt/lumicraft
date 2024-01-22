@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user.interface';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { COUNTRIES } from 'src/assets/countries';
+import { PROVINCES } from 'src/assets/provinces';
 
 @Component({
   selector: 'app-billing',
@@ -11,7 +11,7 @@ import { COUNTRIES } from 'src/assets/countries';
 })
 export class BillingComponent {
   public billingForm!: FormGroup;
-  public countries = COUNTRIES;
+  public provinces = PROVINCES;
   private formBuilder = inject(FormBuilder);
   private authService = inject(AuthService);
   @Output() changeStep: EventEmitter<number> = new EventEmitter<number>();
@@ -26,7 +26,7 @@ export class BillingComponent {
       last_name: [this.user.last_name, [Validators.required]],
       address: [this.user.address, [Validators.required]],
       city: [this.user.city, [Validators.required]],
-      country: [this.user.country, [Validators.required]],
+      province: [this.user.province, [Validators.required]],
       phone: [this.user.phone, [Validators.required]],
       date_of_birth: [this.user.date_of_birth],
     });
@@ -55,8 +55,8 @@ export class BillingComponent {
     return this.billingForm.controls['city'];
   }
 
-  get country() {
-    return this.billingForm.controls['country'];
+  get province() {
+    return this.billingForm.controls['province'];
   }
 
   get phone() {

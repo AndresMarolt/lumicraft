@@ -49,16 +49,13 @@
           </mat-form-field>
 
           <mat-form-field [autofocus]="false">
-            <mat-label>País</mat-label>
-            <mat-select formControlName="country">
-              <mat-option
-                *ngFor="let country of countries"
-                [value]="country.name"
-              >
-                {{ country.name }}
+            <mat-label>Provincia</mat-label>
+            <mat-select formControlName="province">
+              <mat-option *ngFor="let province of provinces" [value]="province">
+                {{ province }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="country.hasError('required')"
+            <mat-error *ngIf="province.hasError('required')"
               >Este campo no puede ir vacío</mat-error
             >
           </mat-form-field>

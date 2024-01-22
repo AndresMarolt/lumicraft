@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NotFoundComponent } from './shared/components/errors/not-found/not-found.component';
 import { AdminComponent } from './modules';
 import { AdminGuard } from './guards/admin.guard';
+import { SessionGuard } from './guards/session.guard';
 
 const routes: Routes = [
   {
@@ -18,6 +19,7 @@ const routes: Routes = [
   {
     path: 'profile',
     loadChildren: () => import('./modules').then((m) => m.ProfileModule),
+    canActivate: [SessionGuard],
   },
   {
     path: 'products',
@@ -30,10 +32,12 @@ const routes: Routes = [
   {
     path: 'cart',
     loadChildren: () => import('./modules').then((m) => m.CartModule),
+    canActivate: [SessionGuard],
   },
   {
     path: 'my-favorites',
     loadChildren: () => import('./modules').then((m) => m.FavoritesModule),
+    canActivate: [SessionGuard],
   },
   {
     path: '',

@@ -7,7 +7,8 @@ export interface User {
   last_name: string;
   address: string | null;
   city: string | null;
-  country: string | null;
+  province: string | null;
+  zipCode?: number | null;
   phone?: string | null;
   date_of_birth?: Date | null;
 }

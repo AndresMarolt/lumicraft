@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CartComponent } from './cart.component';
 import { CartCheckoutComponent } from './cart-checkout/cart-checkout.component';
+import { SessionGuard } from 'src/app/guards/session.guard';
 
 const routes: Routes = [
   {

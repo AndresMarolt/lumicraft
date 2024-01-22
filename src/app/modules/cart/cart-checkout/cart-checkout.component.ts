@@ -23,7 +23,8 @@ export class CartCheckoutComponent implements OnInit {
     last_name: '',
     address: null,
     city: null,
-    country: null,
+    province: null,
+    zipCode: null,
   };
   public enabledIndex = 0;
   public deliveryMethod = '';

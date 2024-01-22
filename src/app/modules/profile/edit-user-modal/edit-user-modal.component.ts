@@ -10,7 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { User } from 'src/app/models/user.interface';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { COUNTRIES } from 'src/assets/countries';
+import { PROVINCES } from 'src/assets/provinces';
 
 @Component({
   selector: 'app-edit-user-modal',
@@ -19,7 +19,7 @@ import { COUNTRIES } from 'src/assets/countries';
 })
 export class EditUserModalComponent implements OnInit {
   public editUserForm: FormGroup;
-  public countries = COUNTRIES;
+  public provinces = PROVINCES;
   private formBuilder = inject(FormBuilder);
   private dialogRef = inject(MatDialogRef);
   private authService = inject(AuthService);
@@ -32,7 +32,8 @@ export class EditUserModalComponent implements OnInit {
       last_name: [null, [Validators.required]],
       address: [null],
       city: [null],
-      country: [null],
+      province: [null],
+      zipCode: [null],
       phone: [null],
       date_of_birth: [null],
     });
@@ -44,7 +45,8 @@ export class EditUserModalComponent implements OnInit {
       last_name: this.user.last_name,
       address: this.user.address,
       city: this.user.city,
-      country: this.user.country,
+      province: this.user.province,
+      zipCode: this.user.zipCode,
       phone: this.user.phone,
       date_of_birth: this.user.date_of_birth,
     });
@@ -69,7 +71,8 @@ export class EditUserModalComponent implements OnInit {
           last_name,
           address,
           city,
-          country,
+          province,
+          zipCode,
           phone,
           date_of_birth,
         } = response;
@@ -79,7 +82,8 @@ export class EditUserModalComponent implements OnInit {
           last_name,
           address,
           city,
-          country,
+          province,
+          zipCode,
           phone,
           date_of_birth,
         };
@@ -106,10 +110,13 @@ export class EditUserModalComponent implements OnInit {
     return this.editUserForm.controls['city'];
   }
 
-  get country() {
-    return this.editUserForm.controls['country'];
+  get province() {
+    return this.editUserForm.controls['province'];
   }
 
+  getZipCode() {
+    return this.editUserForm.controls['zipCode'];
+  }
   get phone() {
     return this.editUserForm.controls['phone'];
   }

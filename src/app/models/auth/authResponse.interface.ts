@@ -6,7 +6,8 @@ export interface AuthResponse {
   email: string;
   address?: string;
   city?: string;
-  country?: string;
+  province?: string;
+  zipCode?: number;
   date_of_birth?: Date;
   phone?: string;
 }

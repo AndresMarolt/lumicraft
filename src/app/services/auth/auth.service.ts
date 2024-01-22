@@ -52,7 +52,8 @@ export class AuthService {
       email,
       address,
       city,
-      country,
+      province,
+      zipCode,
       phone,
       date_of_birth,
     } = response;
@@ -63,7 +64,8 @@ export class AuthService {
       email,
       address: address ?? null,
       city: city ?? null,
-      country: country ?? null,
+      province: province ?? null,
+      zipCode: zipCode ?? null,
       phone: phone ?? null,
       date_of_birth: date_of_birth ?? null,
     });
@@ -76,7 +78,8 @@ export class AuthService {
         email,
         address: address ?? null,
         city: city ?? null,
-        country: country ?? null,
+        province: province ?? null,
+        zipCode: zipCode ?? null,
         phone: phone ?? null,
         date_of_birth: date_of_birth ?? null,
       })
