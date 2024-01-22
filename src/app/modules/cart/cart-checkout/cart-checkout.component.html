@@ -1,15 +1,17 @@
 <div class="">
   <mat-tab-group mat-stretch-tabs="true" mat-align-tabs="center">
-    <mat-tab label="FACTURACIÓN"
-      ><div class="content">
+    <mat-tab [label]="screenWidth < 768 ? '1' : 'FACTURACIÓN'"
+      ><div>
         <app-billing
           [user]="user"
           (changeStep)="changeStep($event)"
           (updateUserBillingData)="updateUserBillingData($event)"
         ></app-billing></div
     ></mat-tab>
-    <mat-tab label="MÉTODO DE ENTREGA" [disabled]="enabledIndex < 1"
-      ><div class="content">
+    <mat-tab
+      [label]="screenWidth < 768 ? '2' : 'MÉTODO DE ENTREGA'"
+      [disabled]="enabledIndex < 1"
+      ><div>
         <app-delivery
           [user]="user"
           (changeStep)="changeStep($event)"
@@ -17,8 +19,10 @@
         ></app-delivery>
       </div>
     </mat-tab>
-    <mat-tab label="FINALIZAR COMPRA" [disabled]="enabledIndex < 2"
-      ><div class="content">
+    <mat-tab
+      [label]="screenWidth < 768 ? '3' : 'FINALIZAR COMPRA'"
+      [disabled]="enabledIndex < 2"
+      ><div>
         <app-summary
           [user]="user"
           [userId]="userId"

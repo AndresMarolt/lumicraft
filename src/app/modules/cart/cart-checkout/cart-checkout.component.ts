@@ -3,6 +3,7 @@ import { MatTabGroup } from '@angular/material/tabs';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user.interface';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
 import { ShoppingCartService } from 'src/app/services/shopping-cart/shopping-cart.service';
 
 export enum DeliveryMethodEnum {
@@ -28,9 +29,11 @@ export class CartCheckoutComponent implements OnInit {
   };
   public enabledIndex = 0;
   public deliveryMethod = '';
+  public screenWidth!: number;
   private shoppingCartService = inject(ShoppingCartService);
   private authService = inject(AuthService);
   private router = inject(Router);
+  private screenSizeService = inject(ScreenSizeService);
   public cart = this.shoppingCartService.cart();
   @ViewChild(MatTabGroup) tabGroup!: MatTabGroup;
 
@@ -38,6 +41,10 @@ export class CartCheckoutComponent implements OnInit {
     if (!this.cart.totalQuantity) {
       this.router.navigate(['/cart']);
     }
+
+    this.screenSizeService.screenWidth$.subscribe((width) => {
+      this.screenWidth = width;
+    });
   }
 
   ngOnInit(): void {

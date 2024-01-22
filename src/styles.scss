@@ -44,6 +44,10 @@ main {
   padding: 8px 16px;
 }
 
+.card-content {
+  padding: 16px !important;
+}
+
 // THEME COLOR VARIABLES
 .background-primary {
   background-color: map-get(palette.$primary, 500);
@@ -95,5 +99,11 @@ main {
 @media(width >= 768px) {
   .content {
     padding: 35px 60px !important;
+  }
+}
+
+@media(width >= 1024px) {
+  .card-content {
+    padding: 16px 30px !important;
   }
 }
