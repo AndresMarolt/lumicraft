@@ -2,11 +2,11 @@
   <app-hero-carousel></app-hero-carousel>
 
   <div
-    class="content my-3 my-md-2 d-flex flex-row flex-wrap flex-md-nowrap justify-content-between align-items-start"
+    class="content my-3 my-md-2 d-flex flex-row flex-md-nowrap justify-content-between align-items-start overflow-scroll"
   >
     <div
       *ngFor="let item of quickInfoItems"
-      class="col-6 col-md-3 d-flex flex-column align-items-center"
+      class="col-5 col-md-3 d-flex flex-column align-items-center"
     >
       <mat-icon class="material-icons-outlined quickInfoIcon">{{
         item.icon

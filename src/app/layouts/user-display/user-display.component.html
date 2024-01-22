@@ -1,7 +1,7 @@
 <button class="p-0" mat-button [matMenuTriggerFor]="menu" *ngIf="user">
   <div class="user-display-container d-flex align-items-center gap-2">
     <mat-icon>person_outline</mat-icon>
-    <p class="m-0">{{ user.username }}</p>
+    <p class="m-0" *ngIf="screenWidth > 767">{{ user.username }}</p>
   </div>
 </button>
 

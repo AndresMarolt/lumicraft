@@ -9,6 +9,14 @@ mat-icon {
   text-wrap: wrap;
 }
 
+.content {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+  &::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+}
+
 @media(min-width: 768px) {
   .content {
     padding: 8px 50px !important;

@@ -2,7 +2,7 @@
 
 .user-display-container {
   background-color: map-get(palette.$primary, 200);
-  padding: 2px 15px;
+  padding: 15px 15px;
   cursor: pointer;
   border-radius: 50px;
   -webkit-border-radius: 50px;
@@ -60,4 +60,10 @@ a {
   color: white;
   text-decoration: none;
   font-size: 1rem;
+}
+
+@media(width >= 768px) {
+  .user-display-container {
+    padding: 2px 15px;
+  }
 }
