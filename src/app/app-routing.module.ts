@@ -32,7 +32,7 @@ const routes: Routes = [
   {
     path: 'cart',
     loadChildren: () => import('./modules').then((m) => m.CartModule),
-    canActivate: [SessionGuard],
+    // canActivate: [SessionGuard],
   },
   {
     path: 'my-favorites',

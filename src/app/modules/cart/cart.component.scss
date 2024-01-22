@@ -4,7 +4,7 @@
     color: unset;
     text-decoration: none;
     .product_image {
-      width: 140px;
+      width: 100px;
     }
     .quantity_modifier {
       width: 100px;
@@ -46,10 +46,25 @@
 }
 
 .buy_column {
-  width: 36%;
+  width: 100%;
 }
 
 .no_items_container {
   position: relative;
   width: 100%;
+}
+
+@media(width >= 768px) {
+  .buy_column {
+    width: 36%;
+  } 
+
+  .items_column {
+    .item {
+      .product_image {
+        width: 140px;
+
+      }
+    }
+  }
 }

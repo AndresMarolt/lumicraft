@@ -84,6 +84,13 @@ main {
   font-size: 4rem;
 }
 
+// CARDS
+::ng-deep {
+  .mat-mdc-card-content {
+  padding: 100px !important;  
+  }
+}
+
 // MEDIA QUERIES
 @media(width >= 768px) {
   .content {
