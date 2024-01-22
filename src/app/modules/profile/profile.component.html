@@ -1,85 +1,85 @@
 <mat-card class="m-4">
-  <mat-card-content>
-    <div class="content">
-      <div>
-        <div class="underline_divider">
-          <h2 class="fs-1 d-inline">
-            {{ user.username }}
-          </h2>
+  <mat-card-content class="card-content">
+    <div>
+      <div class="underline_divider">
+        <h2 class="fs-1 d-inline">
+          {{ user.username }}
+        </h2>
 
-          <mat-icon color="accent" class="edit_icon" (click)="openUserModal()"
-            >edit</mat-icon
-          >
-        </div>
-
-        <div class="mt-4">
-          <p>
-            Nombre completo:
-            <span> {{ user.first_name }} {{ user.last_name }} </span>
-          </p>
-          <p>
-            Email:
-            <span>
-              {{ user.email }}
-            </span>
-          </p>
-          <p>
-            Domicilio:
-            <span>
-              {{ user.address }}
-            </span>
-          </p>
-          <p>
-            Ciudad:
-            <span>
-              {{ user.city }}
-            </span>
-          </p>
-          <p>
-            Provincia:
-            <span>
-              {{ user.province }}
-            </span>
-          </p>
-          <p>
-            Código postal:
-            <span>
-              {{ user.zipCode }}
-            </span>
-          </p>
-          <p>
-            Celular: <span>{{ user.phone }}</span>
-          </p>
-          <p>
-            Fecha de nacimiento:
-            <span>{{ user.date_of_birth | date : "dd/MM/yyyy" }}</span>
-          </p>
-        </div>
+        <mat-icon color="accent" class="edit_icon" (click)="openUserModal()"
+          >edit</mat-icon
+        >
       </div>
 
-      <div class="orders mt-5" *ngIf="orders.length">
-        <p class="fs-3 underline_divider mb-4">Órdenes de compra</p>
-        <div class="d-flex flex-wrap gap-3">
-          <mat-card
-            *ngFor="let order of orders"
-            class="order mb-3"
-            (click)="openOrderModal(order)"
-          >
-            <mat-card-content>
-              <p class="text-center fw-bold">N° de orden: {{ order.id }}</p>
-              <p>
-                Fecha: {{ order.timestamp | date : "dd/MM/yyyy" }} -
-                {{ order.timestamp | date : "HH:mm" }}hs.
-              </p>
-              <p>
-                Estado:
-                {{ order.status === "PENDING" ? "Pendiente" : "Completada" }}
-              </p>
-              <p>Cantidad de productos: {{ order.totalQuantity }}</p>
-              <p>Total: €{{ order.totalAmount }}</p>
-            </mat-card-content>
-          </mat-card>
-        </div>
+      <div class="mt-4">
+        <p>
+          Nombre completo:
+          <span> {{ user.first_name }} {{ user.last_name }} </span>
+        </p>
+        <p>
+          Email:
+          <span>
+            {{ user.email }}
+          </span>
+        </p>
+        <p>
+          Domicilio:
+          <span>
+            {{ user.address }}
+          </span>
+        </p>
+        <p>
+          Ciudad:
+          <span>
+            {{ user.city }}
+          </span>
+        </p>
+        <p>
+          Provincia:
+          <span>
+            {{ user.province }}
+          </span>
+        </p>
+        <p>
+          Código postal:
+          <span>
+            {{ user.zipCode }}
+          </span>
+        </p>
+        <p>
+          Teléfono: <span>{{ user.phone }}</span>
+        </p>
+        <p>
+          Fecha de nacimiento:
+          <span>{{ user.date_of_birth | date : "dd/MM/yyyy" }}</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-5" *ngIf="orders.length">
+      <p class="fs-3 underline_divider mb-4">Órdenes de compra</p>
+      <div
+        class="d-flex flex-column flex-sm-row justify-content-between flex-wrap gap-sm-3"
+      >
+        <mat-card
+          *ngFor="let order of orders"
+          class="order mb-3"
+          (click)="openOrderModal(order)"
+        >
+          <mat-card-content>
+            <p class="text-center fw-bold">N° de orden: {{ order.id }}</p>
+            <p>
+              Fecha: {{ order.timestamp | date : "dd/MM/yyyy" }} -
+              {{ order.timestamp | date : "HH:mm" }}hs.
+            </p>
+            <p>
+              Estado:
+              {{ order.status === "PENDING" ? "Pendiente" : "Completada" }}
+            </p>
+            <p>Cantidad de productos: {{ order.totalQuantity }}</p>
+            <p>Total: €{{ order.totalAmount }}</p>
+          </mat-card-content>
+        </mat-card>
       </div>
     </div>
   </mat-card-content>

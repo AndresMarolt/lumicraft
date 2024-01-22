@@ -8,6 +8,24 @@
 }
 
 .order {
-  width: 24%;
+  width: 100%;
   cursor: pointer;
+}
+
+@media(width >= 576px) {
+  .order {
+    width: 48%;
+  }
+}
+
+@media(width >= 768px) {
+  .order {
+    width: 31%;
+  }
+}
+
+@media(width >= 1024px) {
+  .order {
+    width: 23%;
+  }
 }
