@@ -1,7 +1,12 @@
 <mat-card class="mx-2 my-4 m-md-4">
   <mat-card-content class="card-content">
-    <h2 class="fs-3 mb-2">Mi carrito</h2>
-    <p>{{ cart.totalQuantity }} artículos</p>
+    <div class="underline_divider mb-4">
+      <h2 class="fs-1 d-inline">Mi carrito</h2>
+    </div>
+    <p *ngIf="cart.totalQuantity">
+      {{ cart.totalQuantity }}
+      {{ cart.totalQuantity > 1 ? "artículos" : "artículo" }}
+    </p>
 
     <div class="d-flex flex-column flex-md-row justify-content-between gap-3">
       <div class="items_column" *ngIf="cart.totalQuantity; else noItems">
