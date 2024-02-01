@@ -4,21 +4,21 @@ mat-icon {
   width: 50px;
 }
 
-.quickInfoText {
-  font-size: .8rem;
-  text-wrap: wrap;
-}
-
-.content {
+.quick-info-items {
   -ms-overflow-style: none;  /* Internet Explorer 10+ */
   scrollbar-width: none;  /* Firefox */
   &::-webkit-scrollbar { 
     display: none;  /* Safari and Chrome */
-}
+  }
+  
+  .quick-info-text {
+    font-size: .8rem;
+    text-wrap: wrap;
+  }
 }
 
 @media(min-width: 768px) {
-  .content {
+  .quick-info-items {
     padding: 8px 50px !important;
   }
 }

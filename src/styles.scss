@@ -41,7 +41,7 @@ main {
 
 // CONTENT CONTAINER
 .content {
-  padding: 8px 16px;
+  padding: 24px 8px;
 }
 
 .card-content {
@@ -93,6 +93,10 @@ main {
   .mat-mdc-card-content {
   padding: 100px !important;  
   }
+}
+
+.cdk-overlay-pane#cdk-overlay-0 {
+  max-width: 100% !important;
 }
 
 // MEDIA QUERIES

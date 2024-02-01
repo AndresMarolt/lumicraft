@@ -1,0 +1,43 @@
+<aside class="col-12 px-2 py-3 p-md-0">
+  <div class="col-12 col-md-10pb-md-4">
+    <h4 class="fs-5">Marca</h4>
+    <div class="scrolled_section">
+      <mat-checkbox
+        *ngFor="let brand of brands"
+        class="col-12"
+        [checked]="brandFilters.includes(brand)"
+        (click)="filterByBrand(brand)"
+        >{{ brand | uppercase }}</mat-checkbox
+      >
+    </div>
+  </div>
+
+  <div class="col-12 col-md-10 mt-3 mt-md-4">
+    <h4 class="fs-5">Precio</h4>
+    <div>
+      <span class="monto-seleccionado">
+        {{ minSelectedAmount | currency : "EUR" : "symbol" : "1.2-2" }} a
+        {{ maxSelectedAmount | currency : "EUR" : "symbol" : "1.2-2" }}
+      </span>
+      <mat-slider
+        class="col-12"
+        min="0"
+        max="3000"
+        ngDefaultControl
+        step="100"
+        (change)="onSliderChange()"
+      >
+        <input
+          matSliderStartThumb
+          class="col-12"
+          [(ngModel)]="minSelectedAmount"
+        />
+        <input
+          matSliderEndThumb
+          class="col-12"
+          [(ngModel)]="maxSelectedAmount"
+        />
+      </mat-slider>
+    </div>
+  </div>
+</aside>

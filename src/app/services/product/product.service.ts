@@ -59,7 +59,7 @@ export class ProductService {
     return this.httpClient.get<PaginatedResponse>(url).pipe(
       tap((res) => {
         const productsList = res.content.map((prod) => prod);
-        this.products.next(productsList);
+        this.products.next(productsList || []);
       })
     );
   }

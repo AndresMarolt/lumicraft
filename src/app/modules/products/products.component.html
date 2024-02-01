@@ -1,54 +1,31 @@
-<div class="content d-flex" *ngIf="!httpResponseHasError">
-  <aside class="col-3">
-    <div class="aside_section col-10 pb-4">
-      <h4 class="fs-5">Marca</h4>
-      <div class="scrolled_section">
-        <mat-checkbox
-          *ngFor="let brand of brands"
-          class="col-12"
-          [checked]="brandFilters.includes(brand)"
-          (click)="filterByBrand(brand)"
-          >{{ brand | uppercase }}</mat-checkbox
-        >
-      </div>
-    </div>
+<div class="content position-relative d-flex">
+  <ng-container *ngIf="screenWidth >= 768">
+    <app-filters
+      [currentCategory]="currentCategory"
+      [brandFilters]="brandFilters"
+      [minSelectedAmount]="minSelectedAmount"
+      [maxSelectedAmount]="maxSelectedAmount"
+      (emitFilteredProducts)="updateProductsList($event)"
+    ></app-filters>
+  </ng-container>
 
-    <div class="aside_section col-10 mt-4">
-      <h4 class="fs-5">Precio</h4>
-      <div>
-        <span class="monto-seleccionado">
-          {{ minSelectedAmount | currency : "EUR" : "symbol" : "1.2-2" }} a
-          {{ maxSelectedAmount | currency : "EUR" : "symbol" : "1.2-2" }}
-        </span>
-        <mat-slider
-          class="col-12"
-          min="0"
-          max="3000"
-          ngDefaultControl
-          step="100"
-          (change)="onSliderChange()"
-        >
-          <input
-            matSliderStartThumb
-            class="col-12"
-            [(ngModel)]="minSelectedAmount"
-          />
-          <input
-            matSliderEndThumb
-            class="col-12"
-            [(ngModel)]="maxSelectedAmount"
-          />
-        </mat-slider>
-      </div>
-    </div>
-  </aside>
+  <ng-container *ngIf="screenWidth < 768">
+    <button
+      color="accent"
+      mat-flat-button
+      class="position-fixed filters-button"
+      (click)="toggleFiltersModal()"
+    >
+      Ver filtros
+    </button>
+  </ng-container>
 
-  <div class="col-9" *ngIf="!loading; else loadingSpinner">
-    <div *ngIf="productsList.length; else noResults">
+  <div class="col-12 col-md-9" *ngIf="!loading; else loadingSpinner">
+    <div *ngIf="productListLength; else noResults">
       <div class="products">
         <mat-card *ngFor="let product of productsList" class="product">
           <a [routerLink]="['/product', product.slug]">
-            <mat-card-content>
+            <mat-card-content class="d-flex flex-column">
               <img
                 [src]="
                   'https://mitrahukum.org/wp-content/uploads/2012/09/dummy-post-square-1-768x768.jpg'
@@ -62,7 +39,7 @@
                   [src]="product.images![0].image"
                   *ngIf="product.images!.length === 1; else multipleImages"
                   alt=""
-                  class="product-image"
+                  class="product-image align-self-center"
                 />
                 <ng-template #multipleImages>
                   <app-products-carousel
@@ -103,7 +80,3 @@
     </div>
   </ng-template>
 </div>
-
-<ng-container *ngIf="httpResponseHasError">
-  <app-not-found></app-not-found>
-</ng-container>

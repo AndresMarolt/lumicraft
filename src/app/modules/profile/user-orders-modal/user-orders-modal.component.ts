@@ -8,7 +8,6 @@ import { Order } from 'src/app/models/order.interface';
   styleUrls: ['./user-orders-modal.component.scss'],
 })
 export class UserOrdersModalComponent {
-  private dialog = inject(MatDialogRef);
   @Input()
   order!: Order;
 }
