@@ -10,6 +10,7 @@
         [src]="item.image"
         alt="product_img"
         class="product-image"
+        [ngClass]="{ 'w-100': hasFullWidth, 'h-100': hasFullWidth }"
         [style.width]="imageWidth"
         [style.height]="imageHeight"
       />
