@@ -1,5 +1,4 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { User } from 'src/app/models/user.interface';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ShoppingCartService } from 'src/app/services/shopping-cart/shopping-cart.service';
 

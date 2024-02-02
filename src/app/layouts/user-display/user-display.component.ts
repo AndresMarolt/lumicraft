@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/models/user.interface';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
+import { faUser } from '@fortawesome/free-regular-svg-icons';
+import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-user-display',
@@ -16,6 +18,8 @@ export class UserDisplayComponent implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
   private screenSizeService = inject(ScreenSizeService);
+  public faUser = faUser;
+  public faLogout = faRightFromBracket;
 
   constructor() {
     this.authService.user$.subscribe((user) => {

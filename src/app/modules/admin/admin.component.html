@@ -1,11 +1,13 @@
-<div class="d-flex flex-column gap-2 content">
+<div class="d-flex flex-column gap-2 mx-2 my-4 m-md-4">
   <div
-    class="options-container d-flex align-items-center px-3 py-2 gap-2"
+    class="options-container d-flex align-items-center justify-content-center justify-content-md-start gap-2"
     *ngIf="!httpResponseError"
   >
     <a
+      mat-flat-button
+      color="accent"
       [routerLink]="[option.link]"
-      class="d-flex align-items-center color-primary"
+      class="d-flex align-items-center color-primary p-2 py-4"
       [ngClass]="{
         highlighted: option.highlighted,
         'background-primary': option.highlighted,
@@ -13,9 +15,7 @@
       }"
       *ngFor="let option of adminOptions"
     >
-      <mat-icon [matTooltip]="option.text" class="fs-2 w-100 h-100 me-1">{{
-        option.icon
-      }}</mat-icon>
+      <fa-icon [icon]="option.icon" class="fs-2 w-100 h-100 me-1"></fa-icon>
       <p class="mb-0">
         {{ option.text }}
       </p>

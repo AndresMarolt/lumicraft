@@ -4,6 +4,7 @@
   *ngIf="isUserLoggedIn"
 >
   <mat-icon class="cart_icon">shopping_cart</mat-icon>
+
   <div class="cart_blob background-accent" *ngIf="cartItems.totalQuantity > 0">
     <p class="m-0">
       {{ cartItems.totalQuantity }}
