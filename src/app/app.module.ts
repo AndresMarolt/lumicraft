@@ -15,6 +15,7 @@ import { SidenavComponent } from './layouts/sidenav/sidenav.component';
 import { FooterComponent } from './layouts/footer/footer.component';
 import { CloudinaryModule } from '@cloudinary/ng';
 import { CartModule } from './modules/cart/cart.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { CartModule } from './modules/cart/cart.module';
     AppRoutingModule,
     AdminModule,
     CloudinaryModule,
+    FontAwesomeModule,
     CartModule,
   ],
   providers: [AuthService, httpInterceptorProviders],

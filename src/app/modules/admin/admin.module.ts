@@ -13,6 +13,7 @@ import { ProductComponent } from './admin-product/product.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { NgChartsModule } from 'ng2-charts';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     AdminRoutingModule,
     SharedModule,
     MaterialModule,
+    FontAwesomeModule,
   ],
 })
 export class AdminModule {}

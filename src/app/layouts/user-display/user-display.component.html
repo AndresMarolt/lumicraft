@@ -1,7 +1,7 @@
 <button class="p-0" mat-button [matMenuTriggerFor]="menu" *ngIf="user">
   <div class="user-display-container d-flex align-items-center gap-2">
-    <mat-icon>person_outline</mat-icon>
-    <p class="m-0">{{ user.username }}</p>
+    <fa-icon [icon]="faUser"></fa-icon>
+    <p class="m-0" *ngIf="screenWidth > 767">{{ user.username }}</p>
   </div>
 </button>
 
@@ -18,7 +18,7 @@
     >Admin</a
   >
   <button mat-menu-item class="logout_btn" (click)="logout()">
-    <mat-icon class="logout_icon me-1">logout</mat-icon> Cerrar Sesión
+    <fa-icon [icon]="faLogout" class="logout_icon me-1"></fa-icon> Cerrar Sesión
   </button>
 </mat-menu>
 

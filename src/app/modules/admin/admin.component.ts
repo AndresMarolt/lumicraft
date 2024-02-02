@@ -1,11 +1,17 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { ErrorService } from 'src/app/services/error/error.service';
+import {
+  faChartSimple,
+  faBoxesStacked,
+  faReceipt,
+} from '@fortawesome/free-solid-svg-icons';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 interface AdminOption {
   text: string;
   link: string;
-  icon: string;
+  icon: IconProp;
   highlighted: boolean;
 }
 
@@ -15,23 +21,20 @@ interface AdminOption {
   styleUrls: ['./admin.component.scss'],
 })
 export class AdminComponent implements OnInit {
+  public faChart = faChartSimple;
+  public faProducts = faBoxesStacked;
+  public faOrders = faReceipt;
   public adminOptions: AdminOption[] = [
     {
       text: 'Dashboard',
       link: 'dashboard',
-      icon: 'bar_chart',
+      icon: this.faChart,
       highlighted: false,
     },
     {
       text: 'Productos',
       link: 'products',
-      icon: 'inventory',
-      highlighted: false,
-    },
-    {
-      text: 'Órdenes',
-      link: 'asdasd',
-      icon: 'shopping_cart_checkout',
+      icon: this.faProducts,
       highlighted: false,
     },
   ];

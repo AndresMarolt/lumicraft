@@ -1,12 +1,14 @@
-<form [formGroup]="deliveryMethodForm" (ngSubmit)="nextStep()">
-  <mat-card>
-    <mat-card-content class="px-5 py-4">
+<mat-card class="mx-2 my-4 m-md-4">
+  <mat-card-content class="card-content">
+    <form [formGroup]="deliveryMethodForm" (ngSubmit)="nextStep()">
       <h2 class="fs-3 w-100 pb-2 mb-4">Método de envío</h2>
 
-      <div class="col-8 mx-auto">
-        <div class="d-flex justify-content-around align-items-start mb-4">
+      <div class="col-12 col-md-8 mx-auto">
+        <div
+          class="d-flex flex-column flex-md-row justify-content-between justify-content-md-around align-items-start mb-4 gap-2 gap-md-0"
+        >
           <div
-            class="delivery-method col-5"
+            class="delivery-method col-12 col-md-5"
             (click)="selectMethod('DOMICILIO')"
             [ngClass]="{ 'selected-method': method.value === 'DOMICILIO' }"
           >
@@ -21,7 +23,7 @@
           </div>
 
           <div
-            class="delivery-method col-5"
+            class="delivery-method col-12 col-md-5"
             (click)="selectMethod('TIENDA')"
             [ngClass]="{ 'selected-method': method.value === 'TIENDA' }"
           >
@@ -45,6 +47,6 @@
           Siguiente
         </button>
       </div>
-    </mat-card-content>
-  </mat-card>
-</form>
+    </form>
+  </mat-card-content>
+</mat-card>

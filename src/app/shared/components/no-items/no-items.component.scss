@@ -1,6 +1,6 @@
 .no_items {
   width: 100%;
-  height: 100%;
+  height: 150px;
   border: 2px dashed rgb(161, 161, 161);
   color: rgb(161, 161, 161);
 
@@ -13,5 +13,11 @@
     -moz-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     -o-transform: translate(-50%, -50%);
+  }
+}
+
+@media(width >= 768px) {
+  .no_items {
+    height: 100%;
   }
 }

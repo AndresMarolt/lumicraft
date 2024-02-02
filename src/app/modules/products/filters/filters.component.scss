@@ -1,0 +1,41 @@
+::ng-deep {
+  mat-slider {
+    margin: 0 !important;
+    width: 100% !important;
+  }
+}
+
+.scrolled_section { 
+  max-height: 400px;
+  overflow: scroll;
+}
+
+
+.filters-button {
+  top: 90%;
+  z-index: 1;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+}
+
+::ng-deep {
+  .mdc-dialog__surface {
+    overflow: hidden;
+  }
+
+}
+
+aside {
+  padding: 25px !important;
+}
+
+@media(width >= 768px) {
+  aside {
+    overflow: auto;
+  }
+  
+}

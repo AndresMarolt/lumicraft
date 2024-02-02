@@ -1,16 +1,25 @@
 <div class="" *ngIf="!loading; else loadingSpinner">
   <ng-container *ngIf="!httpResponseHasError">
-    <div class="mx-auto d-flex justify-content-between mb-4"></div>
+    <div class="w-100">
+      <button
+        class="d-flex mb-3 mt-4 ms-md-auto col-12 col-md-auto"
+        mat-flat-button
+        color="accent"
+        (click)="openFormModal()"
+      >
+        <mat-icon class="m-0"> add </mat-icon>
+        <p class="mb-0 ms-2">Agregar producto</p>
+      </button>
+    </div>
+    <div
+      class="mt-4 d-flex flex-column flex-md-row justify-content-between align-items-end"
+    >
+      <app-search-bar
+        class="col-12 col-md-auto"
+        (inputChangeEvent)="search($event)"
+      ></app-search-bar>
 
-    <div class="d-flex justify-content-between align-items-end">
-      <app-search-bar (inputChangeEvent)="search($event)"></app-search-bar>
-
-      <div class="d-flex flex-column gap-3">
-        <button mat-flat-button color="accent" (click)="openFormModal()">
-          <mat-icon class="m-0"> add </mat-icon>
-          <p class="mb-0 ms-2">Agregar producto</p>
-        </button>
-
+      <div class="d-flex flex-column gap-3 col-12 col-md-auto">
         <mat-form-field>
           <mat-label>Categoría</mat-label>
           <mat-select

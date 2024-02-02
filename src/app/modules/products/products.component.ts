@@ -1,10 +1,12 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'src/app/models/product.interface';
-import { AuthService } from 'src/app/services/auth/auth.service';
 import { ProductService } from 'src/app/services/product/product.service';
+import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
 import { BRANDS } from 'src/assets/brands';
+import { FiltersComponent } from './filters/filters.component';
 
 @Component({
   selector: 'app-products',
@@ -19,51 +21,51 @@ export class ProductsComponent implements OnInit {
   minSelectedAmount: number = 0;
   maxSelectedAmount: number = 3000;
   currentCategory!: string;
-  loading = true;
+  loading = false;
   currentPage: number = 0;
   pageSize: number = 9;
   pageIndex = 0;
-  httpResponseHasError: boolean = false;
+  screenWidth!: number;
   private productService = inject(ProductService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  private authService = inject(AuthService);
-  isUserLoggedIn: boolean = this.authService.isLoggedIn();
+  private screenSizeService = inject(ScreenSizeService);
+  private dialog = inject(MatDialog);
 
   ngOnInit(): void {
+    this.loading = true;
+    this.screenSizeService.screenWidth$.subscribe((width) => {
+      this.screenWidth = width;
+    });
     this.productService.products$.subscribe((products) => {
       this.productsList = products;
     });
 
     this.route.params.subscribe((params) => {
-      console.log(params);
-
-      this.loading = true;
-
       this.currentCategory = params['category'];
-
       this.minSelectedAmount = 0;
       this.maxSelectedAmount = 3000;
       this.pageIndex = 0;
       this.currentPage = 0;
       this.brandFilters = [];
-
       this.getProductsByCategoryAndFilter();
     });
 
     this.route.queryParams.subscribe((queryParams) => {
       if (Object.keys(queryParams).length !== 0) {
-        this.loading = true;
         const minPriceFromUrl = queryParams['priceMin'] || 0;
         const maxPriceFromUrl = queryParams['priceMax'] || 3000;
         this.pageIndex = queryParams['page'] || 0;
         this.currentPage = queryParams['page'] || 0;
-
         this.minSelectedAmount = +minPriceFromUrl;
         this.maxSelectedAmount = +maxPriceFromUrl;
-
         const brandsFromUrl = queryParams['brands'];
         this.brandFilters = brandsFromUrl ? brandsFromUrl.split(',') : [];
+
+        if (this.screenWidth < 768) {
+          this.getProductsByCategoryAndFilter();
+        }
+      } else {
         this.getProductsByCategoryAndFilter();
       }
     });
@@ -79,12 +81,14 @@ export class ProductsComponent implements OnInit {
       .getFilteredProducts(this.currentPage, 9, this.currentCategory, filters)
       .subscribe({
         next: (res) => {
+          this.productsList = res.content;
           this.productListLength = res.totalElements;
-          this.httpResponseHasError = false;
+          this.loading = false;
         },
         error: (e) => {
           if (e.status === 404) {
-            this.httpResponseHasError = true;
+            this.productsList = [];
+            this.productListLength = 0;
           }
           this.loading = false;
         },
@@ -92,6 +96,12 @@ export class ProductsComponent implements OnInit {
           this.loading = false;
         },
       });
+  }
+
+  updateProductsList(event: { products: Product[]; totalElements: number }) {
+    this.productsList = event.products;
+    this.productListLength = event.totalElements;
+    this.loading = false;
   }
 
   filterByBrand(brand: string) {
@@ -135,13 +145,31 @@ export class ProductsComponent implements OnInit {
       page: this.currentPage,
     };
     this.addURLParams(newParams);
+
+    this.getProductsByCategoryAndFilter();
+  }
+
+  toggleFiltersModal() {
+    const filtersModal = this.dialog.open(FiltersComponent, {
+      autoFocus: false,
+      width: '100%',
+    });
+
+    filtersModal.componentInstance.currentCategory = this.currentCategory;
+    filtersModal.componentInstance.brandFilters = this.brandFilters;
+    filtersModal.componentInstance.minSelectedAmount = this.minSelectedAmount;
+    filtersModal.componentInstance.maxSelectedAmount = this.maxSelectedAmount;
+
+    filtersModal.componentInstance.closeModal.subscribe(() => {
+      filtersModal.close();
+    });
   }
 
   private addURLParams(newParams: any) {
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: newParams,
-      queryParamsHandling: 'merge', // Para fusionar con los parámetros existentes
+      queryParamsHandling: 'merge',
     });
   }
 }

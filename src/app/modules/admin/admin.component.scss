@@ -4,25 +4,20 @@ a {
   text-decoration: none;
 }
 
-.options-container {
-  width: fit-content;
-  border-radius: 8px;
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  -ms-border-radius: 8px;
-  -o-border-radius: 8px;
-    a {
-      padding: 5px;
-      border-radius: 10px;
-      -webkit-border-radius: 10px;
-      -moz-border-radius: 10px;
-      -ms-border-radius: 10px;
-      -o-border-radius: 10px;
-      border: 2px solid rgb(202, 202, 202);
-  }
+.highlighted {
+  // box-shadow: 0 0 10px rgb(24, 24, 52);
+  border: 3px solid #2e3e4e;
 }
 
-.highlighted {
-  box-shadow: 0 0 10px rgb(24, 24, 52);
-  border: none !important;
+
+::ng-deep {
+  .mdc-button__label {
+    display: flex !important;
+    align-items: center !important;
+  }
+  .mat-mdc-form-field-infix
+  {
+    display: flex !important;
+    flex-direction: row !important;
+  }
 }

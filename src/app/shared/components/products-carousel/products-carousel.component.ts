@@ -10,6 +10,7 @@ export class ProductsCarouselComponent {
   @Input() productImages: { id?: number; image: string }[] = [];
   @Input() imageWidth = '300px';
   @Input() imageHeight = '250px';
+  @Input() hasFullWidth: boolean = false;
   @Input() showSmallImagesBelow = false;
 
   ngOnInit() {

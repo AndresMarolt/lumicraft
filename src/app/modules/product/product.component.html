@@ -1,7 +1,7 @@
 <ng-container *ngIf="!loading; else loadingSpinner">
   <div class="m-4 bg-white" *ngIf="!httpResponseHasError">
-    <div class="d-flex content gap-2">
-      <div class="col-8">
+    <div class="d-flex flex-column flex-md-row content gap-2">
+      <div class="col-12 col-md-8">
         <h2 class="fs-3 fw-bold mb-5">
           {{ product.brand }} {{ product.model }}
         </h2>
@@ -19,20 +19,21 @@
             [src]="product.images![0].image"
             *ngIf="product.images!.length === 1; else multipleImages"
             alt=""
-            class="product-image"
+            class="single_image"
           />
           <ng-template #multipleImages>
             <app-products-carousel
               [productImages]="product.images!"
               [imageWidth]="'550px'"
               [imageHeight]="'450px'"
+              [hasFullWidth]="screenWidth < 1024"
               [showSmallImagesBelow]="true"
             ></app-products-carousel>
           </ng-template>
         </ng-template>
       </div>
 
-      <mat-card class="col-4 h-100">
+      <mat-card class="col-12 col-md-4 h-100">
         <mat-card-content class="py-5 px-4">
           <div class="d-flex justify-content-between">
             <h3 class="color-accent fs-2 fw-bold">€{{ product.price }}</h3>

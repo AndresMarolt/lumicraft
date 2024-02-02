@@ -19,13 +19,10 @@ p {
   height: 80px !important;
 }
 
-footer {
-  height: 340px !important;
-}
-
 main {
   min-height: calc(100svh - 80px - 340px);
 }
+
 
 ::-webkit-scrollbar {
   width: 10px;
@@ -44,7 +41,11 @@ main {
 
 // CONTENT CONTAINER
 .content {
-  padding: 8px 16px;
+  padding: 24px 8px;
+}
+
+.card-content {
+  padding: 16px !important;
 }
 
 // THEME COLOR VARIABLES
@@ -87,9 +88,26 @@ main {
   font-size: 4rem;
 }
 
+// CARDS
+::ng-deep {
+  .mat-mdc-card-content {
+  padding: 100px !important;  
+  }
+}
+
+.cdk-overlay-pane#cdk-overlay-0 {
+  max-width: 100% !important;
+}
+
 // MEDIA QUERIES
-@media(min-width: 768px) {
+@media(width >= 768px) {
   .content {
     padding: 35px 60px !important;
+  }
+}
+
+@media(width >= 1024px) {
+  .card-content {
+    padding: 24px 30px !important;
   }
 }

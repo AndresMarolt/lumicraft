@@ -19,6 +19,7 @@ import {
 import { LoginRedirectModalComponent } from './login-redirect-modal/login-redirect-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { FavoriteService } from 'src/app/services/favorite/favorite.service';
+import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
 
 @Component({
   selector: 'app-product',
@@ -30,6 +31,7 @@ export class ProductComponent implements OnInit {
   public loading = true;
   public product!: Product;
   public httpResponseHasError: boolean = false;
+  public screenWidth: number = 0;
   private userId!: number;
   private route = inject(ActivatedRoute);
   private productService = inject(ProductService);
@@ -38,6 +40,7 @@ export class ProductComponent implements OnInit {
   private favoriteService = inject(FavoriteService);
   private snackbarService = inject(SnackbarService);
   private dialog = inject(MatDialog);
+  private screenSizeService = inject(ScreenSizeService);
   public favorites: WritableSignal<Product[]> = this.favoriteService.favorites;
   public isFav: Signal<boolean> = computed(() => {
     return this.favorites().some((fav) => fav.id === this.product.id);
@@ -48,6 +51,11 @@ export class ProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.screenSizeService.screenWidth$.subscribe((width) => {
+      this.screenWidth = width;
+      console.log(this.screenWidth);
+    });
+
     this.route.params.subscribe((params: Params) => {
       this.productService.getProductsBySlug(params['slug']).subscribe({
         next: (prod: Product) => {

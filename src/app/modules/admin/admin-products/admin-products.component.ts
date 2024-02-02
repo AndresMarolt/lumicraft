@@ -115,6 +115,7 @@ export class AdminProductsComponent implements OnInit {
     const modalRef = this.dialog.open(ProductFormComponent, {
       width: '600px',
       autoFocus: false,
+      maxWidth: '100%',
     });
 
     if (product) {
@@ -134,6 +135,7 @@ export class AdminProductsComponent implements OnInit {
     const modalRef = this.dialog.open(ProductComponent, {
       width: '600px',
       autoFocus: false,
+      maxWidth: '100%',
     });
 
     this.productService.selectProduct(product);

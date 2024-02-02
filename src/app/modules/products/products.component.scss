@@ -1,24 +1,6 @@
-::ng-deep {
-  mat-slider {
-    margin: 0 !important;
-    width: 100% !important;
-  }
-}
-
-.aside_section {
-  &:not(:last-child) {
-    border-bottom: 2px solid rgb(138, 138, 138);
-  }
-}
-
-.scrolled_section { 
-  max-height: 400px;
-  overflow: scroll;
-}
-
 .products {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 10px;
 
   .product {
@@ -41,8 +23,18 @@
       width: 300px;
       height: 250px;
     }
-    
   }
+}
+
+.filters-button {
+  top: 90%;
+  z-index: 1;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
 }
 
 .loading-spinner-container {
@@ -65,5 +57,19 @@
     -o-transform: translate(-50%, -50%);
     filter: brightness(50%);
     -webkit-filter: brightness(50%);
+  }
+}
+
+@media(width >= 768px) {
+  .products {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media(width >= 1200px) {
+  .products {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
   }
 }
