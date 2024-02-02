@@ -133,6 +133,10 @@ export class ProductComponent implements OnInit, OnDestroy {
         this.authService.getToken()!
       )!;
       this.favoriteService.addToFavorites(userId, product.id!);
+      this.snackbarService.showSnackbar(
+        `${product.brand} ${product.model} agregado a favoritos.`,
+        SnackbarTone.Success
+      );
     } else {
       const loginRedirectModalRef = this.dialog.open(
         LoginRedirectModalComponent,
@@ -147,6 +151,10 @@ export class ProductComponent implements OnInit, OnDestroy {
 
   removeItemFromFavorites(item: Product) {
     this.favoriteService.removeFromFavorites(this.userId, item.id!);
+    this.snackbarService.showSnackbar(
+      `${item.brand} ${item.model} retirado de favoritos.`,
+      SnackbarTone.Success
+    );
   }
 
   ngOnDestroy(): void {
