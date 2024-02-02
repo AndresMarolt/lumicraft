@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Product } from 'src/app/models/product.interface';
 import { ProductService } from 'src/app/services/product/product.service';
@@ -11,13 +11,14 @@ import { PageEvent } from '@angular/material/paginator';
 import { ProductComponent } from '../admin-product/product.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ErrorService } from 'src/app/services/error/error.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-products',
   templateUrl: './admin-products.component.html',
   styleUrls: ['./admin-products.component.scss'],
 })
-export class AdminProductsComponent implements OnInit {
+export class AdminProductsComponent implements OnInit, OnDestroy {
   public loading = true;
   productsList: Product[] = [];
   filteredProductsList: Product[] = [];
@@ -36,6 +37,7 @@ export class AdminProductsComponent implements OnInit {
   productListLength: number = 0;
   category = 'todas';
   httpResponseHasError: boolean = false;
+  private subscriptions: Subscription[] = [];
   private productService = inject(ProductService);
   private dialog = inject(MatDialog);
   private snackbarService = inject(SnackbarService);
@@ -44,18 +46,22 @@ export class AdminProductsComponent implements OnInit {
   private errorService = inject(ErrorService);
 
   constructor() {
-    this.productService.products$.subscribe((products) => {
-      this.productsList = products;
-      this.filteredProductsList = products;
-    });
+    this.subscriptions.push(
+      this.productService.products$.subscribe((products) => {
+        this.productsList = products;
+        this.filteredProductsList = products;
+      })
+    );
   }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((queryParams) => {
-      this.pageIndex = queryParams['page'] || 0;
-      this.category = queryParams['category'] || 'todas';
-      this.getProducts(this.pageIndex, this.category);
-    });
+    this.subscriptions.push(
+      this.route.queryParams.subscribe((queryParams) => {
+        this.pageIndex = queryParams['page'] || 0;
+        this.category = queryParams['category'] || 'todas';
+        this.getProducts(this.pageIndex, this.category);
+      })
+    );
   }
 
   onCategoryChange(category: string) {
@@ -75,40 +81,44 @@ export class AdminProductsComponent implements OnInit {
       });
     }
 
-    this.productService
-      .getFilteredProducts(
-        this.currentPage,
-        10,
-        category === 'todas' ? undefined : category
-      )
-      .subscribe((res) => {
-        this.productListLength = res.totalElements;
-      });
+    this.subscriptions.push(
+      this.productService
+        .getFilteredProducts(
+          this.currentPage,
+          10,
+          category === 'todas' ? undefined : category
+        )
+        .subscribe((res) => {
+          this.productListLength = res.totalElements;
+        })
+    );
   }
 
   getProducts(page: number, category: string | undefined) {
-    this.productService
-      .getFilteredProducts(
-        page,
-        10,
-        category === 'todas' ? undefined : category
-      )
-      .subscribe({
-        next: (res) => {
-          this.productListLength = res.totalElements;
-        },
-        error: (e) => {
-          if (e.status === 404) {
-            this.httpResponseHasError = true;
-            this.errorService.setError(true);
-          }
-          this.loading = false;
-        },
-        complete: () => {
-          this.httpResponseHasError = false;
-          this.loading = false;
-        },
-      });
+    this.subscriptions.push(
+      this.productService
+        .getFilteredProducts(
+          page,
+          10,
+          category === 'todas' ? undefined : category
+        )
+        .subscribe({
+          next: (res) => {
+            this.productListLength = res.totalElements;
+          },
+          error: (e) => {
+            if (e.status === 404) {
+              this.httpResponseHasError = true;
+              this.errorService.setError(true);
+            }
+            this.loading = false;
+          },
+          complete: () => {
+            this.httpResponseHasError = false;
+            this.loading = false;
+          },
+        })
+    );
   }
 
   openFormModal(product: Product | undefined = undefined) {
@@ -122,13 +132,15 @@ export class AdminProductsComponent implements OnInit {
       modalRef.componentInstance.product = product;
     }
 
-    modalRef.componentInstance.addProductEvent.subscribe(() => {
-      this.getProducts(0, this.category);
-      this.router.navigate([], {
-        relativeTo: this.route,
-        queryParams: { page: 0, category: this.category },
-      });
-    });
+    this.subscriptions.push(
+      modalRef.componentInstance.addProductEvent.subscribe(() => {
+        this.getProducts(0, this.category);
+        this.router.navigate([], {
+          relativeTo: this.route,
+          queryParams: { page: 0, category: this.category },
+        });
+      })
+    );
   }
 
   openProductModal(product: Product) {
@@ -139,23 +151,25 @@ export class AdminProductsComponent implements OnInit {
     });
 
     this.productService.selectProduct(product);
-    modalRef.componentInstance.deleteProductEvent.subscribe(() => {
-      this.filteredProductsList = this.productsList.filter(
-        (prod) => prod.id !== product.id
-      );
+    this.subscriptions.push(
+      modalRef.componentInstance.deleteProductEvent.subscribe(() => {
+        this.filteredProductsList = this.productsList.filter(
+          (prod) => prod.id !== product.id
+        );
 
-      this.snackbarService.showSnackbar(
-        `${product.brand} ${product.model} eliminado exitosamente!`,
-        SnackbarTone.Success
-      );
+        this.snackbarService.showSnackbar(
+          `${product.brand} ${product.model} eliminado exitosamente!`,
+          SnackbarTone.Success
+        );
 
-      this.getProducts(1, this.category);
+        this.getProducts(1, this.category);
 
-      this.router.navigate([], {
-        relativeTo: this.route,
-        queryParams: { page: 0, category: this.category },
-      });
-    });
+        this.router.navigate([], {
+          relativeTo: this.route,
+          queryParams: { page: 0, category: this.category },
+        });
+      })
+    );
   }
 
   onPageChange(event: PageEvent): void {
@@ -166,11 +180,13 @@ export class AdminProductsComponent implements OnInit {
       page: this.currentPage,
     };
     this.addURLParams(newParams);
-    this.productService
-      .getFilteredProducts(this.currentPage, 10, this.category)
-      .subscribe((res) => {
-        this.productListLength = res.totalElements;
-      });
+    this.subscriptions.push(
+      this.productService
+        .getFilteredProducts(this.currentPage, 10, this.category)
+        .subscribe((res) => {
+          this.productListLength = res.totalElements;
+        })
+    );
   }
 
   search(searchTerm: string) {
@@ -208,5 +224,9 @@ export class AdminProductsComponent implements OnInit {
       queryParams: newParams,
       queryParamsHandling: 'merge', // Para fusionar con los parámetros existentes
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

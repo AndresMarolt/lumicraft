@@ -5,9 +5,11 @@ import {
   OnInit,
   EventEmitter,
   Output,
+  OnDestroy,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/user.interface';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { PROVINCES } from 'src/assets/provinces';
@@ -17,12 +19,13 @@ import { PROVINCES } from 'src/assets/provinces';
   templateUrl: './edit-user-modal.component.html',
   styleUrls: ['./edit-user-modal.component.scss'],
 })
-export class EditUserModalComponent implements OnInit {
+export class EditUserModalComponent implements OnInit, OnDestroy {
   public editUserForm: FormGroup;
   public provinces = PROVINCES;
   private formBuilder = inject(FormBuilder);
   private dialogRef = inject(MatDialogRef);
   private authService = inject(AuthService);
+  private subscriptions: Subscription[] = [];
   @Input() user!: User;
   @Output() updateProfileData: EventEmitter<void> = new EventEmitter<void>();
 
@@ -58,38 +61,40 @@ export class EditUserModalComponent implements OnInit {
     const { id, role } = this.authService.decodeToken(
       this.authService.getToken()!
     )!;
-    this.authService
-      .updateUser({
-        ...this.editUserForm.value,
-        id,
-        role,
-        username: this.user.username,
-      })
-      .subscribe((response) => {
-        const {
-          first_name,
-          last_name,
-          address,
-          city,
-          province,
-          zipCode,
-          phone,
-          date_of_birth,
-        } = response;
-        this.user = {
-          ...this.user,
-          first_name,
-          last_name,
-          address,
-          city,
-          province,
-          zipCode,
-          phone,
-          date_of_birth,
-        };
-        this.authService.updateLocalStorageUserData(response);
-        this.updateProfileData.emit();
-      });
+    this.subscriptions.push(
+      this.authService
+        .updateUser({
+          ...this.editUserForm.value,
+          id,
+          role,
+          username: this.user.username,
+        })
+        .subscribe((response) => {
+          const {
+            first_name,
+            last_name,
+            address,
+            city,
+            province,
+            zipCode,
+            phone,
+            date_of_birth,
+          } = response;
+          this.user = {
+            ...this.user,
+            first_name,
+            last_name,
+            address,
+            city,
+            province,
+            zipCode,
+            phone,
+            date_of_birth,
+          };
+          this.authService.updateLocalStorageUserData(response);
+          this.updateProfileData.emit();
+        })
+    );
 
     this.dialogRef.close();
   }
@@ -123,5 +128,9 @@ export class EditUserModalComponent implements OnInit {
 
   get date_of_birth() {
     return this.editUserForm.controls['date_of_birth'];
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

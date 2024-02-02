@@ -6,6 +6,7 @@ import {
   computed,
   effect,
   WritableSignal,
+  OnDestroy,
 } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Product } from 'src/app/models/product.interface';
@@ -20,13 +21,14 @@ import { LoginRedirectModalComponent } from './login-redirect-modal/login-redire
 import { MatDialog } from '@angular/material/dialog';
 import { FavoriteService } from 'src/app/services/favorite/favorite.service';
 import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss'],
 })
-export class ProductComponent implements OnInit {
+export class ProductComponent implements OnInit, OnDestroy {
   public isShippingFree = false;
   public loading = true;
   public product!: Product;
@@ -41,6 +43,7 @@ export class ProductComponent implements OnInit {
   private snackbarService = inject(SnackbarService);
   private dialog = inject(MatDialog);
   private screenSizeService = inject(ScreenSizeService);
+  private subscriptions: Subscription[] = [];
   public favorites: WritableSignal<Product[]> = this.favoriteService.favorites;
   public isFav: Signal<boolean> = computed(() => {
     return this.favorites().some((fav) => fav.id === this.product.id);
@@ -51,47 +54,51 @@ export class ProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.screenSizeService.screenWidth$.subscribe((width) => {
-      this.screenWidth = width;
-      console.log(this.screenWidth);
-    });
+    this.subscriptions.push(
+      this.screenSizeService.screenWidth$.subscribe((width) => {
+        this.screenWidth = width;
+        console.log(this.screenWidth);
+      })
+    );
 
-    this.route.params.subscribe((params: Params) => {
-      this.productService.getProductsBySlug(params['slug']).subscribe({
-        next: (prod: Product) => {
-          this.product = prod;
+    this.subscriptions.push(
+      this.route.params.subscribe((params: Params) => {
+        this.productService.getProductsBySlug(params['slug']).subscribe({
+          next: (prod: Product) => {
+            this.product = prod;
 
-          if (this.authService.isLoggedIn()) {
-            this.userId = this.authService.decodeToken(
-              this.authService.getToken()!
-            )!.id;
-            this.favoriteService.getFavorites(this.userId);
-          }
+            if (this.authService.isLoggedIn()) {
+              this.userId = this.authService.decodeToken(
+                this.authService.getToken()!
+              )!.id;
+              this.favoriteService.getFavorites(this.userId);
+            }
 
-          if (
-            prod.category === 'accessory' ||
-            prod.category === 'phone' ||
-            prod.category === 'smartwatch'
-          ) {
-            this.isShippingFree = true;
-          } else if (
-            prod.category === 'computer' ||
-            prod.category === 'tablet'
-          ) {
-            this.isShippingFree = false;
-          }
-        },
-        error: (e) => {
-          if (e.status === 404) {
-            this.httpResponseHasError = true;
-          }
-          this.loading = false;
-        },
-        complete: () => {
-          this.loading = false;
-        },
-      });
-    });
+            if (
+              prod.category === 'accessory' ||
+              prod.category === 'phone' ||
+              prod.category === 'smartwatch'
+            ) {
+              this.isShippingFree = true;
+            } else if (
+              prod.category === 'computer' ||
+              prod.category === 'tablet'
+            ) {
+              this.isShippingFree = false;
+            }
+          },
+          error: (e) => {
+            if (e.status === 404) {
+              this.httpResponseHasError = true;
+            }
+            this.loading = false;
+          },
+          complete: () => {
+            this.loading = false;
+          },
+        });
+      })
+    );
   }
 
   addToCart(product: Product) {
@@ -100,7 +107,9 @@ export class ProductComponent implements OnInit {
         this.authService.getToken()!
       )!;
 
-      this.shoppingCartService.addProduct(userId, product).subscribe();
+      this.subscriptions.push(
+        this.shoppingCartService.addProduct(userId, product).subscribe()
+      );
 
       this.snackbarService.showSnackbar(
         `${product.brand} ${product.model} agregado al carrito.`,
@@ -138,5 +147,9 @@ export class ProductComponent implements OnInit {
 
   removeItemFromFavorites(item: Product) {
     this.favoriteService.removeFromFavorites(this.userId, item.id!);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

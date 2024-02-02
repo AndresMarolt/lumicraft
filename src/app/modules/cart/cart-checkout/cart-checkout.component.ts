@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { MatTabGroup } from '@angular/material/tabs';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/user.interface';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
@@ -15,7 +16,7 @@ export enum DeliveryMethodEnum {
   templateUrl: './cart-checkout.component.html',
   styleUrls: ['./cart-checkout.component.scss'],
 })
-export class CartCheckoutComponent implements OnInit {
+export class CartCheckoutComponent implements OnInit, OnDestroy {
   public userId!: number;
   public user: User = {
     username: '',
@@ -34,6 +35,7 @@ export class CartCheckoutComponent implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
   private screenSizeService = inject(ScreenSizeService);
+  private subscriptions: Subscription[] = [];
   public cart = this.shoppingCartService.cart();
   @ViewChild(MatTabGroup) tabGroup!: MatTabGroup;
 
@@ -42,9 +44,11 @@ export class CartCheckoutComponent implements OnInit {
       this.router.navigate(['/cart']);
     }
 
-    this.screenSizeService.screenWidth$.subscribe((width) => {
-      this.screenWidth = width;
-    });
+    this.subscriptions.push(
+      this.screenSizeService.screenWidth$.subscribe((width) => {
+        this.screenWidth = width;
+      })
+    );
   }
 
   ngOnInit(): void {
@@ -62,5 +66,9 @@ export class CartCheckoutComponent implements OnInit {
 
   setDeliveryMethod(method: string) {
     this.deliveryMethod = method;
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

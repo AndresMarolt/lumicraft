@@ -2,6 +2,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   inject,
@@ -15,7 +16,7 @@ import {
 import { MatDialogRef } from '@angular/material/dialog';
 import { Product } from 'src/app/models/product.interface';
 import { ProductService } from 'src/app/services/product/product.service';
-import { Observable, catchError, forkJoin, of } from 'rxjs';
+import { Observable, Subscription, catchError, forkJoin, of } from 'rxjs';
 import {
   SnackbarService,
   SnackbarTone,
@@ -28,7 +29,7 @@ import { CloudinaryUploadResponse } from 'src/app/models/cloudinary-response.int
   templateUrl: './product-form.component.html',
   styleUrls: ['./product-form.component.scss'],
 })
-export class ProductFormComponent implements OnInit {
+export class ProductFormComponent implements OnInit, OnDestroy {
   productCategories: { text: string; value: string | null }[] = [
     { text: 'Todas', value: null },
     { text: 'Móvil', value: 'phone' },
@@ -49,6 +50,7 @@ export class ProductFormComponent implements OnInit {
   private productService = inject(ProductService);
   private dialogRef = inject(MatDialogRef<ProductFormComponent>);
   private snackbarService = inject(SnackbarService);
+  private subscriptions: Subscription[] = [];
 
   constructor() {
     this.productForm = this.formBuilder.group({
@@ -96,24 +98,26 @@ export class ProductFormComponent implements OnInit {
     const handleEdition = () => {
       if (hasSelectedFiles) {
         // EL PRODUCTO EDITADO TIENE IMAGEN/ES
-        this.fileUpload().subscribe((res: CloudinaryUploadResponse[]) => {
-          const filesUrls = res.map((obj) => ({
-            image: obj.url,
-            publicId: obj.public_id,
-          }));
-          const existingImagesUrls = this.productForm
-            .get('images')!
-            .value.map((obj: any) => ({
-              image: obj.image,
-              publicId: obj.publicId,
+        this.subscriptions.push(
+          this.fileUpload().subscribe((res: CloudinaryUploadResponse[]) => {
+            const filesUrls = res.map((obj) => ({
+              image: obj.url,
+              publicId: obj.public_id,
             }));
+            const existingImagesUrls = this.productForm
+              .get('images')!
+              .value.map((obj: any) => ({
+                image: obj.image,
+                publicId: obj.publicId,
+              }));
 
-          this.submitProduct({
-            ...this.productForm.value,
-            id: this.product.id,
-            images: [...filesUrls, ...existingImagesUrls],
-          });
-        });
+            this.submitProduct({
+              ...this.productForm.value,
+              id: this.product.id,
+              images: [...filesUrls, ...existingImagesUrls],
+            });
+          })
+        );
       } else {
         // EL PRODUCTO EDITADO NO TIENE IMAGENES
         this.submitProduct({
@@ -127,13 +131,18 @@ export class ProductFormComponent implements OnInit {
       // MODO DE CREACION DE PRODUCTO
       if (hasSelectedFiles) {
         // EL NUEVO PRODUCTO TIENE IMAGEN/ES
-        this.fileUpload().subscribe((res: CloudinaryUploadResponse[]) => {
-          const filesUrls = res.map((obj) => ({
-            image: obj.url,
-            publicId: obj.public_id,
-          }));
-          this.submitProduct({ ...this.productForm.value, images: filesUrls });
-        });
+        this.subscriptions.push(
+          this.fileUpload().subscribe((res: CloudinaryUploadResponse[]) => {
+            const filesUrls = res.map((obj) => ({
+              image: obj.url,
+              publicId: obj.public_id,
+            }));
+            this.submitProduct({
+              ...this.productForm.value,
+              images: filesUrls,
+            });
+          })
+        );
       } else {
         // EL NUEVO PRODUCTO NO TIENE IMAGEN/ES
         this.submitProduct({ ...this.productForm.value });
@@ -148,36 +157,38 @@ export class ProductFormComponent implements OnInit {
       handleCreation();
     }
   }
-
+  // CAMBIAR POR NEXT
   submitProduct(product: Product) {
-    this.productService[`${this.product ? 'editProduct' : 'addProduct'}`](
-      product
-    )
-      .pipe(
-        catchError((error) => {
+    this.subscriptions.push(
+      this.productService[`${this.product ? 'editProduct' : 'addProduct'}`](
+        product
+      )
+        .pipe(
+          catchError((error) => {
+            this.snackbarService.showSnackbar(
+              `${
+                this.product
+                  ? 'Error al intentar editar el producto.'
+                  : 'Error al intentar crear el producto'
+              }`,
+              SnackbarTone.Error
+            );
+            return of(null);
+          })
+        )
+        .subscribe((res) => {
+          this.loading = false;
+          this.dialogRef.close();
           this.snackbarService.showSnackbar(
             `${
               this.product
-                ? 'Error al intentar editar el producto.'
-                : 'Error al intentar crear el producto'
+                ? `Producto editado exitosamente.`
+                : `${res?.brand} ${res?.model} creado exitosamente`
             }`,
-            SnackbarTone.Error
+            SnackbarTone.Success
           );
-          return of(null);
         })
-      )
-      .subscribe((res) => {
-        this.loading = false;
-        this.dialogRef.close();
-        this.snackbarService.showSnackbar(
-          `${
-            this.product
-              ? `Producto editado exitosamente.`
-              : `${res?.brand} ${res?.model} creado exitosamente`
-          }`,
-          SnackbarTone.Success
-        );
-      });
+    );
   }
 
   closeProductForm() {
@@ -243,6 +254,10 @@ export class ProductFormComponent implements OnInit {
     image: string;
   }): boolean {
     return this.imagesToDelete.some((img) => img.id === productImage.id);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
   get model() {

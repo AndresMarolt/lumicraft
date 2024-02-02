@@ -16,8 +16,7 @@ import { ConfirmationComponent } from 'src/app/shared/components/confirmation/co
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss'],
 })
-export class ProductComponent implements OnDestroy {
-  subscriptions: Subscription[] = [];
+export class ProductComponent implements OnDestroy, OnDestroy {
   isEditing = false;
   product!: Product;
   @Output() deleteProductEvent: EventEmitter<Product> =
@@ -25,6 +24,7 @@ export class ProductComponent implements OnDestroy {
   private productService = inject(ProductService);
   private dialog = inject(MatDialog);
   private thisDialogRef = inject(MatDialogRef<ProductComponent>);
+  private subscriptions: Subscription[] = [];
 
   constructor() {
     this.subscriptions.push(
@@ -34,17 +34,13 @@ export class ProductComponent implements OnDestroy {
     );
   }
 
-  ngOnDestroy(): void {
-    this.subscriptions.forEach((sub) => {
-      sub.unsubscribe();
-    });
-  }
-
   deleteProduct(product: Product) {
     const action = () =>
-      this.productService.deleteProduct(product.id!).subscribe(() => {
-        this.deleteProductEvent.emit(product);
-      });
+      this.subscriptions.push(
+        this.productService.deleteProduct(product.id!).subscribe(() => {
+          this.deleteProductEvent.emit(product);
+        })
+      );
     const message = '¿Está seguro que desea eliminar este producto?';
     this.openConfirmationModal(message, action);
   }
@@ -55,13 +51,21 @@ export class ProductComponent implements OnDestroy {
       autoFocus: false,
     });
     confirmationModalRef.componentInstance.message = message;
-    confirmationModalRef.componentInstance.action.subscribe(() => {
-      action();
-      this.thisDialogRef.close();
-    });
+    this.subscriptions.push(
+      confirmationModalRef.componentInstance.action.subscribe(() => {
+        action();
+        this.thisDialogRef.close();
+      })
+    );
   }
 
   toggleEditMode(value: boolean) {
     this.isEditing = value;
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub) => {
+      sub.unsubscribe();
+    });
   }
 }

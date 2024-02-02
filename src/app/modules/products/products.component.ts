@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,13 +7,14 @@ import { ProductService } from 'src/app/services/product/product.service';
 import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
 import { BRANDS } from 'src/assets/brands';
 import { FiltersComponent } from './filters/filters.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent implements OnInit, OnDestroy {
   productsList: Product[] = [];
   productListLength: number = 0;
   brandFilters: string[] = [];
@@ -31,44 +32,54 @@ export class ProductsComponent implements OnInit {
   private router = inject(Router);
   private screenSizeService = inject(ScreenSizeService);
   private dialog = inject(MatDialog);
+  private subscriptions: Subscription[] = [];
 
   ngOnInit(): void {
     this.loading = true;
-    this.screenSizeService.screenWidth$.subscribe((width) => {
-      this.screenWidth = width;
-    });
-    this.productService.products$.subscribe((products) => {
-      this.productsList = products;
-    });
+    this.subscriptions.push(
+      this.screenSizeService.screenWidth$.subscribe((width) => {
+        this.screenWidth = width;
+      })
+    );
 
-    this.route.params.subscribe((params) => {
-      this.currentCategory = params['category'];
-      this.minSelectedAmount = 0;
-      this.maxSelectedAmount = 3000;
-      this.pageIndex = 0;
-      this.currentPage = 0;
-      this.brandFilters = [];
-      this.getProductsByCategoryAndFilter();
-    });
+    this.subscriptions.push(
+      this.productService.products$.subscribe((products) => {
+        this.productsList = products;
+      })
+    );
 
-    this.route.queryParams.subscribe((queryParams) => {
-      if (Object.keys(queryParams).length !== 0) {
-        const minPriceFromUrl = queryParams['priceMin'] || 0;
-        const maxPriceFromUrl = queryParams['priceMax'] || 3000;
-        this.pageIndex = queryParams['page'] || 0;
-        this.currentPage = queryParams['page'] || 0;
-        this.minSelectedAmount = +minPriceFromUrl;
-        this.maxSelectedAmount = +maxPriceFromUrl;
-        const brandsFromUrl = queryParams['brands'];
-        this.brandFilters = brandsFromUrl ? brandsFromUrl.split(',') : [];
+    this.subscriptions.push(
+      this.route.params.subscribe((params) => {
+        this.currentCategory = params['category'];
+        this.minSelectedAmount = 0;
+        this.maxSelectedAmount = 3000;
+        this.pageIndex = 0;
+        this.currentPage = 0;
+        this.brandFilters = [];
+        this.getProductsByCategoryAndFilter();
+      })
+    );
 
-        if (this.screenWidth < 768) {
+    this.subscriptions.push(
+      this.route.queryParams.subscribe((queryParams) => {
+        if (Object.keys(queryParams).length !== 0) {
+          const minPriceFromUrl = queryParams['priceMin'] || 0;
+          const maxPriceFromUrl = queryParams['priceMax'] || 3000;
+          this.pageIndex = queryParams['page'] || 0;
+          this.currentPage = queryParams['page'] || 0;
+          this.minSelectedAmount = +minPriceFromUrl;
+          this.maxSelectedAmount = +maxPriceFromUrl;
+          const brandsFromUrl = queryParams['brands'];
+          this.brandFilters = brandsFromUrl ? brandsFromUrl.split(',') : [];
+
+          if (this.screenWidth < 768) {
+            this.getProductsByCategoryAndFilter();
+          }
+        } else {
           this.getProductsByCategoryAndFilter();
         }
-      } else {
-        this.getProductsByCategoryAndFilter();
-      }
-    });
+      })
+    );
   }
 
   getProductsByCategoryAndFilter() {
@@ -77,25 +88,27 @@ export class ProductsComponent implements OnInit {
       maxSelectedAmount: this.maxSelectedAmount || 3000,
       brands: this.brandFilters || undefined,
     };
-    this.productService
-      .getFilteredProducts(this.currentPage, 9, this.currentCategory, filters)
-      .subscribe({
-        next: (res) => {
-          this.productsList = res.content;
-          this.productListLength = res.totalElements;
-          this.loading = false;
-        },
-        error: (e) => {
-          if (e.status === 404) {
-            this.productsList = [];
-            this.productListLength = 0;
-          }
-          this.loading = false;
-        },
-        complete: () => {
-          this.loading = false;
-        },
-      });
+    this.subscriptions.push(
+      this.productService
+        .getFilteredProducts(this.currentPage, 9, this.currentCategory, filters)
+        .subscribe({
+          next: (res) => {
+            this.productsList = res.content;
+            this.productListLength = res.totalElements;
+            this.loading = false;
+          },
+          error: (e) => {
+            if (e.status === 404) {
+              this.productsList = [];
+              this.productListLength = 0;
+            }
+            this.loading = false;
+          },
+          complete: () => {
+            this.loading = false;
+          },
+        })
+    );
   }
 
   updateProductsList(event: { products: Product[]; totalElements: number }) {
@@ -160,9 +173,11 @@ export class ProductsComponent implements OnInit {
     filtersModal.componentInstance.minSelectedAmount = this.minSelectedAmount;
     filtersModal.componentInstance.maxSelectedAmount = this.maxSelectedAmount;
 
-    filtersModal.componentInstance.closeModal.subscribe(() => {
-      filtersModal.close();
-    });
+    this.subscriptions.push(
+      filtersModal.componentInstance.closeModal.subscribe(() => {
+        filtersModal.close();
+      })
+    );
   }
 
   private addURLParams(newParams: any) {
@@ -171,5 +186,9 @@ export class ProductsComponent implements OnInit {
       queryParams: newParams,
       queryParamsHandling: 'merge',
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

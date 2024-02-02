@@ -1,16 +1,24 @@
-import { Component, QueryList, ViewChildren, inject } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  ViewChildren,
+  inject,
+} from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
 import { Order } from 'src/app/models/order.interface';
 import { ShoppingCartService } from 'src/app/services/shopping-cart/shopping-cart.service';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit, OnDestroy {
   @ViewChildren(BaseChartDirective) charts:
     | QueryList<BaseChartDirective>
     | undefined;
@@ -21,6 +29,7 @@ export class DashboardComponent {
   public pendingOrders: Order[] = [];
   public averageSaleAmount: number = 0;
   private shoppingCartService = inject(ShoppingCartService);
+  private subscriptions: Subscription[] = [];
   public chartOptions: ChartConfiguration['options'] = {
     scales: {
       x: {},
@@ -48,42 +57,44 @@ export class DashboardComponent {
   };
 
   ngOnInit(): void {
-    this.shoppingCartService.getAllOrders().subscribe((res) => {
-      this.orders = res;
-      this.amountOfItemsSold = this.orders.reduce(
-        (sum, order) => order.totalQuantity + sum,
-        0
-      );
+    this.subscriptions.push(
+      this.shoppingCartService.getAllOrders().subscribe((res) => {
+        this.orders = res;
+        this.amountOfItemsSold = this.orders.reduce(
+          (sum, order) => order.totalQuantity + sum,
+          0
+        );
 
-      this.completedOrders = res.filter(
-        (order) => order.status === 'DELIVERED'
-      );
-      this.pendingOrders = res.filter((order) => order.status === 'PENDING');
+        this.completedOrders = res.filter(
+          (order) => order.status === 'DELIVERED'
+        );
+        this.pendingOrders = res.filter((order) => order.status === 'PENDING');
 
-      const totalAmountSum: number = this.orders.reduce(
-        (sum, order) => sum + order.totalAmount,
-        0
-      );
-      this.averageSaleAmount = totalAmountSum / this.orders.length;
-      this.salesQuantityChartData.labels = this.salesAmountChartData.labels =
-        this.generateLastMonths();
+        const totalAmountSum: number = this.orders.reduce(
+          (sum, order) => sum + order.totalAmount,
+          0
+        );
+        this.averageSaleAmount = totalAmountSum / this.orders.length;
+        this.salesQuantityChartData.labels = this.salesAmountChartData.labels =
+          this.generateLastMonths();
 
-      let { monthAmountValues, monthCountValues } = this.obtainSalesData(res);
+        let { monthAmountValues, monthCountValues } = this.obtainSalesData(res);
 
-      this.salesQuantityChartData.datasets.push({
-        data: monthCountValues,
-        label: 'Total de ventas',
-        backgroundColor: '#2e3e4e',
-      });
-      this.salesAmountChartData.datasets.push({
-        data: monthAmountValues,
-        label: 'Ingreso por ventas',
-        backgroundColor: '#ec4e20',
-      });
-      this.loading = false;
-      this.charts?.toArray()[0].update();
-      this.charts?.toArray()[1].update();
-    });
+        this.salesQuantityChartData.datasets.push({
+          data: monthCountValues,
+          label: 'Total de ventas',
+          backgroundColor: '#2e3e4e',
+        });
+        this.salesAmountChartData.datasets.push({
+          data: monthAmountValues,
+          label: 'Ingreso por ventas',
+          backgroundColor: '#ec4e20',
+        });
+        this.loading = false;
+        this.charts?.toArray()[0].update();
+        this.charts?.toArray()[1].update();
+      })
+    );
   }
 
   public generateLastMonths() {
@@ -137,5 +148,9 @@ export class DashboardComponent {
     const orderMonth = new Date(order.timestamp).getMonth() + 1;
     const orderYear = new Date(order.timestamp).getFullYear();
     return `${orderMonth.toString().padStart(2, '0')}/${orderYear}`;
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

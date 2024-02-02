@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, OnDestroy, inject, signal } from '@angular/core';
 import { Product } from 'src/app/models/product.interface';
-import { Observable, tap } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import {
   ShoppingCart,
   ShoppingCartProduct,
@@ -12,30 +12,34 @@ import { Order } from 'src/app/models/order.interface';
 @Injectable({
   providedIn: 'root',
 })
-export class ShoppingCartService {
+export class ShoppingCartService implements OnDestroy {
   public cart = signal<ShoppingCart>({
     allProducts: [],
     totalAmount: 0,
     totalQuantity: 0,
   });
   private httpClient = inject(HttpClient);
+  private subscriptions: Subscription[] = [];
 
   constructor() {}
 
   getCartProducts(userId: number) {
     const url = `${environment.ApiURL}/api/cart/${userId}`;
-    this.httpClient.get<ShoppingCartProduct[]>(url).subscribe((res) => {
-      this.cart.mutate((currentCart) => {
-        currentCart.totalAmount = 0;
-        currentCart.allProducts = [];
-        currentCart.totalQuantity = 0;
-        res.map((cartItem) => {
-          currentCart.totalAmount += cartItem.quantity * cartItem.product.price;
-          currentCart.allProducts.push(cartItem);
-          currentCart.totalQuantity += cartItem.quantity;
+    this.subscriptions.push(
+      this.httpClient.get<ShoppingCartProduct[]>(url).subscribe((res) => {
+        this.cart.mutate((currentCart) => {
+          currentCart.totalAmount = 0;
+          currentCart.allProducts = [];
+          currentCart.totalQuantity = 0;
+          res.map((cartItem) => {
+            currentCart.totalAmount +=
+              cartItem.quantity * cartItem.product.price;
+            currentCart.allProducts.push(cartItem);
+            currentCart.totalQuantity += cartItem.quantity;
+          });
         });
-      });
-    });
+      })
+    );
   }
 
   addProduct(userId: number, product: Product) {
@@ -120,5 +124,9 @@ export class ShoppingCartService {
   generateOrder(userId: number): Observable<Order> {
     const url = `${environment.ApiURL}/api/order/create`;
     return this.httpClient.post<Order>(url, userId);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

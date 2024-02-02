@@ -3,6 +3,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   ViewChild,
@@ -10,13 +11,14 @@ import {
 } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { NavigationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss'],
 })
-export class SidenavComponent implements OnInit, AfterViewInit {
+export class SidenavComponent implements OnInit, AfterViewInit, OnDestroy {
   sidebarOptions!: { text: string; link: string }[];
   sidenavTitle!: string;
   @Input() isMobile: boolean = false;
@@ -30,23 +32,32 @@ export class SidenavComponent implements OnInit, AfterViewInit {
     { text: 'Tablets', link: 'products/tablet' },
     { text: 'Smartwatch', link: 'products/smartwatch' },
   ];
+  private subscriptions: Subscription[] = [];
 
   ngOnInit(): void {
     this.sidebarOptions = this.userOptions;
     this.sidenavTitle = 'CATEGORIAS';
 
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.sidebarOptions = this.userOptions;
-        this.sidenavTitle = 'CATEGORIAS';
-        this.toggleSidebar.emit(false);
-      }
-    });
+    this.subscriptions.push(
+      this.router.events.subscribe((event) => {
+        if (event instanceof NavigationEnd) {
+          this.sidebarOptions = this.userOptions;
+          this.sidenavTitle = 'CATEGORIAS';
+          this.toggleSidebar.emit(false);
+        }
+      })
+    );
   }
 
   ngAfterViewInit(): void {
-    this.drawerElement.openedChange.subscribe((status) => {
-      this.toggleSidebar.emit(status);
-    });
+    this.subscriptions.push(
+      this.drawerElement.openedChange.subscribe((status) => {
+        this.toggleSidebar.emit(status);
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

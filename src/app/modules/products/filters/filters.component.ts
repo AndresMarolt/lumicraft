@@ -2,11 +2,13 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   inject,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Product } from 'src/app/models/product.interface';
 import { ProductService } from 'src/app/services/product/product.service';
 import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
@@ -17,7 +19,7 @@ import { BRANDS } from 'src/assets/brands';
   templateUrl: './filters.component.html',
   styleUrls: ['./filters.component.scss'],
 })
-export class FiltersComponent implements OnInit {
+export class FiltersComponent implements OnInit, OnDestroy {
   @Input() currentCategory: string = '';
   @Output() emitFilteredProducts: EventEmitter<{
     products: Product[];
@@ -38,28 +40,31 @@ export class FiltersComponent implements OnInit {
   private router = inject(Router);
   private productService = inject(ProductService);
   private screenWidthService = inject(ScreenSizeService);
+  private subscriptions: Subscription[] = [];
 
   ngOnInit(): void {
-    this.screenWidthService.screenWidth$.subscribe((width) => {
-      if (width > 768) {
-        this.route.queryParams.subscribe((queryParams) => {
-          if (Object.keys(queryParams).length !== 0) {
-            this.loading = true;
-            const minPriceFromUrl = queryParams['priceMin'] || 0;
-            const maxPriceFromUrl = queryParams['priceMax'] || 3000;
-            this.pageIndex = queryParams['page'] || 0;
-            this.currentPage = queryParams['page'] || 0;
+    this.subscriptions.push(
+      this.screenWidthService.screenWidth$.subscribe((width) => {
+        if (width > 768) {
+          this.route.queryParams.subscribe((queryParams) => {
+            if (Object.keys(queryParams).length !== 0) {
+              this.loading = true;
+              const minPriceFromUrl = queryParams['priceMin'] || 0;
+              const maxPriceFromUrl = queryParams['priceMax'] || 3000;
+              this.pageIndex = queryParams['page'] || 0;
+              this.currentPage = queryParams['page'] || 0;
 
-            this.minSelectedAmount = +minPriceFromUrl;
-            this.maxSelectedAmount = +maxPriceFromUrl;
+              this.minSelectedAmount = +minPriceFromUrl;
+              this.maxSelectedAmount = +maxPriceFromUrl;
 
-            const brandsFromUrl = queryParams['brands'];
-            this.brandFilters = brandsFromUrl ? brandsFromUrl.split(',') : [];
-            this.getProductsByCategoryAndFilter();
-          }
-        });
-      }
-    });
+              const brandsFromUrl = queryParams['brands'];
+              this.brandFilters = brandsFromUrl ? brandsFromUrl.split(',') : [];
+              this.getProductsByCategoryAndFilter();
+            }
+          });
+        }
+      })
+    );
   }
 
   getProductsByCategoryAndFilter() {
@@ -68,27 +73,31 @@ export class FiltersComponent implements OnInit {
       maxSelectedAmount: this.maxSelectedAmount || 3000,
       brands: this.brandFilters || undefined,
     };
-
-    this.productService
-      .getFilteredProducts(this.currentPage, 9, this.currentCategory, filters)
-      .subscribe({
-        next: (res) => {
-          this.emitFilteredProducts.emit({
-            products: res.content,
-            totalElements: res.totalElements,
-          });
-          this.loading = false;
-        },
-        error: (e) => {
-          if (e.status === 404) {
-            this.emitFilteredProducts.emit({ products: [], totalElements: 0 });
-          }
-          this.loading = false;
-        },
-        complete: () => {
-          this.loading = false;
-        },
-      });
+    this.subscriptions.push(
+      this.productService
+        .getFilteredProducts(this.currentPage, 9, this.currentCategory, filters)
+        .subscribe({
+          next: (res) => {
+            this.emitFilteredProducts.emit({
+              products: res.content,
+              totalElements: res.totalElements,
+            });
+            this.loading = false;
+          },
+          error: (e) => {
+            if (e.status === 404) {
+              this.emitFilteredProducts.emit({
+                products: [],
+                totalElements: 0,
+              });
+            }
+            this.loading = false;
+          },
+          complete: () => {
+            this.loading = false;
+          },
+        })
+    );
   }
 
   filterByBrand(brand: string) {
@@ -128,5 +137,9 @@ export class FiltersComponent implements OnInit {
       queryParams: newParams,
       queryParamsHandling: 'merge', // Para fusionar con los parámetros existentes
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

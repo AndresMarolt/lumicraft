@@ -1,6 +1,13 @@
-import { Component, EventEmitter, Output, inject } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  Output,
+  inject,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthResponse } from 'src/app/models/auth/authResponse.interface';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
@@ -9,12 +16,13 @@ import { AuthService } from 'src/app/services/auth/auth.service';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
 })
-export class SignupComponent {
+export class SignupComponent implements OnDestroy {
   signupForm!: FormGroup;
   @Output() changeAuthTypeEvent: EventEmitter<void> = new EventEmitter<void>();
   private formBuilder = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
+  private subscriptions: Subscription[] = [];
 
   constructor() {
     this.signupForm = this.formBuilder.group({
@@ -29,15 +37,21 @@ export class SignupComponent {
   submit() {
     if (this.signupForm.invalid) return;
 
-    this.authService.signup(this.signupForm.value).subscribe({
-      next: (data: AuthResponse) => {
-        this.router.navigate(['/']);
-      },
-      error: (err) => {
-        console.log(err);
-        this.signupForm.reset();
-      },
-    });
+    this.subscriptions.push(
+      this.authService.signup(this.signupForm.value).subscribe({
+        next: (data: AuthResponse) => {
+          this.router.navigate(['/']);
+        },
+        error: (err) => {
+          console.log(err);
+          this.signupForm.reset();
+        },
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
   get username() {
