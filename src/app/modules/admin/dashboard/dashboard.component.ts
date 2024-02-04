@@ -98,25 +98,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   public generateLastMonths() {
-    const currentYear = new Date().getFullYear();
-    let currentMonth = new Date().getMonth() + 1;
-    let aux = currentMonth;
+    let year = new Date().getFullYear();
+    let month = new Date().getMonth() + 2;
 
-    return Array.from({ length: 7 }, (_, index) => {
-      let month;
-      let year = currentYear;
-      if (aux > 0) {
-        month = currentMonth - index;
+    return Array.from({ length: 7 }, () => {
+      if (month > 1) {
+        month--;
       } else {
-        currentMonth = 12;
         month = 12;
+        year--;
       }
-      aux = currentMonth - 1;
-
-      if (month - 1 > 0) {
-        year = currentYear - 1;
-      }
-
       return `${month.toString().padStart(2, '0')}/${year}`;
     }).reverse();
   }
