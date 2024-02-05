@@ -12,12 +12,19 @@
       <mat-label>Usuario</mat-label>
       <input matInput formControlName="username" />
       <mat-icon matPrefix>person_outline</mat-icon>
+      <mat-error *ngIf="username.hasError('required') && !loginError"
+        >Debe ingresar su nombre de usuario</mat-error
+      >
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Contraseña</mat-label>
       <input matInput type="password" formControlName="password" />
       <mat-icon matPrefix>lock_outline</mat-icon>
+      <mat-error *ngIf="loginError">Usuario o contraseña incorrectos</mat-error>
+      <mat-error *ngIf="password.hasError('required') && !loginError"
+        >Debe ingresar su contraseña</mat-error
+      >
     </mat-form-field>
 
     <button

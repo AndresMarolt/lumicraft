@@ -71,7 +71,12 @@
     </button>
   </form>
 
-  <span class="change__auth" (click)="changeAuthTypeEvent.emit()"
-    >ir a Login</span
-  >
+  <div>
+    ¿Ya tienes una cuenta?
+    <span
+      class="change__auth text-decoration-underline"
+      (click)="changeAuthTypeEvent.emit()"
+      >Inicia sesión</span
+    >
+  </div>
 </mat-card>
