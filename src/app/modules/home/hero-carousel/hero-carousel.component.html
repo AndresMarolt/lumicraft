@@ -1,25 +1,130 @@
 <div id="carouselExample" class="carousel slide">
   <div class="carousel-inner">
-    <div
-      class="carousel-item active"
-      style="width: 100%; height: 400px; background-color: black"
-    ></div>
-    <div
-      class="carousel-item"
-      style="width: 100%; height: 400px; background-color: #627c85"
-    ></div>
-    <div
-      class="carousel-item"
-      style="width: 100%; height: 400px; background-color: #28294c"
-    ></div>
-    <div
-      class="carousel-item"
-      style="width: 100%; height: 400px; background-color: #ea638c"
-    ></div>
-    <div
-      class="carousel-item"
-      style="width: 100%; height: 400px; background-color: #fcd0a1"
-    ></div>
+    <div class="carousel-item carousel-item-1 active">
+      <div
+        class="carousel-item-content d-flex align-items-center flex-column flex-md-row"
+      >
+        <img
+          src="assets/hero-carousel/carousel-1.webp"
+          alt="carousel-1"
+          class="carousel_img col-12 col-md-5 mx-auto h-md-100 mb-4 mb-md-0"
+        />
+        <div
+          class="col-12 col-md-5 text-light d-flex flex-column justify-content-center"
+        >
+          <img
+            src="assets/samsung_logo.png"
+            alt="samsung-logo"
+            class="mb-2 mb-md-4 samsung_logo"
+          />
+          <div>
+            <span class="fs-3">Galaxy S24 Ultra</span>
+            <p class="mt-2 subtext">
+              Compra ahora y consigue hasta €150 al entregar tu antiguo equipo
+            </p>
+            <a
+              mat-raised-button
+              color="accent"
+              class=""
+              [routerLink]="['product/samsung-galaxy-s23-ultra']"
+            >
+              Compra ya
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-item carousel-item-2">
+      <div
+        class="carousel-item-content d-flex align-items-center flex-column flex-md-row"
+      >
+        <img
+          src="assets/hero-carousel/carousel-2.png"
+          alt="carousel-2"
+          class="carousel_img col-12 col-md-6 mx-auto h-md-100 mb-4 mb-md-0"
+        />
+        <div
+          class="col-12 col-md-5 text-light d-flex flex-column justify-content-center"
+        >
+          <img
+            src="assets/apple_logo.png"
+            alt="apple-logo"
+            class="mb-2 mb-md-4 apple_logo"
+          />
+          <div>
+            <span class="fs-3 d-block mb-2 mb-md-3"
+              >Descubre el nuevo iPad Air</span
+            >
+            <div class="d-flex align-items-center gap-4 mb-md-2">
+              <div class="d-flex flex-column align-items-center">
+                <fa-icon
+                  [icon]="faUpRightAndDownLeftFromCenter"
+                  class="fs-5"
+                ></fa-icon>
+                <p class="mb-2">10,9 in.</p>
+              </div>
+              <div class="d-flex flex-column align-items-center">
+                <fa-icon [icon]="faMemory" class="fs-5"></fa-icon>
+                <p class="mb-2">256GB</p>
+              </div>
+              <div class="d-flex flex-column align-items-center">
+                <fa-icon [icon]="faCamera" class="fs-5"></fa-icon>
+                <p class="mb-2">12 mpx.</p>
+              </div>
+            </div>
+
+            <a
+              mat-raised-button
+              color="accent"
+              class="mx-auto"
+              [routerLink]="['product/samsung-galaxy-s23-ultra']"
+            >
+              Compra ya
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-item carousel-item-3">
+      <div
+        class="carousel-item-content d-flex align-items-center flex-column flex-md-row"
+      >
+        <img
+          src="assets/hero-carousel/carousel-3.png"
+          alt="carousel-3"
+          class="carousel_img col-12 col-md-5 mx-auto h-md-100 mb-4 mb-md-0"
+        />
+        <div
+          class="col-12 col-md-5 text-light d-flex flex-column justify-content-center"
+        >
+          <img
+            src="assets/xiaomi_logo.png"
+            alt="xiaomi-logo"
+            class="mb-md-4 xiaomi_logo"
+          />
+          <div>
+            <span class="fs-1 fs-md-1 mb-2 mb-md-4 d-block"
+              >Redmi Watch 2 Lite</span
+            >
+            <span class="fs-4 d-block"
+              >Más de 200 esferas, cambia cuando quieras</span
+            >
+            <p class="mt-2 subtext">
+              Cambia de tema cuando quieras gracias a las 200 esferas. Es fácil
+              mostrar tu personalidad única con solo levantar la mano
+            </p>
+            <a
+              mat-raised-button
+              color="accent"
+              class="mx-auto"
+              [routerLink]="['product/xiaomi-redmi-watch-2-lite']"
+            >
+              Compra ya
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <button
     class="carousel-control-prev"
