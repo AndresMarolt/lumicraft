@@ -1,8 +1,99 @@
 .carousel {
-  height: 400px;
+  height: 500px;
 
-  img {
-    height: 400px;
+  &-item {
+    height: 500px;
+    width: 100%;
 
+    &-1 {
+      background-color: black !important;
+    }
+
+    &-2 {
+      background-color: #627c85;
+    }
+
+    &-3 {
+      background-color: #BB9BB0;
+    }
+
+    &-content {
+      width: 95%;
+      margin: 18px auto;
+
+      .carousel_img {
+        max-height: 280px;
+      }
+
+      .samsung_logo {
+        width: 160px;
+      }
+
+      .apple_logo {
+        width: 40px
+      }
+
+      .xiaomi_logo {
+        width: 75px;
+      }
+
+      a {
+        font-size: 12px;
+      }
+    }
+  }
+  
+  .subtext {
+    font-size: 12px;
+  }
+  
+}
+
+::ng-deep {
+  .carousel-control-prev, .carousel-control-next {
+    width: 5%;
+  }
+}
+
+@media(width >= 768px) {
+  .carousel {
+    height: 500px;
+  
+    &-item {
+      height: 500px;
+      width: 100%;
+  
+      &-1 {
+        background-color: black !important;
+      }
+  
+      &-2 {
+        background-color: #627c85;
+      }
+  
+      &-3 {
+        background-color: #BB9BB0;
+      }
+  
+      &-content {
+        width: 95%;
+        height: 100%;
+        margin: 0 auto;
+        padding: 8px 0;
+
+        .carousel_img {
+          max-height: 460px;
+        }
+        
+        .samsung_logo {
+          width: 220px;
+        }
+      }
+    }
+    
+    .subtext {
+      font-size: 14px;
+    }
+    
   }
 }
