@@ -1,26 +1,25 @@
 <ng-container *ngIf="!loading; else loadingSpinner">
-  <div class="m-4 bg-white" *ngIf="!httpResponseHasError">
-    <div class="d-flex flex-column flex-md-row content gap-2">
-      <div class="col-12 col-md-8">
-        <h2 class="fs-3 fw-bold mb-5">
-          {{ product.brand }} {{ product.model }}
-        </h2>
-
+  <div class="m-4 bg-white content" *ngIf="!httpResponseHasError">
+    <h2 class="fs-3 fw-bold mb-2 mb-md-4 mb-lg-4">
+      {{ product.brand }} {{ product.model }}
+    </h2>
+    <div class="d-flex flex-column flex-md-row gap-2 mb-4">
+      <div class="col-12 col-md-6 col-lg-8">
         <img
           [src]="
             'https://mitrahukum.org/wp-content/uploads/2012/09/dummy-post-square-1-768x768.jpg'
           "
           *ngIf="product.images!.length === 0; else oneOrMoreImages"
           alt="img-product"
-          class="single_image"
+          class="single_image mb-4 mb-md-0"
         />
         <ng-template #oneOrMoreImages>
-          <img
-            [src]="product.images![0].image"
+          <div
             *ngIf="product.images!.length === 1; else multipleImages"
-            alt=""
-            class="single_image"
-          />
+            class="col-12"
+          >
+            <img [src]="product.images![0].image" alt="" class="single_image" />
+          </div>
           <ng-template #multipleImages>
             <app-products-carousel
               [productImages]="product.images!"
@@ -33,7 +32,7 @@
         </ng-template>
       </div>
 
-      <mat-card class="col-12 col-md-4 h-100">
+      <mat-card class="col-12 col-md-6 col-lg-4 h-100">
         <mat-card-content class="py-5 px-4">
           <div class="d-flex justify-content-between">
             <h3 class="color-accent fs-2 fw-bold">€{{ product.price }}</h3>
@@ -81,7 +80,7 @@
       </mat-card>
     </div>
 
-    <section class="content">
+    <section>
       <h4 class="fs-3">Descripción</h4>
 
       <p>{{ product.description }}</p>
