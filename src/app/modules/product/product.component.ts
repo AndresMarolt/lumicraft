@@ -57,7 +57,6 @@ export class ProductComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.screenSizeService.screenWidth$.subscribe((width) => {
         this.screenWidth = width;
-        console.log(this.screenWidth);
       })
     );
 
