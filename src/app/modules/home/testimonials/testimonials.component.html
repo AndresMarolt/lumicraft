@@ -1,0 +1,52 @@
+<section class="background-primary content py-5">
+  <p class="fs-2 pb-3 fw-bold text-white">Nuestros clientes</p>
+  <div
+    class="col-12 d-md-flex flex-md-wrap justify-content-between content py-2"
+  >
+    <mat-card
+      *ngFor="let testimonial of testimonials; let i = index"
+      class="testimonial mb-2"
+    >
+      <mat-card-content>
+        <div class="d-flex gap-3">
+          <img
+            [src]="testimonial.image"
+            [alt]="'testimonial-' + i"
+            class="testimonial_img"
+          />
+
+          <div class="d-flex flex-column justify-content-center">
+            <span class="">
+              {{ testimonial.name }}
+            </span>
+            <span>
+              <ng-container
+                *ngFor="let rating of [].constructor(testimonial.rating)"
+              >
+                <fa-icon [icon]="faStar" class="testimonial_star"></fa-icon>
+              </ng-container>
+            </span>
+            <div>
+              <span class="d-block text-secondary">
+                {{ testimonial.date | date : "dd/MM/yyyy" }}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="position-relative testimonial_text-container">
+          <fa-icon
+            [icon]="faQuoteLeft"
+            class="color-accent quote_icon quote_icon-left"
+          ></fa-icon>
+          <p class="fw-light mt-2 testimonial_text px-4">
+            {{ testimonial.text }}
+          </p>
+          <fa-icon
+            [icon]="faQuoteRight"
+            class="color-accent quote_icon quote_icon-right"
+          ></fa-icon>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</section>

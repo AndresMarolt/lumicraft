@@ -33,7 +33,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   productCategories: { text: string; value: string | null }[] = [
     { text: 'Todas', value: null },
     { text: 'Móvil', value: 'phone' },
-    { text: 'Ordenador', value: 'computer' },
+    { text: 'Portátil', value: 'laptop' },
     { text: 'Tablet', value: 'tablet' },
     { text: 'Smartwatch', value: 'smartwatch' },
     { text: 'Accesorio', value: 'accessory' },

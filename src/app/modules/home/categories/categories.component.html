@@ -1,0 +1,16 @@
+<section
+  class="categories d-flex flex-wrap content align-items-center justify-content-between"
+>
+  <div *ngFor="let category of categories" class="col-6 col-md-3 col-xl-1 mb-2">
+    <a
+      [routerLink]="['products', category.link]"
+      class="category d-flex flex-column align-items-center"
+      [id]="category.title"
+    >
+      <div class="img_container col-7">
+        <img [src]="category.img" alt="movil" class="col-12 mx-auto" />
+      </div>
+      <p class="m-0">{{ category.title }}</p>
+    </a>
+  </div>
+</section>

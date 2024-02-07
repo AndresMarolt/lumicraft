@@ -1,0 +1,36 @@
+.categories {
+  .category {
+    color: black;
+    text-decoration: none;
+    height: 90%;
+    width: 86px;
+    margin: auto;
+    .img_container {
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 82px;
+      width: 100%;
+      background-color: white;
+      padding: 10px;
+      border-radius: 50%;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      -ms-border-radius: 50%;
+      -o-border-radius: 50%;
+        img {
+          height: 100%;
+          width: 100%;
+        }
+    }
+
+    p {
+      font-size: 12px;
+    }
+  }
+
+  #Tablets .img_container {
+    padding: 16px 12px;
+  }
+}
