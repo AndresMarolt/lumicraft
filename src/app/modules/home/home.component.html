@@ -1,8 +1,8 @@
 <div>
   <app-hero-carousel></app-hero-carousel>
 
-  <div
-    class="quick-info-items my-3 my-md-2 d-flex flex-row flex-md-nowrap justify-content-between align-items-start overflow-scroll"
+  <section
+    class="quick-info-items bg-white py-3 py-md-2 d-flex flex-row flex-md-nowrap justify-content-between align-items-start overflow-scroll"
   >
     <div
       *ngFor="let item of quickInfoItems"
@@ -13,5 +13,145 @@
         <p class="m-0 quick-info-text">{{ item.text | uppercase }}</p>
       </div>
     </div>
-  </div>
+  </section>
+
+  <section
+    class="categories d-flex flex-wrap content align-items-center justify-content-between"
+  >
+    <div
+      *ngFor="let category of categories"
+      class="col-6 col-md-3 col-xl-1 mb-2"
+    >
+      <a
+        [routerLink]="['products', category.link]"
+        class="category d-flex flex-column align-items-center"
+        [id]="category.title"
+      >
+        <div class="img_container col-7">
+          <img [src]="category.img" alt="movil" class="col-12 mx-auto" />
+        </div>
+        <p class="m-0">{{ category.title }}</p>
+      </a>
+    </div>
+  </section>
+
+  <section class="bg-white">
+    <p class="fs-2 content pt-5 pb-3 fw-bold">Productos destacados</p>
+
+    <div class="carousel-container col-12 pb-4">
+      <div
+        [id]="'multi-item-carousel'"
+        class="carousel slide"
+        data-bs-ride="carousel"
+      >
+        <div class="carousel-inner py-2 col-10 mx-auto">
+          <ng-container *ngFor="let chunk of productsChunks; let i = index">
+            <div class="carousel-item" [class.active]="i === 0">
+              <div class="row justify-content-between col-10 mx-auto">
+                <a
+                  *ngFor="let product of chunk"
+                  class="col-md-6 col-lg-4 text-decoration-none product_link"
+                  [routerLink]="['/product', product.slug]"
+                >
+                  <mat-card class="col-12">
+                    <mat-card-content class="d-flex flex-column">
+                      <div class="text-center">
+                        <img
+                          [src]="product.images![0].image"
+                          alt=""
+                          class="product-image mx-auto"
+                        />
+                        <ng-template #multipleImages>
+                          <app-products-carousel
+                            (click)="$event.stopPropagation()"
+                            [productImages]="product.images!"
+                          ></app-products-carousel>
+                        </ng-template>
+                      </div>
+                      <div>
+                        <div
+                          class="d-flex justify-content-between align-items-center"
+                        >
+                          <p class="my-3 fs-3 color-accent fw-bold">
+                            €{{ product.price }}
+                          </p>
+                        </div>
+                        <h4 class="">
+                          {{ product.brand }} {{ product.model }}
+                        </h4>
+                      </div>
+                    </mat-card-content>
+                  </mat-card>
+                </a>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+        <button
+          class="carousel-control-prev"
+          type="button"
+          [attr.data-bs-target]="'#multi-item-carousel'"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          [attr.data-bs-target]="'#multi-item-carousel'"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+    <!-- <div class="products overflow-scroll">
+        <mat-card *ngFor="let product of prominentProducts" class="product">
+          <a
+            [routerLink]="['/product', product.slug]"
+            class="text-decoration-none product_link"
+          >
+            <mat-card-content class="d-flex flex-column">
+              <img
+                [src]="
+                  'https://mitrahukum.org/wp-content/uploads/2012/09/dummy-post-square-1-768x768.jpg'
+                "
+                *ngIf="product.images!.length === 0; else oneOrMoreImages"
+                alt=""
+                class="product-image"
+              />
+              <ng-template #oneOrMoreImages>
+                <img
+                  [src]="product.images![0].image"
+                  *ngIf="product.images!.length === 1; else multipleImages"
+                  alt=""
+                  class="product-image align-self-center"
+                />
+                <ng-template #multipleImages>
+                  <app-products-carousel
+                    (click)="$event.stopPropagation()"
+                    [productImages]="product.images!"
+                  ></app-products-carousel>
+                </ng-template>
+              </ng-template>
+              <div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <p class="my-3 fs-3 color-accent fw-bold">
+                    €{{ product.price }}
+                  </p>
+                </div>
+                <h4 class="">{{ product.brand }} {{ product.model }}</h4>
+              </div>
+            </mat-card-content>
+          </a>
+        </mat-card>
+      </div> -->
+
+    <ng-template #noResults>
+      <p>No se encontraron resultados para los filtros ingresados.</p>
+    </ng-template>
+  </section>
 </div>

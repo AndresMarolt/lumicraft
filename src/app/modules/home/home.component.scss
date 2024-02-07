@@ -17,8 +17,77 @@ mat-icon {
   }
 }
 
-@media(min-width: 768px) {
+.categories {
+  .category {
+    color: black;
+    text-decoration: none;
+    height: 90%;
+    width: 86px;
+    margin: auto;
+    .img_container {
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 82px;
+      width: 100%;
+      background-color: white;
+      padding: 10px;
+      border-radius: 50%;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      -ms-border-radius: 50%;
+      -o-border-radius: 50%;
+        img {
+          height: 100%;
+          width: 100%;
+        }
+    }
+
+    p {
+      font-size: 12px;
+    }
+  }
+
+  #Tablets .img_container {
+    padding: 16px 12px;
+  }
+}
+
+.row > .product_link {
+  padding: 0;
+  // margin: 0 calc(1.5rem * 0.5);
+}
+.product_link {
+  color: unset;
+  cursor: pointer;
+  width: 100%;
+  .product-image {
+    width: 100%;
+    height: 250px;
+  }
+}
+
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(100%);
+  height: 100%;
+  -webkit-filter: invert(100%);
+}
+
+@media(width >= 768px) {
   .quick-info-items {
     padding: 8px 50px !important;
+  }
+
+  .product_link {
+    width: 49%;
+  }
+}
+
+@media(width >= 1024px) {
+  .product_link {
+    width: 33%;
   }
 }
