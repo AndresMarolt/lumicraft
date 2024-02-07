@@ -112,6 +112,16 @@ mat-icon {
   }
 }
 
+.social-media {
+
+  a {
+    color: unset;
+  }
+  &_icon {
+    font-size: 2rem;
+  }
+}
+
 @media(width >= 768px) {
   .quick-info-items {
     padding: 8px 50px !important;
@@ -121,10 +131,21 @@ mat-icon {
   .testimonial{
     width: 49%;
   }
+
+  .social-media {
+    &_icon {
+      font-size: 3rem;
+    }
+  }
+}
+
+@media(width >= 1024px) {
+  .product_link {
+    width: 32%;
+  }
 }
 
 @media(width >= 1200px) {
-  .product_link,
   .testimonial {
     width: 24%;
   }

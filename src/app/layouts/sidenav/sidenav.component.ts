@@ -28,7 +28,7 @@ export class SidenavComponent implements OnInit, AfterViewInit, OnDestroy {
   private router = inject(Router);
   private userOptions = [
     { text: 'Móviles', link: 'products/phone' },
-    { text: 'Ordenadores', link: 'products/computer' },
+    { text: 'Portátiles', link: 'products/computer' },
     { text: 'Tablets', link: 'products/tablet' },
     { text: 'Smartwatch', link: 'products/smartwatch' },
   ];

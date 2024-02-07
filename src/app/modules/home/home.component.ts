@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, inject } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Product } from 'src/app/models/product.interface';
 import { ProductService } from 'src/app/services/product/product.service';
@@ -6,7 +6,17 @@ import {
   faStar,
   faQuoteLeft,
   faQuoteRight,
+  IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
+import {
+  faXTwitter,
+  faFacebook,
+  faInstagram,
+  faLinkedin,
+  faYoutube,
+  faQuora,
+  faPinterest,
+} from '@fortawesome/free-brands-svg-icons';
 
 @Component({
   selector: 'app-home',
@@ -29,6 +39,13 @@ export class HomeComponent {
   public faStar = faStar;
   public faQuoteLeft = faQuoteLeft;
   public faQuoteRight = faQuoteRight;
+
+  public faFacebook = faFacebook;
+  public faInstagram = faInstagram;
+  public faLinkedin = faLinkedin;
+  public faYoutube = faYoutube;
+  public faQuora = faQuora;
+  public faPinterest = faPinterest;
 
   private subscriptions: Subscription[] = [];
 
@@ -55,7 +72,7 @@ export class HomeComponent {
       link: 'phone',
     },
     {
-      title: 'Laptops',
+      title: 'Portátiles',
       img: 'https://res.cloudinary.com/dpq3kpgdy/image/upload/v1707236619/lumicraft/uf2rbzmj5ufb88rqs87c.png',
       link: 'computer',
     },
@@ -91,11 +108,20 @@ export class HomeComponent {
     },
   ];
 
+  public socialMedia: { icon: IconDefinition; link: string }[] = [
+    { icon: faFacebook, link: 'www.facebook.com' },
+    { icon: faInstagram, link: 'www.instagram.com' },
+    { icon: faXTwitter, link: 'www.x.com' },
+    { icon: faLinkedin, link: 'www.linkedin.com' },
+    { icon: faYoutube, link: 'www.youtube.com' },
+    { icon: faPinterest, link: 'www.pinterest.com' },
+  ];
+
   @HostListener('window:resize', ['$event'])
   detectScreenSize(): void {
     const screenWidth = window.innerWidth;
 
-    if (screenWidth > 770 && screenWidth <= 996) {
+    if (screenWidth >= 768 && screenWidth < 1024) {
       this.sizeRow = 2;
     } else {
       this.sizeRow = 3;
