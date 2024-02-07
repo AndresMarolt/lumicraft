@@ -76,18 +76,58 @@ mat-icon {
   -webkit-filter: invert(100%);
 }
 
+.testimonial {
+  width: 100%;
+  &_img {
+    width: 60px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+  }
+
+  &_star {
+    color: gold;
+  }
+  &_text {
+    font-size: 14px;
+  }
+  .quote_icon {
+    position: absolute;
+    font-size: 2rem;
+
+    &-left {
+      top: 0;
+    }
+
+    &-right {
+      bottom: 0;
+      right: 0;
+    }
+  }
+
+  &_text-container {
+    padding: 1.2rem 0;
+  }
+}
+
 @media(width >= 768px) {
   .quick-info-items {
     padding: 8px 50px !important;
   }
 
-  .product_link {
+  .product_link,
+  .testimonial{
     width: 49%;
   }
 }
 
-@media(width >= 1024px) {
-  .product_link {
-    width: 33%;
+@media(width >= 1200px) {
+  .product_link,
+  .testimonial {
+    width: 24%;
   }
+
+
 }
