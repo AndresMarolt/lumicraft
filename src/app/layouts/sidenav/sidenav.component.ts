@@ -26,10 +26,14 @@ export class SidenavComponent implements OnInit, AfterViewInit, OnDestroy {
   @Output() toggleSidebar: EventEmitter<boolean> = new EventEmitter<boolean>();
   @ViewChild('drawer') drawerElement!: MatDrawer;
   private router = inject(Router);
-  private userOptions = [
+  private userOptions: { text: string; link: string }[] = [
     { text: 'Móviles', link: 'products/phone' },
-    { text: 'Portátiles', link: 'products/laptop' },
     { text: 'Tablets', link: 'products/tablet' },
+    { text: 'Portátiles', link: 'products/laptop' },
+    { text: 'Ordenadores', link: 'products/computer' },
+    { text: 'Televisores', link: 'products/tv' },
+    { text: 'Videojuegos', link: 'products/videogame' },
+    { text: 'Auriculares', link: 'products/headphones' },
     { text: 'Smartwatch', link: 'products/smartwatch' },
   ];
   private subscriptions: Subscription[] = [];

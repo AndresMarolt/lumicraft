@@ -32,11 +32,14 @@ import { CloudinaryUploadResponse } from 'src/app/models/cloudinary-response.int
 export class ProductFormComponent implements OnInit, OnDestroy {
   productCategories: { text: string; value: string | null }[] = [
     { text: 'Todas', value: null },
-    { text: 'Móvil', value: 'phone' },
-    { text: 'Portátil', value: 'laptop' },
-    { text: 'Tablet', value: 'tablet' },
-    { text: 'Smartwatch', value: 'smartwatch' },
-    { text: 'Accesorio', value: 'accessory' },
+    { text: 'Móviles', value: 'phone' },
+    { text: 'Tablets', value: 'tablet' },
+    { text: 'Portátiles', value: 'laptop' },
+    { text: 'Ordenadores', value: 'computer' },
+    { text: 'Televisores', value: 'tv' },
+    { text: 'Videojuegos', value: 'videogame' },
+    { text: 'Auriculares', value: 'headphones' },
+    { text: 'Smartwatches', value: 'smartwatch' },
   ];
   loading = false;
   productForm!: FormGroup;

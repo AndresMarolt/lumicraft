@@ -30,7 +30,9 @@
     }
   }
 
-  #Tablets .img_container {
-    padding: 16px 12px;
-  }
+  #Tablets, #Televisores {
+    .img_container {
+      padding: 16px 12px;
+    }
+  } 
 }

@@ -26,10 +26,13 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
   productCategories: { text: string; value: string | null }[] = [
     { text: 'Todas', value: 'todas' },
     { text: 'Móviles', value: 'phone' },
-    { text: 'Portátiles', value: 'laptop' },
     { text: 'Tablets', value: 'tablet' },
+    { text: 'Portátiles', value: 'laptop' },
+    { text: 'Ordenadores', value: 'computer' },
+    { text: 'Televisores', value: 'tv' },
+    { text: 'Videojuegos', value: 'videogame' },
+    { text: 'Auriculares', value: 'headphones' },
     { text: 'Smartwatches', value: 'smartwatch' },
-    { text: 'Accesorios', value: 'accessory' },
   ];
   closeResult!: string;
   currentPage: number = 0;
