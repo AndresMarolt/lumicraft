@@ -160,7 +160,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
       handleCreation();
     }
   }
-  // CAMBIAR POR NEXT
+
   submitProduct(product: Product) {
     this.subscriptions.push(
       this.productService[`${this.product ? 'editProduct' : 'addProduct'}`](

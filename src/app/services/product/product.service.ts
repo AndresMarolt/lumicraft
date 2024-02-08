@@ -93,7 +93,7 @@ export class ProductService {
             existingProducts[index] = {
               ...res,
             };
-            this.products.next(existingProducts);
+            this.products.next([...existingProducts]);
             this.selectedProduct.next(res);
           }
         })
@@ -108,7 +108,7 @@ export class ProductService {
           let existingProducts = this.products.getValue();
           const index = existingProducts.findIndex((p) => p.id === productId);
           existingProducts.splice(index, 1);
-          this.products.next(existingProducts);
+          this.products.next([...existingProducts]);
         })
       );
   }
