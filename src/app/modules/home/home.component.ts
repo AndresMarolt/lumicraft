@@ -45,11 +45,11 @@ export class HomeComponent {
   ];
 
   public socialMedia: { icon: IconDefinition; link: string }[] = [
-    { icon: faFacebook, link: 'www.facebook.com' },
-    { icon: faInstagram, link: 'www.instagram.com' },
-    { icon: faXTwitter, link: 'www.x.com' },
-    { icon: faLinkedin, link: 'www.linkedin.com' },
-    { icon: faYoutube, link: 'www.youtube.com' },
-    { icon: faPinterest, link: 'www.pinterest.com' },
+    { icon: faFacebook, link: 'https://www.facebook.com' },
+    { icon: faInstagram, link: 'https://www.instagram.com' },
+    { icon: faXTwitter, link: 'https://www.x.com' },
+    { icon: faLinkedin, link: 'https://www.linkedin.com' },
+    { icon: faYoutube, link: 'https://www.youtube.com' },
+    { icon: faPinterest, link: 'https://www.pinterest.com' },
   ];
 }

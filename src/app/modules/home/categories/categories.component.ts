@@ -15,7 +15,7 @@ export class CategoriesComponent {
     {
       title: 'Portátiles',
       img: 'https://res.cloudinary.com/dpq3kpgdy/image/upload/v1707236619/lumicraft/uf2rbzmj5ufb88rqs87c.png',
-      link: 'computer',
+      link: 'laptop',
     },
     {
       title: 'Tablets',

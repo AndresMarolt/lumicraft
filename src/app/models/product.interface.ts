@@ -13,6 +13,9 @@ export interface Product {
 export type Category =
   | 'phone'
   | 'tablet'
+  | 'tv'
+  | 'videogame'
+  | 'headphones'
+  | 'laptop'
   | 'computer'
-  | 'smartwatch'
-  | 'accessory';
+  | 'smartwatch';

@@ -73,14 +73,10 @@ export class ProductComponent implements OnInit, OnDestroy {
               this.favoriteService.getFavorites(this.userId);
             }
 
-            if (
-              prod.category === 'accessory' ||
-              prod.category === 'phone' ||
-              prod.category === 'smartwatch'
-            ) {
+            if (prod.category === 'phone' || prod.category === 'smartwatch') {
               this.isShippingFree = true;
             } else if (
-              prod.category === 'computer' ||
+              prod.category === 'laptop' ||
               prod.category === 'tablet'
             ) {
               this.isShippingFree = false;

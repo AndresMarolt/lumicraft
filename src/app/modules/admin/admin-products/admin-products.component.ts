@@ -26,7 +26,7 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
   productCategories: { text: string; value: string | null }[] = [
     { text: 'Todas', value: 'todas' },
     { text: 'Móviles', value: 'phone' },
-    { text: 'Portátiles', value: 'computer' },
+    { text: 'Portátiles', value: 'laptop' },
     { text: 'Tablets', value: 'tablet' },
     { text: 'Smartwatches', value: 'smartwatch' },
     { text: 'Accesorios', value: 'accessory' },
