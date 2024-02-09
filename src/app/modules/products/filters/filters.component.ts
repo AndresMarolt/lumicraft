@@ -29,6 +29,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
     totalElements: number;
   }>();
   @Output() closeModal: EventEmitter<void> = new EventEmitter<void>();
+  @Output() emitPageIndex: EventEmitter<number> = new EventEmitter<number>();
   @Input() brandFilters: string[] = [];
   @Input() minSelectedAmount: number = 0;
   @Input() maxSelectedAmount: number = 3000;
@@ -36,6 +37,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   pageIndex = 0;
   currentPage = 0;
+  screenWidth!: number;
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private productService = inject(ProductService);
@@ -44,30 +46,28 @@ export class FiltersComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.screenWidthService.screenWidth$.subscribe((width) => {
-        if (width > 768) {
-          this.route.queryParams.subscribe((queryParams) => {
-            if (Object.keys(queryParams).length !== 0) {
-              this.loading = true;
-              const minPriceFromUrl = queryParams['priceMin'] || 0;
-              const maxPriceFromUrl = queryParams['priceMax'] || 3000;
-              this.pageIndex = queryParams['page'] || 0;
-              this.currentPage = queryParams['page'] || 0;
+      this.route.queryParams.subscribe((queryParams) => {
+        if (Object.keys(queryParams).length !== 0) {
+          this.loading = true;
+          const minPriceFromUrl = queryParams['priceMin'] || 0;
+          const maxPriceFromUrl = queryParams['priceMax'] || 3000;
+          this.emitPageIndex.emit(queryParams['page'] || 0);
+          this.currentPage = queryParams['page'] || 0;
 
-              this.minSelectedAmount = +minPriceFromUrl;
-              this.maxSelectedAmount = +maxPriceFromUrl;
+          this.minSelectedAmount = +minPriceFromUrl;
+          this.maxSelectedAmount = +maxPriceFromUrl;
 
-              const brandsFromUrl = queryParams['brands'];
-              this.brandFilters = brandsFromUrl ? brandsFromUrl.split(',') : [];
-              this.getProductsByCategoryAndFilter();
-            }
-          });
+          const brandsFromUrl = queryParams['brands'];
+          this.brandFilters = brandsFromUrl ? brandsFromUrl.split(',') : [];
+          this.getProductsByCategoryAndFilter();
         }
       })
     );
   }
 
   getProductsByCategoryAndFilter() {
+    console.log('LLAMADO A API DESDE FILTERS');
+
     let filters = {
       minSelectedAmount: this.minSelectedAmount || 0,
       maxSelectedAmount: this.maxSelectedAmount || 3000,

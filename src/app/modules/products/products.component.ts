@@ -56,30 +56,37 @@ export class ProductsComponent implements OnInit, OnDestroy {
         this.pageIndex = 0;
         this.currentPage = 0;
         this.brandFilters = [];
+
         this.getProductsByCategoryAndFilter();
       })
     );
 
-    this.subscriptions.push(
-      this.route.queryParams.subscribe((queryParams) => {
-        if (Object.keys(queryParams).length !== 0) {
-          const minPriceFromUrl = queryParams['priceMin'] || 0;
-          const maxPriceFromUrl = queryParams['priceMax'] || 3000;
-          this.pageIndex = queryParams['page'] || 0;
-          this.currentPage = queryParams['page'] || 0;
-          this.minSelectedAmount = +minPriceFromUrl;
-          this.maxSelectedAmount = +maxPriceFromUrl;
-          const brandsFromUrl = queryParams['brands'];
-          this.brandFilters = brandsFromUrl ? brandsFromUrl.split(',') : [];
+    if (this.screenWidth < 768) {
+      this.subscriptions.push(
+        this.route.queryParams.subscribe((queryParams) => {
+          if (Object.keys(queryParams).length !== 0) {
+            const minPriceFromUrl = queryParams['priceMin'] || 0;
+            const maxPriceFromUrl = queryParams['priceMax'] || 3000;
+            this.pageIndex = queryParams['page'] || 0;
+            this.currentPage = queryParams['page'] || 0;
+            this.minSelectedAmount = +minPriceFromUrl;
+            this.maxSelectedAmount = +maxPriceFromUrl;
+            const brandsFromUrl = queryParams['brands'];
+            this.brandFilters = brandsFromUrl ? brandsFromUrl.split(',') : [];
 
-          if (this.screenWidth < 768) {
+            if (this.screenWidth < 768) {
+              this.getProductsByCategoryAndFilter();
+            }
+          } else {
             this.getProductsByCategoryAndFilter();
           }
-        } else {
-          this.getProductsByCategoryAndFilter();
-        }
-      })
-    );
+        })
+      );
+    }
+  }
+
+  updatePageIndex(pageIndex: number) {
+    this.pageIndex = pageIndex;
   }
 
   getProductsByCategoryAndFilter() {
@@ -117,48 +124,14 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.loading = false;
   }
 
-  filterByBrand(brand: string) {
-    const index = this.brandFilters.indexOf(brand);
-    const currentParams = this.router.routerState.snapshot.root.queryParams;
-
-    if (index === -1) {
-      this.brandFilters.push(brand);
-    } else {
-      this.brandFilters.splice(index, 1);
-    }
-
-    let newParams = {
-      ...currentParams,
-      page: 0,
-      brands: this.brandFilters.length ? this.brandFilters.join(',') : null,
-    };
-
-    this.addURLParams(newParams);
-  }
-
-  onSliderChange() {
-    const currentParams = this.router.routerState.snapshot.root.queryParams;
-
-    const newParams = {
-      ...currentParams,
-      priceMin: this.minSelectedAmount,
-      priceMax: this.maxSelectedAmount,
-    };
-
-    this.addURLParams(newParams);
-  }
-
   onPageChange(event: PageEvent): void {
     const currentParams = this.router.routerState.snapshot.root.queryParams;
-
     this.currentPage = event.pageIndex;
-
     const newParams = {
       ...currentParams,
       page: this.currentPage,
     };
     this.addURLParams(newParams);
-
     this.getProductsByCategoryAndFilter();
   }
 
@@ -176,7 +149,12 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       filtersModal.componentInstance.closeModal.subscribe(() => {
         filtersModal.close();
-      })
+      }),
+      filtersModal.componentInstance.emitFilteredProducts.subscribe(
+        (productsList) => {
+          this.updateProductsList(productsList);
+        }
+      )
     );
   }
 

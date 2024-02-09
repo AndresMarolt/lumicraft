@@ -1,11 +1,13 @@
 <div class="content position-relative d-flex">
   <ng-container *ngIf="screenWidth >= 768">
     <app-filters
+      *ngIf="!loading"
       [currentCategory]="currentCategory"
       [brandFilters]="brandFilters"
       [minSelectedAmount]="minSelectedAmount"
       [maxSelectedAmount]="maxSelectedAmount"
       (emitFilteredProducts)="updateProductsList($event)"
+      (emitPageIndex)="updatePageIndex($event)"
     ></app-filters>
   </ng-container>
 
